@@ -10,13 +10,13 @@ from time import sleep
 
 def ScrapeCNA(category,pages):
     #1 is health, #2 is business, #3 politics
-    db = mysql.connect(
-        host="rm-gs595dd89hu8175hl6o.mysql.singapore.rds.aliyuncs.com",
-        user="ict1902698psk",
-        passwd="KSP8962091",
-        database="sql1902698psk"
-    )
-    cursor = db.cursor()
+    # db = mysql.connect(
+    #     host="rm-gs595dd89hu8175hl6o.mysql.singapore.rds.aliyuncs.com",
+    #     user="ict1902698psk",
+    #     passwd="KSP8962091",
+    #     database="sql1902698psk"
+    # )
+    # cursor = db.cursor()
     if category == 1:
         search = "health"
     elif category == 2:
@@ -74,22 +74,22 @@ def ScrapeCNA(category,pages):
             Dateresult = soup.find("time", class_="article__details-item")
             datetime_object = datetime.strptime(Dateresult.getText(), '%d %b  %Y %I:%M%p')
             ArticleDate = datetime_object.strftime("%Y-%m-%d")
-            try:
-                query = "INSERT INTO article VALUES (%s,%s,%s,%s,%s,%s,%s,%s,MD5(%s))"
-                val = (
-                0, ArticleURL, ArticleTitle, ArticleDate, SentimentRating, ArticleText, AgencyID, CategoryID,
-                ArticleTitle)
-                cursor.execute(query, val)
-                print(ArticleDate)
-                print(ArticleText)
-                print(ArticleURL)
-                print(SentimentRating)
-                print(ArticleTitle)
-                db.commit()
-            except:
-                print("error")
-                print(ArticleTitle)
-                continue
+            # try:
+                # query = "INSERT INTO article VALUES (%s,%s,%s,%s,%s,%s,%s,%s,MD5(%s))"
+                # val = (
+                # 0, ArticleURL, ArticleTitle, ArticleDate, SentimentRating, ArticleText, AgencyID, CategoryID,
+                # ArticleTitle)
+                # cursor.execute(query, val)
+                # print(ArticleDate)
+                # print(ArticleText)
+                # print(ArticleURL)
+                # print(SentimentRating)
+                # print(ArticleTitle)
+                # db.commit()
+            # except:
+            #     print("error")
+            #     print(ArticleTitle)
+            #     continue
 
 ScrapeCNA(3,2)
 

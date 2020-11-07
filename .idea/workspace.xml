@@ -1,360 +1,50 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="BranchesTreeState">
-    <expand>
-      <path>
-        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
-        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
-      </path>
-      <path>
-        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
-        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
-      </path>
-      <path>
-        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
-        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
-        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
-      </path>
-    </expand>
-    <select />
-  </component>
   <component name="ChangeListManager">
-<<<<<<< Updated upstream
-    <list default="true" id="efae0dc4-ac07-493b-90c2-b1281ffbfd78" name="Default Changelist" comment="" />
-=======
-    <list default="true" id="efae0dc4-ac07-493b-90c2-b1281ffbfd78" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/database-m3012.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/database-m3012.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ScrapeCNA.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/ScrapeCNA.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/UserFunctions.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/UserFunctions.py" afterDir="false" />
+    <list default="true" id="60754506-8a0b-4153-bdaf-84b7e7cb0586" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/database-m3012/src/WordCloud.py" beforeDir="false" afterPath="$PROJECT_DIR$/database-m3012/src/WordCloud.py" afterDir="false" />
     </list>
->>>>>>> Stashed changes
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="FileTemplateManagerImpl">
-    <option name="RECENT_TEMPLATES">
-      <list>
-        <option value="Python Script" />
-      </list>
-    </option>
-  </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/database-m3012" />
   </component>
-  <component name="JupyterTrust" id="35149626-12ad-44db-bf43-4bad9a875e3b" />
-  <component name="ProjectId" id="1jHsHtbagvGIHFiGvgH5H8KMRIP" />
+  <component name="ProjectId" id="1jyQ9aLQ7Qnpg8O0jENWnJ9SAss" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
-    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="node.js.detected.package.eslint" value="true" />
-    <property name="node.js.detected.package.tslint" value="true" />
-    <property name="node.js.path.for.package.eslint" value="project" />
-    <property name="node.js.path.for.package.tslint" value="project" />
-    <property name="node.js.selected.package.eslint" value="(autodetect)" />
-    <property name="node.js.selected.package.tslint" value="(autodetect)" />
-    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
-<<<<<<< Updated upstream
-  <component name="RunManager" selected="Python.ArticlesFunction">
-=======
-  <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\Darin\OneDrive\Documents\database-m3012\src" />
-    </key>
-  </component>
-  <component name="RunManager" selected="Python.UserFunctions">
->>>>>>> Stashed changes
-    <configuration name="ArticlesFunction" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="database-m3012" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/ArticlesFunction.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="ScrapeCNA (1)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="database-m3012" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/ScrapeCNA.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="ScrapeCNA" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="database-m3012" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="C:\Users\Darin\OneDrive\Documents\GitHub\database-m3012\src\ScrapeCNA.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="UserFunctions" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="database-m3012" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/UserFunctions.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="main(pak)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="database-m3012" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/main(pak).py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <recent_temporary>
-      <list>
-<<<<<<< Updated upstream
-        <item itemvalue="Python.ArticlesFunction" />
-        <item itemvalue="Python.ScrapeCNA (1)" />
-=======
-        <item itemvalue="Python.UserFunctions" />
-        <item itemvalue="Python.ScrapeCNA" />
-        <item itemvalue="Python.ArticlesFunction" />
->>>>>>> Stashed changes
-        <item itemvalue="Python.ScrapeCNA" />
-        <item itemvalue="Python.UserFunctions" />
-        <item itemvalue="Python.main(pak)" />
-      </list>
-    </recent_temporary>
-  </component>
-  <component name="SpellCheckerSettings" BundledDictionaries="0" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" Dictionaries="0" CorrectionsLimit="5" DefaultDictionary="application-level" UseSingleDictionary="true" />
   <component name="SvnConfiguration">
     <configuration />
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="efae0dc4-ac07-493b-90c2-b1281ffbfd78" name="Default Changelist" comment="" />
-      <created>1603472266763</created>
+      <changelist id="60754506-8a0b-4153-bdaf-84b7e7cb0586" name="Default Changelist" comment="" />
+      <created>1604773700415</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1603472266763</updated>
-      <workItem from="1603472267958" duration="2058000" />
-      <workItem from="1603526995905" duration="32000" />
-      <workItem from="1603543614440" duration="3319000" />
-      <workItem from="1603722407856" duration="5370000" />
-      <workItem from="1603895724461" duration="90000" />
-      <workItem from="1603895852395" duration="9278000" />
-      <workItem from="1603955458442" duration="3699000" />
-<<<<<<< Updated upstream
-=======
-      <workItem from="1604149004921" duration="4428000" />
-      <workItem from="1604153929273" duration="13391000" />
-      <workItem from="1604210453359" duration="1468000" />
-      <workItem from="1604229184308" duration="4544000" />
->>>>>>> Stashed changes
+      <updated>1604773700415</updated>
+      <workItem from="1604773704648" duration="298000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
   </component>
-  <component name="Vcs.Log.Tabs.Properties">
-    <option name="TAB_STATES">
-      <map>
-        <entry key="MAIN">
-          <value>
-            <State>
-              <option name="COLUMN_ORDER" />
-            </State>
-          </value>
-        </entry>
-      </map>
-    </option>
-  </component>
   <component name="WindowStateProjectService">
-<<<<<<< Updated upstream
-    <state x="733" y="261" key="FileChooserDialogImpl" timestamp="1603903725035">
+    <state x="763" y="360" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1604773869564">
       <screen x="0" y="0" width="2048" height="1112" />
     </state>
-    <state x="550" y="216" key="FileChooserDialogImpl/0.0.1536.920@0.0.1536.920" timestamp="1603553956123" />
-    <state x="733" y="261" key="FileChooserDialogImpl/0.0.2048.1112@0.0.2048.1112" timestamp="1603903725035" />
-    <state width="1990" height="307" key="GridCell.Tab.0.bottom" timestamp="1603960612202">
-      <screen x="0" y="0" width="2048" height="1112" />
-    </state>
-    <state width="1497" height="243" key="GridCell.Tab.0.bottom/0.0.1536.920@0.0.1536.920" timestamp="1603727717642" />
-    <state width="1990" height="307" key="GridCell.Tab.0.bottom/0.0.2048.1112@0.0.2048.1112" timestamp="1603960612202" />
-    <state width="1990" height="307" key="GridCell.Tab.0.center" timestamp="1603960612202">
-      <screen x="0" y="0" width="2048" height="1112" />
-    </state>
-    <state width="1497" height="243" key="GridCell.Tab.0.center/0.0.1536.920@0.0.1536.920" timestamp="1603727717642" />
-    <state width="1990" height="307" key="GridCell.Tab.0.center/0.0.2048.1112@0.0.2048.1112" timestamp="1603960612202" />
-    <state width="1990" height="307" key="GridCell.Tab.0.left" timestamp="1603960612202">
-      <screen x="0" y="0" width="2048" height="1112" />
-    </state>
-    <state width="1497" height="243" key="GridCell.Tab.0.left/0.0.1536.920@0.0.1536.920" timestamp="1603727717642" />
-    <state width="1990" height="307" key="GridCell.Tab.0.left/0.0.2048.1112@0.0.2048.1112" timestamp="1603960612202" />
-    <state width="1990" height="307" key="GridCell.Tab.0.right" timestamp="1603960612202">
-      <screen x="0" y="0" width="2048" height="1112" />
-    </state>
-    <state width="1497" height="243" key="GridCell.Tab.0.right/0.0.1536.920@0.0.1536.920" timestamp="1603727717642" />
-    <state width="1990" height="307" key="GridCell.Tab.0.right/0.0.2048.1112@0.0.2048.1112" timestamp="1603960612202" />
-=======
-    <state x="752" y="184" key="#ScrapeCNA_(1)" timestamp="1604153944434">
-      <screen x="0" y="0" width="2048" height="1112" />
-    </state>
-    <state x="752" y="184" key="#ScrapeCNA_(1)/0.0.2048.1112@0.0.2048.1112" timestamp="1604153944434" />
-    <state x="479" y="212" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1604149791516">
-      <screen x="0" y="0" width="2048" height="1112" />
-    </state>
-    <state x="479" y="212" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.2048.1112@0.0.2048.1112" timestamp="1604149791516" />
-    <state x="763" y="360" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1604158467785">
-      <screen x="0" y="0" width="2048" height="1112" />
-    </state>
-    <state x="763" y="360" key="#com.intellij.fileTypes.FileTypeChooser/0.0.2048.1112@0.0.2048.1112" timestamp="1604158467785" />
-    <state x="733" y="261" key="FileChooserDialogImpl" timestamp="1604229357174">
-      <screen x="0" y="0" width="2048" height="1112" />
-    </state>
-    <state x="550" y="216" key="FileChooserDialogImpl/0.0.1536.920@0.0.1536.920" timestamp="1603553956123" />
-    <state x="733" y="261" key="FileChooserDialogImpl/0.0.2048.1112@0.0.2048.1112" timestamp="1604229357174" />
-    <state width="2005" height="262" key="GridCell.Tab.0.bottom" timestamp="1604233779095">
-      <screen x="0" y="0" width="2048" height="1112" />
-    </state>
-    <state width="1497" height="243" key="GridCell.Tab.0.bottom/0.0.1536.920@0.0.1536.920" timestamp="1604211644193" />
-    <state width="2005" height="262" key="GridCell.Tab.0.bottom/0.0.2048.1112@0.0.2048.1112" timestamp="1604233779095" />
-    <state width="2005" height="262" key="GridCell.Tab.0.center" timestamp="1604233779095">
-      <screen x="0" y="0" width="2048" height="1112" />
-    </state>
-    <state width="1497" height="243" key="GridCell.Tab.0.center/0.0.1536.920@0.0.1536.920" timestamp="1604211644192" />
-    <state width="2005" height="262" key="GridCell.Tab.0.center/0.0.2048.1112@0.0.2048.1112" timestamp="1604233779095" />
-    <state width="2005" height="262" key="GridCell.Tab.0.left" timestamp="1604233779095">
-      <screen x="0" y="0" width="2048" height="1112" />
-    </state>
-    <state width="1497" height="243" key="GridCell.Tab.0.left/0.0.1536.920@0.0.1536.920" timestamp="1604211644192" />
-    <state width="2005" height="262" key="GridCell.Tab.0.left/0.0.2048.1112@0.0.2048.1112" timestamp="1604233779095" />
-    <state width="2005" height="262" key="GridCell.Tab.0.right" timestamp="1604233779095">
-      <screen x="0" y="0" width="2048" height="1112" />
-    </state>
-    <state width="1497" height="243" key="GridCell.Tab.0.right/0.0.1536.920@0.0.1536.920" timestamp="1604211644192" />
-    <state width="2005" height="262" key="GridCell.Tab.0.right/0.0.2048.1112@0.0.2048.1112" timestamp="1604233779095" />
->>>>>>> Stashed changes
-    <state width="1497" height="301" key="GridCell.Tab.1.bottom" timestamp="1603727061136">
-      <screen x="0" y="0" width="1536" height="920" />
-    </state>
-    <state width="1497" height="301" key="GridCell.Tab.1.bottom/0.0.1536.920@0.0.1536.920" timestamp="1603727061136" />
-    <state width="1497" height="301" key="GridCell.Tab.1.center" timestamp="1603727061136">
-      <screen x="0" y="0" width="1536" height="920" />
-    </state>
-    <state width="1497" height="301" key="GridCell.Tab.1.center/0.0.1536.920@0.0.1536.920" timestamp="1603727061136" />
-    <state width="1497" height="301" key="GridCell.Tab.1.left" timestamp="1603727061136">
-      <screen x="0" y="0" width="1536" height="920" />
-    </state>
-    <state width="1497" height="301" key="GridCell.Tab.1.left/0.0.1536.920@0.0.1536.920" timestamp="1603727061136" />
-    <state width="1497" height="301" key="GridCell.Tab.1.right" timestamp="1603727061136">
-      <screen x="0" y="0" width="1536" height="920" />
-    </state>
-    <state width="1497" height="301" key="GridCell.Tab.1.right/0.0.1536.920@0.0.1536.920" timestamp="1603727061136" />
-    <state x="533" y="200" key="SettingsEditor" timestamp="1604229361910">
-      <screen x="0" y="0" width="2048" height="1112" />
-    </state>
-<<<<<<< Updated upstream
-    <state x="533" y="200" key="SettingsEditor/0.0.2048.1112@0.0.2048.1112" timestamp="1603896043127" />
-    <state x="721" y="382" key="com.intellij.ide.util.TipDialog" timestamp="1603955460675">
-=======
-    <state x="533" y="200" key="SettingsEditor/0.0.2048.1112@0.0.2048.1112" timestamp="1604229361910" />
-    <state x="721" y="382" key="com.intellij.ide.util.TipDialog" timestamp="1604153932335">
->>>>>>> Stashed changes
-      <screen x="0" y="0" width="2048" height="1112" />
-    </state>
-    <state x="721" y="382" key="com.intellij.ide.util.TipDialog/0.0.2048.1112@0.0.2048.1112" timestamp="1603955460675" />
-  </component>
-  <component name="com.intellij.coverage.CoverageDataManagerImpl">
-<<<<<<< Updated upstream
-    <SUITE FILE_PATH="coverage/database_m3012$UserFunctions.coverage" NAME="UserFunctions Coverage Results" MODIFIED="1603956200389" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
-    <SUITE FILE_PATH="coverage/database_m3012$main_pak_.coverage" NAME="main(pak) Coverage Results" MODIFIED="1603901893664" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
-    <SUITE FILE_PATH="coverage/database_m3012$ScrapeCNA.coverage" NAME="ScrapeCNA Coverage Results" MODIFIED="1603958390443" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
-    <SUITE FILE_PATH="coverage/database_m3012$SentimentTest1.coverage" NAME="SentimentTest1 Coverage Results" MODIFIED="1603474543342" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
-    <SUITE FILE_PATH="coverage/database_m3012$ScrapeCNA__1_.coverage" NAME="ScrapeCNA (1) Coverage Results" MODIFIED="1603958419462" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
-    <SUITE FILE_PATH="coverage/database_m3012$ArticlesFunction.coverage" NAME="ArticlesFunction Coverage Results" MODIFIED="1603960612195" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
-=======
-    <SUITE FILE_PATH="coverage/database_m3012$UserFunctions.coverage" NAME="UserFunctions Coverage Results" MODIFIED="1604233779088" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
-    <SUITE FILE_PATH="coverage/database_m3012$main_pak_.coverage" NAME="main(pak) Coverage Results" MODIFIED="1603901893664" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
-    <SUITE FILE_PATH="coverage/database_m3012$ScrapeCNA.coverage" NAME="ScrapeCNA Coverage Results" MODIFIED="1604211644168" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
-    <SUITE FILE_PATH="coverage/database_m3012$SentimentTest1.coverage" NAME="SentimentTest1 Coverage Results" MODIFIED="1603474543342" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
-    <SUITE FILE_PATH="coverage/database_m3012$ScrapeCNA__1_.coverage" NAME="ScrapeCNA (1) Coverage Results" MODIFIED="1604153262382" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
-    <SUITE FILE_PATH="coverage/database_m3012$ArticlesFunction.coverage" NAME="ArticlesFunction Coverage Results" MODIFIED="1604211380222" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
->>>>>>> Stashed changes
-    <SUITE FILE_PATH="coverage/database_m3012$NewsAPI.coverage" NAME="ScrapeCNA Coverage Results" MODIFIED="1603474537680" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
+    <state x="763" y="360" key="#com.intellij.fileTypes.FileTypeChooser/0.0.2048.1112@0.0.2048.1112" timestamp="1604773869564" />
   </component>
 </project>
