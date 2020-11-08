@@ -23,7 +23,7 @@ db = mysql.connect(
     passwd ="KSP8962091",
     database = "sql1902698psk"
 )
-cursor = db.cursor()
+cursor = db.cursor(buffered=True)
 
 # ensure page is login (for users)
 def login_required(f):
@@ -121,36 +121,53 @@ def article():
     article = SelectAllArticleTitle(cursor)
     return render_template("main/article.htm", article=article,username=session['username'])
 
-@app.route("/article", methods=['GET','POST'])
+@app.route("/view_article", methods=['GET','POST'])
 @login_required
-def article_id():
+def view_article():
+    user_id = session['id']
     article_id = request.form['text']
     article_item = SelectArticleDetails(cursor, article_id)
-    return render_template('main/user_article_insides.htm', username=session['username'], article_id=article_id, article_item=article_item)
+    check_like = CheckLike(cursor, user_id, article_id) 
 
-#return route to user article individual view
-@app.route("/user_article_insides")
-@login_required
-def user_article_insides():
-    return render_template("main/user_article_insides.htm", username=session['username'])
+    if request.method == 'POST' and check_like == False:
+        LikeArticle(db, cursor, user_id, article_id)
+        flash(check_like)
+        # return redirect(url_for('view_article'))
+    if request.method == 'POST' and check_like == True:
+        UnlikeArticle(db, cursor, user_id, article_id)
+        # return redirect(url_for('view_article'))
+    # else:
+    return render_template('main/view_article.htm', username=session['username'], article_id=article_id, article_item=article_item, check_like=check_like)
 
 #like function here
-@app.route("/user_article_insides.htm", methods=['GET','POST'])
-@login_required
-def like_article():
-    article_item_id = request.form['like_item']
-    article_item = SelectArticleDetails(cursor, article_item_id)
-    username=session['username']
+# @app.route("/view_article", methods=['GET','POST'])
+# @login_required
+# def like_article():
+#     article_item_id = request.form['like_item']
+#     article_item = SelectArticleDetails(cursor, article_item_id)
+#     user_id = session['id']
 
-    #check like function here
-    check_like = CheckLike(cursor, username, article_item_id) 
-    if (check_like == 'False'):
-        LikeArticle(db, cursor, username, article_item_id)
-    else:
-        UnlikeArticle(db, cursor, username, article_item_id)
+#     check_like = CheckLike(cursor, user_id, article_item_id)
 
-    #to front-end check like = true/false
-    return render_template('main/user_article_insides.htm', username=session['username'], article_item_id=article_item_id, article_item=article_item, check_like=check_like)
+#     LikeArticle(db, cursor, user_id, article_item_id)
+
+#     #to front-end check like = true/false
+#     return render_template('main/view_article.htm', username=session['username'], article_item_id=article_item_id, article_item=article_item, check_like = check_like)
+
+#unlike function here
+# @app.route("/view_article", methods=['GET','POST'])
+# @login_required
+# def unlike_article():
+#     article_item_id = request.form['unlike_item']
+#     article_item = SelectArticleDetails(cursor, article_item_id)
+#     user_id = session['id']
+
+#     check_like = CheckLike(cursor, user_id, article_item_id)
+
+#     UnlikeArticle(db, cursor, user_id, article_item_id)
+
+#     #to front-end check like = true/false
+#     return render_template('main/view_article.htm', username=session['username'], article_item_id=article_item_id, article_item=article_item, check_like = check_like)
 
 #return route to user favourite view, profile, privillege, etc
 @app.route("/user_profile")

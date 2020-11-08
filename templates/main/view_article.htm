@@ -2,6 +2,19 @@
 {% block title %}Home{% endblock %}
 {% block content %}
 <div class="container-fluid">
+    <!-- flash messages -->
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        {% for category, message in messages %}
+        <div class="alert alert-danger" role="alert">
+            {{ message }}
+            
+        </div>
+        {% endfor %}
+        {% endif %}
+    {% endwith %}
+
     <div class="container">
         <a class="text-dark" href="{{ url_for('article') }}"><small>← return back to previous page</small></a>
         <br><br>
@@ -45,11 +58,19 @@
                     </div>
                     
                     <!-- like item -->
-                    <form method="POST" action={{ url_for('like_article') }}>
-                        <input type="text" id="post_item" name="like_item" value="{{ article_id }}">
+                    <!-- <button type="button" class="btn btn-danger" class="like_btn" id="like_btn">❤ Unlike this Article</button> -->
+                    {{ check_like }}
+                    {% if (check_like)  %}
+                    <form method="POST" action={{ url_for('view_article') }}>
+                        <input type="text" id="post_item" name="text" value="{{ article_id }}">
+                        <input type="submit" class="btn btn-danger" class="like_btn" id="like_btn" value="❤ Unlike this Article">
+                    </form>
+                    {% else: %}
+                    <form method="POST" action={{ url_for('view_article') }}>
+                        <input type="text" id="post_item" name="text" value="{{ article_id }}">
                         <input type="submit" class="btn btn-danger" class="like_btn" id="like_btn" value="❤ Like this Article">
                     </form>
-                    <!-- <button type="button" class="btn btn-danger" class="like_btn" id="like_btn">❤ Like this Article</button> -->
+                    {% endif %}
             </div>
         </div>
     </div>

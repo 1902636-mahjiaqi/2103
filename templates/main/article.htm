@@ -7,7 +7,7 @@
 {% block home_active %}active{% endblock %}
 {% block content %}
 
-<div id="scroll-container p-2">
+<!-- <div id="scroll-container p-2">
 <div class="wrap-container " id="wrap-scroll">
     <ul id="ul-scroll">
     <h3 class="card-title text-danger">Quick Glance</h3>
@@ -23,7 +23,7 @@
     {% endfor %}
     </ul>
 </div>
-</div>
+</div> -->
 
 <div class="container-fluid">
     <div class="container">
@@ -43,7 +43,7 @@
                     <p><small>{{a[2]}}</small></p>
                 </div>
                 <!-- news article header -->
-                <form method="POST">
+                <form method="POST" action={{ url_for('view_article') }}>
                     <input type="text" id="post_item" name="text" value="{{a[0]}}">
                     <input type="submit" id="display_text" value="{{a[1]}}">
                 </form>
