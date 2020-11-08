@@ -1,7 +1,7 @@
 import hashlib
 import mysql.connector as mysql
 import datetime as dt
-#
+
 # db = mysql.connect(
 #     host ="rm-gs595dd89hu8175hl6o.mysql.singapore.rds.aliyuncs.com",
 #     user ="ict1902698psk",
@@ -36,7 +36,10 @@ def UserCreate(db, cursor, UserName, Password):
         val = (0, UserName,Password)
         cursor.execute(query, val)
         db.commit()
-        return True
+        query = "SELECT LAST_INSERT_ID()"
+        cursor.execute(query)
+        result = cursor.fetchone()
+        return result
     except:
         return False
 
@@ -85,5 +88,5 @@ def Transact(db,cursor,UserID):
 #print(InsertPaymentMethod(db,cursor,7,"5500 0000 0000 0004","03/21"))
 #print (SelectUserPayment(cursor, 7))
 #print(UserAuth(cursor,"test","1234"))
-#UserCreate(db,cursor,"","1234")
+#print(UserCreate(db,cursor,"test","123"))
 #print(SelectLikedArticles(cursor,7))
