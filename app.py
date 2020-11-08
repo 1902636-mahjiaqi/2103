@@ -131,7 +131,7 @@ def view_article():
 
     if request.method == 'POST' and check_like == False:
         LikeArticle(db, cursor, user_id, article_id)
-        flash(check_like)
+        # flash(check_like)
         # return redirect(url_for('view_article'))
     if request.method == 'POST' and check_like == True:
         UnlikeArticle(db, cursor, user_id, article_id)
