@@ -63,12 +63,12 @@
                     {% if (check_like)  %}
                     <form method="POST" action={{ url_for('view_article') }}>
                         <input type="text" id="post_item" name="text" value="{{ article_id }}">
-                        <input type="submit" class="btn btn-danger" class="like_btn" id="like_btn" value="❤ Unlike this Article">
+                        <input type="submit" class="btn btn-danger" class="like_btn" id="like_btn" value="💔 Unlike this Article">
                     </form>
                     {% else: %}
                     <form method="POST" action={{ url_for('view_article') }}>
                         <input type="text" id="post_item" name="text" value="{{ article_id }}">
-                        <input type="submit" class="btn btn-danger" class="like_btn" id="like_btn" value="❤ Like this Article">
+                        <input type="submit" class="btn btn-dark text-white" class="like_btn" id="like_btn" value="❤ Like this Article">
                     </form>
                     {% endif %}
             </div>
