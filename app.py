@@ -149,7 +149,8 @@ def like_article():
     else:
         UnlikeArticle(db, cursor, username, article_item_id)
 
-    return render_template('main/user_article_insides.htm', username=session['username'], article_item_id=article_item_id, article_item=article_item)
+    #to front-end check like = true/false
+    return render_template('main/user_article_insides.htm', username=session['username'], article_item_id=article_item_id, article_item=article_item, check_like=check_like)
 
 #return route to user favourite view, profile, privillege, etc
 @app.route("/user_profile")
