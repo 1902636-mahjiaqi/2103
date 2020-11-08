@@ -45,13 +45,24 @@
                     </div>
                     
                     <!-- like item -->
-                    <form method="POST">
-                        <input type="text" id="post_item" name="text" value="{{ article_id }}">
-                        <input type="submit" class="btn btn-danger" id="like_btn" value="❤ Like this Article">
+                    <form method="POST" action={{ url_for('like_article') }}>
+                        <input type="text" id="post_item" name="like_item" value="{{ article_id }}">
+                        <input type="submit" class="btn btn-danger" class="like_btn" id="like_btn" value="❤ Like this Article">
                     </form>
+                    <!-- <button type="button" class="btn btn-danger" class="like_btn" id="like_btn">❤ Like this Article</button> -->
             </div>
         </div>
     </div>
 </div>
-
+<!-- <script>
+    $('#like_btn').click(function(){
+    var $this = $(this);
+    $this.toggleClass('like_btn');
+    if($this.hasClass('like_btn')){
+        $this.text('❤ Unlike this Article');
+    } else {
+        $this.text('❤ Like this Article');
+    }
+});
+</script> -->
 {% endblock %}

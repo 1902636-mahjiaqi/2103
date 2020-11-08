@@ -4,8 +4,7 @@ import mysql.connector as mysql
 from functools import wraps
 
 from src.UserFunctions import UserAuth, UserCreate
-from src.ArticlesFunction import SelectAllArticleTitle, SelectArticleDetails, LikeArticle
-
+from src.ArticlesFunction import SelectAllArticleTitle, SelectArticleDetails, LikeArticle, CheckLike, UnlikeArticle
 #UserName: test PW:123 Admin
 
 app = Flask(
@@ -135,14 +134,22 @@ def article_id():
 def user_article_insides():
     return render_template("main/user_article_insides.htm", username=session['username'])
 
-@app.route("/user_article_insides", methods=['POST'])
+#like function here
+@app.route("/user_article_insides.htm", methods=['GET','POST'])
 @login_required
-def user_like_article_insides():
-    article_id = request.form['text']
-    username = session['username']
-    LikeArticle(db, cursor,username,article_id)
-    
-    return redirect(url_for('user_articles_insides'))
+def like_article():
+    article_item_id = request.form['like_item']
+    article_item = SelectArticleDetails(cursor, article_item_id)
+    username=session['username']
+
+    #check like function here
+    check_like = CheckLike(cursor, username, article_item_id) 
+    if (check_like == 'False'):
+        LikeArticle(db, cursor, username, article_item_id)
+    else:
+        UnlikeArticle(db, cursor, username, article_item_id)
+
+    return render_template('main/user_article_insides.htm', username=session['username'], article_item_id=article_item_id, article_item=article_item)
 
 #return route to user favourite view, profile, privillege, etc
 @app.route("/user_profile")
