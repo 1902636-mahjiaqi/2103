@@ -59,7 +59,7 @@
                     
                     <!-- like item -->
                     <!-- <button type="button" class="btn btn-danger" class="like_btn" id="like_btn">❤ Unlike this Article</button> -->
-                    {{ check_like }}
+                    <!-- {{ check_like }} -->
                     {% if (check_like)  %}
                     <form method="POST" action={{ url_for('view_article') }}>
                         <input type="text" id="post_item" name="text" value="{{ article_id }}">
