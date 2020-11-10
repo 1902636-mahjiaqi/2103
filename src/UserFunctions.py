@@ -32,24 +32,19 @@ def UserCreate(db, UserName, Password):
     query = {"_id": "userID"}
     selectedcol = db["counters"]
     result = selectedcol.find_one(query)
-    print(result["sequence_value"])
+    #Increment Value of User ID by one
+    selectedcol.find_one_and_update(
+        query,
+        {'$inc': {'sequence_value': 1}}
+    )
 
-    #complete this later
     #insert user
+    #Hash user password
+    hash = hashlib.sha256()
+    hash.update(b"Password")
     selectedcol = db["Users"]
-    mydict = {"_id": "John", "address": "Highway 37"}
-
-
-
-    # try:
-    #     query = "INSERT INTO user VALUES (%s, %s, SHA2(%s,256), DEFAULT(TierID), DEFAULT(isAdmin),DEFAULT,DEFAULT)"
-    #     val = (0, UserName,Password)
-    #     cursor.execute(query, val)
-    #     db.commit()
-    #     return True
-    # except:
-    #     return False
-
+    row = {"_id": result["sequence_value"], "UserName": UserName, "UserPw": hash.digest(),"TierID":1,"isAdmin":0,"CardNo":"-","CardExpiryDate":"-"}
+    selectedcol.insert_one(row)
 
 def InsertPaymentMethod(db, cursor, UserID, CardNo, CardExpiryDate):
     pass
@@ -99,5 +94,5 @@ def Transact(db,cursor,UserID):
 #print(InsertPaymentMethod(db,cursor,7,"5500 0000 0000 0004","03/21"))
 #print (SelectUserPayment(cursor, 7))
 #print(UserAuth(cursor,"test","1234"))
-UserCreate(db,"","1234")
+#UserCreate(db,"test","123")
 #print(SelectLikedArticles(cursor,7))
