@@ -1,10 +1,13 @@
 import pymongo
-import urllib
 
-myclient = pymongo.MongoClient("mongodb://root:" +urllib.parse.quote("ict@2103")+ "mdb@dds-gs5174a84c2af8841124-pub.mongodb.singapore.rds.aliyuncs.com:3717,dds-gs5174a84c2af8842921-pub.mongodb.singapore.rds.aliyuncs.com:3717/admin?replicaSet=mgset-303122826")
-mydb = myclient["yueheng_db"]
-mycol = mydb["customers"]
+myclient = pymongo.MongoClient("mongodb+srv://admin:IBXxRxezhvT9f4D3@cluster0.vkqbl.mongodb.net/<dbname>?retryWrites=true&w=majority")
+mydb = myclient["ICT2103_Project"]
+mycol = mydb["counters"]
 
-mydict = { "name": "John", "address": "Highway 37" }
+mydict = { "_id": "userID", "sequence_value": "0" }
+mycol.insert_one(mydict)
 
-x = mycol.insert_one(mydict)
+# selectedcol = db["Users"]
+# mydict = {"name": "John", "address": "Highway 37"}
+
+

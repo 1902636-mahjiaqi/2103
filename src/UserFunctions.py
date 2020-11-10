@@ -1,14 +1,10 @@
 import hashlib
-import mysql.connector as mysql
 import datetime as dt
-#
-# db = mysql.connect(
-#     host ="rm-gs595dd89hu8175hl6o.mysql.singapore.rds.aliyuncs.com",
-#     user ="ict1902698psk",
-#     passwd ="KSP8962091",
-#     database = "sql1902698psk"
-# )
-# cursor = db.cursor()
+import pymongo
+import urllib
+
+client = pymongo.MongoClient("mongodb+srv://admin:IBXxRxezhvT9f4D3@cluster0.vkqbl.mongodb.net/<dbname>?retryWrites=true&w=majority")
+db = client["ICT2103_Project"]
 
 def UserAuth(db, cursor, Username, Password):
     pass
@@ -31,8 +27,20 @@ def UserAuth(db, cursor, Username, Password):
     #         result[3] = 1
     # return result
 
-def UserCreate(db, cursor, UserName, Password):
-    pass
+def UserCreate(db, UserName, Password):
+    # Getting UserID
+    query = {"_id": "userID"}
+    selectedcol = db["counters"]
+    result = selectedcol.find_one(query)
+    print(result["sequence_value"])
+
+    #complete this later
+    #insert user
+    selectedcol = db["Users"]
+    mydict = {"_id": "John", "address": "Highway 37"}
+
+
+
     # try:
     #     query = "INSERT INTO user VALUES (%s, %s, SHA2(%s,256), DEFAULT(TierID), DEFAULT(isAdmin),DEFAULT,DEFAULT)"
     #     val = (0, UserName,Password)
@@ -91,5 +99,5 @@ def Transact(db,cursor,UserID):
 #print(InsertPaymentMethod(db,cursor,7,"5500 0000 0000 0004","03/21"))
 #print (SelectUserPayment(cursor, 7))
 #print(UserAuth(cursor,"test","1234"))
-#UserCreate(db,cursor,"","1234")
+UserCreate(db,"","1234")
 #print(SelectLikedArticles(cursor,7))
