@@ -14,6 +14,6 @@
 2. pip install vaderSentiment
 
 
-###PyMongo
-pip install pymongo
-pip install pymongo[srv]
+### PyMongo
+1. pip install pymongo
+2. pip install pymongo[srv]
