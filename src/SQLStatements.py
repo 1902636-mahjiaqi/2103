@@ -2,13 +2,13 @@ import hashlib
 import mysql.connector as mysql
 import datetime as dt
 
-db = mysql.connect(
-    host ="rm-gs595dd89hu8175hl6o.mysql.singapore.rds.aliyuncs.com",
-    user ="ict1902698psk",
-    passwd ="KSP8962091",
-    database = "sql1902698psk"
-)
-cursor = db.cursor()
+# db = mysql.connect(
+#     host ="rm-gs595dd89hu8175hl6o.mysql.singapore.rds.aliyuncs.com",
+#     user ="ict1902698psk",
+#     passwd ="KSP8962091",
+#     database = "sql1902698psk"
+# )
+# cursor = db.cursor()
 
 
 # admin
