@@ -3,11 +3,18 @@ import datetime as dt
 import pymongo
 import urllib
 
-client = pymongo.MongoClient("mongodb+srv://admin:IBXxRxezhvT9f4D3@cluster0.vkqbl.mongodb.net/<dbname>?retryWrites=true&w=majority")
-db = client["ICT2103_Project"]
+# client = pymongo.MongoClient("mongodb+srv://admin:IBXxRxezhvT9f4D3@cluster0.vkqbl.mongodb.net/<dbname>?retryWrites=true&w=majority")
+# db = client["ICT2103_Project"]
 
-def UserAuth(db, cursor, Username, Password):
-    pass
+def UserAuth(db, Username, Password):
+    #hash Password
+    hash = hashlib.sha256()
+    hash.update(Password.encode())
+    selectedcol = db["Users"]
+    #Find username and password
+    result = selectedcol.find_one({"UserName": Username,"UserPw": hash.digest()})
+    result = [result["_id"], result["UserName"],result["UserPw"],result["TierID"],result["isAdmin"],result["CardNo"],result["CardExpiryDate"]]
+    return result
     # query = "SELECT * FROM user WHERE user.UserName = '{0}' AND UserPw = SHA2('{1}',256)".format(Username,Password)
     # cursor.execute(query)
     # result = cursor.fetchone()
@@ -41,7 +48,7 @@ def UserCreate(db, UserName, Password):
     #insert user
     #Hash user password
     hash = hashlib.sha256()
-    hash.update(b"Password")
+    hash.update(Password.encode())
     selectedcol = db["Users"]
     row = {"_id": result["sequence_value"], "UserName": UserName, "UserPw": hash.digest(),"TierID":1,"isAdmin":0,"CardNo":"-","CardExpiryDate":"-"}
     selectedcol.insert_one(row)
@@ -90,7 +97,7 @@ def Transact(db,cursor,UserID):
     #     return False
 
 #print(Transact(db,cursor,8))
-#print(UserAuth(db,cursor,"test1","123"))
+#print(UserAuth(db,"test","123"))
 #print(InsertPaymentMethod(db,cursor,7,"5500 0000 0000 0004","03/21"))
 #print (SelectUserPayment(cursor, 7))
 #print(UserAuth(cursor,"test","1234"))
