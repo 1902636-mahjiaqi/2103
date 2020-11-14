@@ -131,17 +131,17 @@ def TopTenSentimentForAllCategory(cursor):
 
 # this code
 # for specifc Agency
-def testNested(cursor):
+def testNested(cursor, agencyname):
     query = "SELECT AgencyID,avg(SentimentRating)" \
             "FROM sql1902698psk.article " \
-            "where agencyID = (Select AgencyID From sql1902698psk.Agency WHERE AgencyName = 'Today') " \
-            "and ArticleDate >= '2020/10/31' and ArticleDate <= '2020/11/21' group by AgencyID;"
+            "where agencyID = (Select AgencyID From sql1902698psk.Agency WHERE AgencyName = '{0}') " \
+            "and ArticleDate >= '2020/10/31' and ArticleDate <= '2020/11/21' group by AgencyID;".format(agencyname)
     cursor.execute(query)
     result = cursor.fetchall()
     return result
 
 
-# print(TierAnalysis(cursor))
+#print(TierAnalysis(cursor))
 
 # print(SentimentValueCategory(cursor))
 # print(MostArticleLikedAgency(cursor))
@@ -154,4 +154,4 @@ def testNested(cursor):
 # print(TopTenSentimentForSpecificCategory(cursor))
 # print(WorstTenSentimentForSpecificCategory(cursor))
 # print(TopTenSentimentForAllCategory(cursor))
-print(testNested(cursor))
+# print(testNested(cursor,'Today'))
