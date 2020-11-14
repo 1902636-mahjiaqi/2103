@@ -140,8 +140,15 @@ def testNested(cursor, agencyname):
     result = cursor.fetchall()
     return result
 
+#Counting Payment Method
+def TopPaymentMethod(cursor):
+    args = (0,0,0)
+    result = cursor.callproc('Decryptrow',args)
+    result = list(result)
+    return result
 
-#print(TierAnalysis(cursor))
+# print(TopPaymentMethod(cursor))
+# print(TierAnalysis(cursor))
 
 # print(SentimentValueCategory(cursor))
 # print(MostArticleLikedAgency(cursor))
