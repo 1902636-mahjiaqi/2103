@@ -22,6 +22,7 @@ def TierAnalysis(cursor):
     return result
 
 
+# normal user
 # Topic: SENTIMENT VALUE WITH CATEGORY NAME---(BAR CHART)
 def SentimentValueCategory(cursor):
     query = "SELECT c.CategoryName,a.CategoryID,sum(a.SentimentRating) " \
@@ -128,6 +129,17 @@ def TopTenSentimentForAllCategory(cursor):
     return result
 
 
+# this code
+# for specifc Agency
+def testNested(cursor):
+    query = "SELECT AgencyID,avg(SentimentRating)" \
+            "FROM sql1902698psk.article " \
+            "where agencyID = (Select AgencyID From sql1902698psk.Agency WHERE AgencyName = 'Today') " \
+            "and ArticleDate >= '2020/10/31' and ArticleDate <= '2020/11/21' group by AgencyID;"
+    cursor.execute(query)
+    result = cursor.fetchall()
+    return result
+
 
 # print(TierAnalysis(cursor))
 
@@ -142,3 +154,4 @@ def TopTenSentimentForAllCategory(cursor):
 # print(TopTenSentimentForSpecificCategory(cursor))
 # print(WorstTenSentimentForSpecificCategory(cursor))
 # print(TopTenSentimentForAllCategory(cursor))
+print(testNested(cursor))
