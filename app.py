@@ -153,6 +153,18 @@ def user_profile():
     
     return render_template("main/user_profile.htm", article=article, username=session['username'])
 
+
+@app.route("/user_profile_unfav", methods=['GET','POST'])
+@login_required
+def user_profile_unfav():
+    user_id = session['id']
+    article_id = request.form['article_id']
+    UnlikeArticle(db, cursor, user_id, article_id)
+    article = SelectLikedArticles(cursor, user_id)
+
+    return render_template("main/user_profile.htm", article=article, username=session['username'])
+
+
 #return route to user purchase view
 @app.route("/user_purchase")
 @login_required

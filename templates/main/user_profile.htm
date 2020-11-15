@@ -50,14 +50,15 @@
                             </form>
 
                             <!-- unfav button -->
-                            <form method="POST" action={{ url_for('user_profile') }}>
+                            <form method="POST" action={{ url_for('user_profile_unfav') }}>
                                 <input type="text" id="post_item" name="article_id" value="{{a[0]}}">
                                 <input type="text" id="post_item" name="unlike" value="false">
-                                <input type="submit" id="display_text" value="Unfavourite" class="bg-danger text-white p-2">
+                                <input type="submit" id="display_text" value="Unfavourite" class="bg-danger small text-white p-2 rounded">
                             </form>
  
                         </span>
-                        <p class="text-justify"></p>
+                        <p class="text-justify">{{a[4]}}</p>
+                        <br>
                     {% endfor %}
                     </div>
                 </div>
