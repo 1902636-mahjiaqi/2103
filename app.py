@@ -125,49 +125,20 @@ def article():
 @login_required
 def view_article():
     user_id = session['id']
-    article_id = request.form['text']
+    article_id = request.args['article_id']
     article_item = SelectArticleDetails(cursor, article_id)
     check_like = CheckLike(cursor, user_id, article_id) 
+    like = request.args['like']
 
-    if request.method == 'POST' and check_like == False:
+    if like == 'true' and check_like == False:
         LikeArticle(db, cursor, user_id, article_id)
-        # flash(check_like)
-        # return redirect(url_for('view_article'))
-    if request.method == 'POST' and check_like == True:
+        
+    if like == 'false' and check_like == True:
         UnlikeArticle(db, cursor, user_id, article_id)
-        # return redirect(url_for('view_article'))
+
     # else:
-    return render_template('main/view_article.htm', username=session['username'], article_id=article_id, article_item=article_item, check_like=check_like)
+    return render_template('main/view_article.htm', username=session['username'], article_id=article_id, article_item=article_item, check_like=check_like, like=like)
 
-#like function here
-# @app.route("/view_article", methods=['GET','POST'])
-# @login_required
-# def like_article():
-#     article_item_id = request.form['like_item']
-#     article_item = SelectArticleDetails(cursor, article_item_id)
-#     user_id = session['id']
-
-#     check_like = CheckLike(cursor, user_id, article_item_id)
-
-#     LikeArticle(db, cursor, user_id, article_item_id)
-
-#     #to front-end check like = true/false
-#     return render_template('main/view_article.htm', username=session['username'], article_item_id=article_item_id, article_item=article_item, check_like = check_like)
-
-#unlike function here
-# @app.route("/view_article", methods=['GET','POST'])
-# @login_required
-# def unlike_article():
-#     article_item_id = request.form['unlike_item']
-#     article_item = SelectArticleDetails(cursor, article_item_id)
-#     user_id = session['id']
-
-#     check_like = CheckLike(cursor, user_id, article_item_id)
-
-#     UnlikeArticle(db, cursor, user_id, article_item_id)
-
-#     #to front-end check like = true/false
-#     return render_template('main/view_article.htm', username=session['username'], article_item_id=article_item_id, article_item=article_item, check_like = check_like)
 
 #return route to user favourite view, profile, privillege, etc
 @app.route("/user_profile")

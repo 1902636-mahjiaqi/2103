@@ -60,16 +60,21 @@
                     <!-- like item -->
                     <!-- <button type="button" class="btn btn-danger" class="like_btn" id="like_btn">❤ Unlike this Article</button> -->
                     <!-- {{ check_like }} -->
-                    {% if (check_like)  %}
-                    <form method="POST" action={{ url_for('view_article') }}>
-                        <input type="text" id="post_item" name="text" value="{{ article_id }}">
+                    {% if request.args['like'] == 'true' %}
+                    <form method="GET" action={{ url_for('view_article') }}>
+                        <input type="text" id="post_item" name="article_id" value="{{ article_id }}">
+                        <input type="text" id="post_item" name="like" value="false">
                         <input type="submit" class="btn btn-danger" class="like_btn" id="like_btn" value="💔 Unlike this Article">
                     </form>
+
                     {% else: %}
-                    <form method="POST" action={{ url_for('view_article') }}>
-                        <input type="text" id="post_item" name="text" value="{{ article_id }}">
+  
+                    <form method="GET" action={{ url_for('view_article') }}>
+                        <input type="text" id="post_item" name="article_id" value="{{ article_id }}">
+                        <input type="text" id="post_item" name="like" value="true">
                         <input type="submit" class="btn btn-dark text-white" class="like_btn" id="like_btn" value="❤ Like this Article">
                     </form>
+
                     {% endif %}
             </div>
         </div>
