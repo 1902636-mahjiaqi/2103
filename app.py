@@ -3,7 +3,7 @@ from flask_login import login_user, current_user, LoginManager, login_manager
 import mysql.connector as mysql
 from functools import wraps
 
-from src.UserFunctions import UserAuth, UserCreate
+from src.UserFunctions import UserAuth, UserCreate, SelectLikedArticles
 from src.ArticlesFunction import SelectAllArticleTitle, SelectArticleDetails, LikeArticle, CheckLike, UnlikeArticle
 #UserName: test PW:123 Admin
 
@@ -126,10 +126,12 @@ def article():
 def view_article():
     user_id = session['id']
     article_id = request.form['article_id']
-    article_item = SelectArticleDetails(cursor, article_id)
-    check_like = CheckLike(cursor, user_id, article_id) 
     like = request.form['like']
 
+    article_item = SelectArticleDetails(cursor, article_id)
+    check_like = CheckLike(cursor, user_id, article_id) 
+
+    # check if liked
     if like == 'true' and check_like == False:
         LikeArticle(db, cursor, user_id, article_id)
         
@@ -144,7 +146,9 @@ def view_article():
 @app.route("/user_profile")
 @login_required
 def user_profile():
-    return render_template("main/user_profile.htm", username=session['username'])
+    user_id = session['id']
+    article = SelectLikedArticles(cursor, user_id)
+    return render_template("main/user_profile.htm", article=article, username=session['username'])
 
 #return route to user purchase view
 @app.route("/user_purchase")

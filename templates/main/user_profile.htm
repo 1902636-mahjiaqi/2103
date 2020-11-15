@@ -39,21 +39,19 @@
             <div class="card">
                 <form class="card-body">
                     <h4 class="card-title">Favourites</h4>
+                    {% for a in article %}
                     <div>
                         <span class="d-flex justify-content-between"> 
-                            <h5>Article 1</h5> 
-                            <button type="button" class="btn btn-danger btn-sm">Unfavourite</button> 
+                            <!-- news article header -->
+                            <form method="POST" action={{ url_for('view_article') }}>
+                                <input type="text" id="post_item" name="article_id" value="{{a[0]}}">
+                                <input type="text" id="post_item" name="like">
+                                <input type="submit" id="display_text" value="{{a[1]}}">
+                            </form>
+                            <!-- <button type="button" class="btn btn-danger btn-sm">Unfavourite</button>  -->
                         </span>
-                        <p class="text-justify">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent porttitor mauris turpis, sit amet ornare justo placerat in. Proin vitae ante in orci sodales convallis. In efficitur enim sit amet ligula fermentum, accumsan vestibulum dolor posuere. Donec pellentesque in dolor et consequat. Ut vehicula semper lacus eu mattis. Fusce tincidunt, sem et tempor laoreet, ipsum nisl pulvinar mi, sit amet dapibus ligula dolor vitae diam. In posuere in ipsum sit amet mattis. Nulla vestibulum est viverra quam lacinia, quis iaculis tortor tincidunt. Vivamus suscipit massa elit, a suscipit tellus porta vitae. In vitae tincidunt leo. Donec fringilla magna dapibus urna convallis ultrices. Cras pharetra diam in leo tempus molestie. Nulla aliquet lacus eu porta interdum. Quisque lacinia nulla quis lorem hendrerit, sit amet interdum lectus pulvinar. Vestibulum sagittis molestie lorem et euismod.</p>
-
-                    </div>
-                    <div>
-                        <span class="d-flex justify-content-between"> 
-                            <h5>Article 2</h5> 
-                            <button type="button" class="btn btn-danger btn-sm">Unfavourite</button> 
-                        </span>
-                        <p class="text-justify">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent porttitor mauris turpis, sit amet ornare justo placerat in. Proin vitae ante in orci sodales convallis. In efficitur enim sit amet ligula fermentum, accumsan vestibulum dolor posuere. Donec pellentesque in dolor et consequat. Ut vehicula semper lacus eu mattis. Fusce tincidunt, sem et tempor laoreet, ipsum nisl pulvinar mi, sit amet dapibus ligula dolor vitae diam. In posuere in ipsum sit amet mattis. Nulla vestibulum est viverra quam lacinia, quis iaculis tortor tincidunt. Vivamus suscipit massa elit, a suscipit tellus porta vitae. In vitae tincidunt leo. Donec fringilla magna dapibus urna convallis ultrices. Cras pharetra diam in leo tempus molestie. Nulla aliquet lacus eu porta interdum. Quisque lacinia nulla quis lorem hendrerit, sit amet interdum lectus pulvinar. Vestibulum sagittis molestie lorem et euismod.</p>
-
+                        <p class="text-justify"></p>
+                    {% endfor %}
                     </div>
                 </form>
             </div>
