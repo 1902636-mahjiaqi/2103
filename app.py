@@ -125,10 +125,10 @@ def article():
 @login_required
 def view_article():
     user_id = session['id']
-    article_id = request.args['article_id']
+    article_id = request.form['article_id']
     article_item = SelectArticleDetails(cursor, article_id)
     check_like = CheckLike(cursor, user_id, article_id) 
-    like = request.args['like']
+    like = request.form['like']
 
     if like == 'true' and check_like == False:
         LikeArticle(db, cursor, user_id, article_id)
@@ -165,4 +165,3 @@ def user_privilege():
 @admin_login_required
 def admin_dashboard():
     return render_template("main/admin_dashboard.htm", username=session['username'])
-

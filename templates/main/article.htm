@@ -43,7 +43,7 @@
                     <p><small>{{a[2]}}</small></p>
                 </div>
                 <!-- news article header -->
-                <form method="GET" action={{ url_for('view_article') }}>
+                <form method="POST" action={{ url_for('view_article') }}>
                     <input type="text" id="post_item" name="article_id" value="{{a[0]}}">
                     <input type="text" id="post_item" name="like" value="">
                     <input type="submit" id="display_text" value="{{a[1]}}">
