@@ -37,7 +37,7 @@
         <div class="col-sm">
             <!-- favourites -->
             <div class="card">
-                <form class="card-body">
+                <div class="card-body">
                     <h4 class="card-title">Favourites</h4>
                     {% for a in article %}
                     <div>
@@ -48,12 +48,19 @@
                                 <input type="text" id="post_item" name="like">
                                 <input type="submit" id="display_text" value="{{a[1]}}">
                             </form>
-                            <!-- <button type="button" class="btn btn-danger btn-sm">Unfavourite</button>  -->
+
+                            <!-- unfav button -->
+                            <form method="POST" action={{ url_for('user_profile') }}>
+                                <input type="text" id="post_item" name="article_id" value="{{a[0]}}">
+                                <input type="text" id="post_item" name="unlike" value="false">
+                                <input type="submit" id="display_text" value="Unfavourite" class="bg-danger text-white p-2">
+                            </form>
+ 
                         </span>
                         <p class="text-justify"></p>
                     {% endfor %}
                     </div>
-                </form>
+                </div>
             </div>
         </div>
     </div>

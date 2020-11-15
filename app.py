@@ -78,7 +78,9 @@ def login_post():
             session['is_admin'] = True
 
         # Redirect to home page
-        return render_template('main/user_profile.htm', username=session['username'])
+        user_id = session['id']
+        article = SelectLikedArticles(cursor, user_id)
+        return render_template('main/user_profile.htm', username=session['username'], article=article)
     else:
         flash('Please check your login details and try again.')
         session.clear()
@@ -148,6 +150,7 @@ def view_article():
 def user_profile():
     user_id = session['id']
     article = SelectLikedArticles(cursor, user_id)
+    
     return render_template("main/user_profile.htm", article=article, username=session['username'])
 
 #return route to user purchase view
