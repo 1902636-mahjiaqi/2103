@@ -64,7 +64,7 @@
                     <form method="GET" action={{ url_for('view_article') }}>
                         <input type="text" id="post_item" name="article_id" value="{{ article_id }}">
                         <input type="text" id="post_item" name="like" value="false">
-                        <input type="submit" class="btn btn-danger" class="like_btn" id="like_btn" value="💔 Unlike this Article">
+                        <input type="submit" class="btn btn-danger" class="like_btn snd_btn" id="unlike_btn" value="💔 Unlike this Article">
                     </form>
 
                     {% else: %}
@@ -72,7 +72,7 @@
                     <form method="GET" action={{ url_for('view_article') }}>
                         <input type="text" id="post_item" name="article_id" value="{{ article_id }}">
                         <input type="text" id="post_item" name="like" value="true">
-                        <input type="submit" class="btn btn-dark text-white" class="like_btn" id="like_btn" value="❤ Like this Article">
+                        <input type="submit" class="btn btn-dark text-white" class="like_btn snd_btn" id="like_btn" value="❤ Like this Article">
                     </form>
 
                     {% endif %}
@@ -80,15 +80,4 @@
         </div>
     </div>
 </div>
-<!-- <script>
-    $('#like_btn').click(function(){
-    var $this = $(this);
-    $this.toggleClass('like_btn');
-    if($this.hasClass('like_btn')){
-        $this.text('❤ Unlike this Article');
-    } else {
-        $this.text('❤ Like this Article');
-    }
-});
-</script> -->
 {% endblock %}
