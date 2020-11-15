@@ -6,13 +6,14 @@
 {% block dashboard_active %}active{% endblock %}
 {% block content %}
     <div class="container-fluid">
-        <div class="alert alert-info" role="alert">
+        <!-- <div class="alert alert-info" role="alert">
             This is a info alert—check it out!
-        </div>
+        </div> -->
         <div class="row">
             <div class="col-sm">
                 <!-- chart number 1 -->
-                <canvas id="barChart"></canvas>
+                <!-- <canvas id="barChart"></canvas> -->
+                <img src="{{url_for('static', filename='cloud.png')}}" class="image" alt="Word Cloud" width="100%" />
             </div>
             <div class="col-sm">
                 <!-- chart number 2 -->

@@ -17,3 +17,9 @@ input#display_text { border: none; background: none; font-weight: bold; padding:
 .wrap-container ul { list-style: none; position: relative;  top: 50px; }
 .wrap-container ul, ul li { margin: 0; padding: 0;  text-align: center; }
 .wrap-container ul li {  height: 50px; line-height: 50px; overflow: hidden; }
+
+.image {
+ position: absolute;
+  clip: rect(193px,1000px,3000px,0px); 
+  margin-top: -100px;
+  }
