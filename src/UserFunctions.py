@@ -3,8 +3,8 @@ import datetime as dt
 import pymongo
 import urllib
 
-# client = pymongo.MongoClient("mongodb+srv://admin:IBXxRxezhvT9f4D3@cluster0.vkqbl.mongodb.net/<dbname>?retryWrites=true&w=majority")
-# db = client["ICT2103_Project"]
+client = pymongo.MongoClient("mongodb+srv://admin:IBXxRxezhvT9f4D3@cluster0.vkqbl.mongodb.net/<dbname>?retryWrites=true&w=majority")
+db = client["ICT2103_Project"]
 
 def UserAuth(db, Username, Password):
     #hash Password
@@ -44,7 +44,6 @@ def UserCreate(db, UserName, Password):
         query,
         {'$inc': {'sequence_value': 1}}
     )
-
     #insert user
     #Hash user password
     hash = hashlib.sha256()
@@ -52,6 +51,11 @@ def UserCreate(db, UserName, Password):
     selectedcol = db["Users"]
     row = {"_id": result["sequence_value"], "UserName": UserName, "UserPw": hash.digest(),"TierID":1,"isAdmin":0,"CardNo":"-","CardExpiryDate":"-"}
     selectedcol.insert_one(row)
+    result = selectedcol.find().sort("_id", -1).limit(1)
+    result = result[0]
+    result = [result["_id"], result["UserName"], result["UserPw"], result["TierID"], result["isAdmin"],
+              result["CardNo"], result["CardExpiryDate"]]
+    return result
 
 def InsertPaymentMethod(db, cursor, UserID, CardNo, CardExpiryDate):
     pass
@@ -101,5 +105,5 @@ def Transact(db,cursor,UserID):
 #print(InsertPaymentMethod(db,cursor,7,"5500 0000 0000 0004","03/21"))
 #print (SelectUserPayment(cursor, 7))
 #print(UserAuth(cursor,"test","1234"))
-#UserCreate(db,"test","123")
+#print(UserCreate(db,"test","123"))
 #print(SelectLikedArticles(cursor,7))
