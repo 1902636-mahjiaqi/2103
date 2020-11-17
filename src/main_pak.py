@@ -3,7 +3,8 @@ import urllib.request
 import json
 import re
 from datetime import datetime
-#from src.SentimentTest1 import SentimentAnalyse
+from SentimentTest1 import SentimentAnalyse
+import mysql.connector as mysql
 
 class stArticle:
     def __init__(self, title, author, date, content, url):
@@ -52,10 +53,8 @@ def stCrawl(url,pageCount):
             article.author = "2"
         date = soup.find(attrs={"property":"article:published_time"})['content']
         date = datetime.strptime(date[:-6], "%Y-%m-%dT%H:%M:%S").strftime('%Y-%m-%d')
-        ####################????????????????
         article.date = date
         stArticlesList.append(article)
-
     return stArticlesList
 
 ################################################################
@@ -110,32 +109,82 @@ def todayCrawl(keyword,pageCount):
     #     print(soup)
     return todayArticlesList
 
-count = 1
+db = mysql.connect(
+        host="rm-gs595dd89hu8175hl6o.mysql.singapore.rds.aliyuncs.com",
+        user="ict1902698psk",
+        passwd="KSP8962091",
+        database="sql1902698psk"
+    )
+cursor = db.cursor()
 
-STarticles = stCrawl("https://www.straitstimes.com/business/economy?page=",10)
-for article in STarticles:
-    
-    print(count)
-    print("Title is "+article.title)
-    print("author is "+article.author)
-    print(article.content)
-    print("date is "+article.date)
-    print("url is "+article.url)
-    count+=1
-    print("==============================================================================\n")
+def pushtoDB(articlesList,agency,category):
+    #count = 1
+    for article in articlesList:
+        #print(count)
+        SentimentRating = 0
+        SentimentRating += SentimentAnalyse(article.content)
+        #print("Title is "+article.title)
+        #print("author is "+article.author)
+        #print(article.content)
+        #print(SentimentRating)
+        #print("date is "+article.date)
+        #print("url is "+article.url)
+        #count+=1
+        try:
+            query = "INSERT INTO article VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,MD5(%s))"
+            val = (
+            0, article.url, article.title, article.date, SentimentRating, article.content, "2", agency, category,
+            article.title)
+            cursor.execute(query, val)
+            db.commit()
+            print("passed: " + article.title)
+        except:
+            print("error: " + article.title)
+            continue
+        print("\n")
 
-'''
-Tarticles = todayCrawl("health",1)
-for article in Tarticles:
-    print(count)
-    print(article.title)
-    print(article.author)
-    print(article.content)
-    print(article.date)
-    print(article.url)
-    count+=1
-    print("==============================================================================\n")
-    # query = "INSERT INTO article VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s)"
-    # val = (0, ArticleURL, ArticleTitle, ArticleDate, SentimentRating, ArticleText, "2", AgencyID, CategoryID)
-    # cursor.execute(query, val)
-'''
+
+"""
+
+    1:
+        search = "health"
+    2:
+        search = "business"
+    3:
+        search = "politics"
+
+"""
+#agency = 1
+STarticles1 = stCrawl("https://www.straitstimes.com/business/economy?page=",10)
+STarticles2 = stCrawl("https://www.straitstimes.com/business/invest?page=",10)
+STarticles3 = stCrawl("https://www.straitstimes.com/business/banking?page=",10)
+STarticles4 = stCrawl("https://www.straitstimes.com/business/companies-markets?page=",10)
+
+STarticles5 = stCrawl("https://www.straitstimes.com/tags/coronavirus?page=",10)
+STarticles6 = stCrawl("https://www.straitstimes.com/singapore/health?page=",10)
+
+STarticles7 = stCrawl("https://www.straitstimes.com/politics/latest?page=",8)
+STarticles8 = stCrawl("https://www.straitstimes.com/tags/us-presidential-election-2020?page=",3)
+
+pushtoDB(STarticles5,1,1)
+pushtoDB(STarticles6,1,1)
+
+pushtoDB(STarticles1,1,2)
+pushtoDB(STarticles2,1,2)
+pushtoDB(STarticles3,1,2)
+pushtoDB(STarticles4,1,2)
+
+pushtoDB(STarticles7,1,3)
+pushtoDB(STarticles8,1,3)
+"""
+
+#agency = 3
+Tarticles1 = todayCrawl("health",20)
+Tarticles2 = todayCrawl("business",20)
+Tarticles3 = todayCrawl("politics",20)
+
+
+pushtoDB(Tarticles1,3,1)
+pushtoDB(Tarticles2,3,2)
+pushtoDB(Tarticles3,3,3)
+"""
