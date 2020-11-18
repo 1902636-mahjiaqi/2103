@@ -1,14 +1,9 @@
-import mysql.connector as mysql
+import pymongo
 from datetime import datetime
 import hashlib
 
-# db = mysql.connect(
-#     host ="rm-gs595dd89hu8175hl6o.mysql.singapore.rds.aliyuncs.com",
-#     user ="ict1902698psk",
-#     passwd ="KSP8962091",
-#     database = "sql1902698psk"
-# )
-# cursor = db.cursor()
+client = pymongo.MongoClient("mongodb+srv://admin:IBXxRxezhvT9f4D3@cluster0.vkqbl.mongodb.net/<dbname>?retryWrites=true&w=majority")
+db = client["ICT2103_Project"]
 
 def SelectAllArticleTitle(cursor):
     pass
@@ -31,30 +26,25 @@ def SelectArticleDetails(cursor, articleID):
     # listresult[1] = listresult[1].strftime("%d/%m/%Y")
     # return listresult
 
-def LikeArticle(db, cursor,userID,articleID):
-    pass
-    # try:
-    #     query = "INSERT into likedby VALUES (%s, %s)"
-    #     val = (userID, articleID)
-    #     cursor.execute(query, val)
-    #     db.commit()
-    #     return True
-    # except:
-    #     return False
+def LikeArticle(db,userID,articleID):
+    query = {"_id": articleID}
+    values = { "$push": { "likeList": userID } }
+    selectedcol = db["Articles"]
+    result = selectedcol.update_one(query, values)
+    if result.matched_count > 0:
+        return True
+    else:
+        return False
 
-def UnlikeArticle(db, cursor,userID,articleID):
-    pass
-    # try:
-    #     query = "DELETE FROM likedby WHERE UserID = %s AND ArticleID = %s"
-    #     val = (userID, articleID)
-    #     cursor.execute(query, val)
-    #     db.commit()
-    #     if cursor.rowcount > 0:
-    #         return True
-    #     else:
-    #         return False
-    # except:
-    #     return False
+def UnlikeArticle(db,userID,articleID):
+    query = {"_id": articleID}
+    values = {"$pull": {"likeList": userID}}
+    selectedcol = db["Articles"]
+    result = selectedcol.update_one(query, values)
+    if result.matched_count > 0:
+        return True
+    else:
+        return False
 
 def CheckLike(cursor,userID,articleID):
     pass
@@ -77,7 +67,7 @@ def SelectRecentArticles(cursor):
 
 #print(SelectRecentArticles(cursor))
 #print(CheckLike(cursor,6,2420))
-#print(LikeArticle(db,cursor,7,2420))
+#print(LikeArticle(db,21,40))
 #print(SelectArticleDetails(cursor,2427))
 #print(SelectAllArticleTitle(cursor)[0])
-#print(UnlikeArticle(db,cursor,7,2417))
+#print(UnlikeArticle(db,21,40))
