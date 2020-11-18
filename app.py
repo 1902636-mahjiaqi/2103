@@ -1,6 +1,6 @@
 from flask import Flask, redirect, url_for, render_template, request, flash, session
 from flask_login import login_user, current_user, LoginManager, login_manager
-import mysql.connector as mysql
+import pymongo
 from functools import wraps
 
 from src.UserFunctions import UserAuth, UserCreate, SelectLikedArticles
@@ -17,6 +17,8 @@ app.secret_key = 'secretkeyhere'
 if __name__ == '__main__':
     app.run(debug = True)
 
+client = pymongo.MongoClient("mongodb+srv://admin:IBXxRxezhvT9f4D3@cluster0.vkqbl.mongodb.net/<dbname>?retryWrites=true&w=majority")
+db = client["ICT2103_Project"]
 
 # ensure page is login (for users)
 def login_required(f):
@@ -61,7 +63,7 @@ def login_post():
     account = UserAuth(db, username, password)
     if account:
         session['logged_in'] = True
-        session['id'] = UserAuth(db,, username, password)[0]
+        session['id'] = UserAuth(db, username, password)[0]
         session['username'] = UserAuth(db, username, password)[1]
 
         # check whether if account is administrator is admin
@@ -73,6 +75,7 @@ def login_post():
         # Redirect to home page
         user_id = session['id']
         article = SelectLikedArticles(db, user_id)
+        print(article)
         return render_template('main/user_profile.htm', username=session['username'], article=article)
     else:
         flash('Please check your login details and try again.')
@@ -113,7 +116,7 @@ def user_dashboard():
 @app.route("/article")
 @login_required
 def article():
-    article = SelectAllArticleTitle(cursor)
+    article = SelectAllArticleTitle(db)
     return render_template("main/article.htm", article=article,username=session['username'])
 
 @app.route("/view_article", methods=['GET','POST'])
@@ -123,15 +126,15 @@ def view_article():
     article_id = request.form['article_id']
     like = request.form['like']
 
-    article_item = SelectArticleDetails(cursor, article_id)
-    check_like = CheckLike(cursor, user_id, article_id) 
+    article_item = SelectArticleDetails(db, article_id)
+    check_like = CheckLike(db, user_id, article_id)
 
     # check if liked
     if like == 'true' and check_like == False:
-        LikeArticle(db, cursor, user_id, article_id)
+        LikeArticle(db, user_id, article_id)
         
     if like == 'false' and check_like == True:
-        UnlikeArticle(db, cursor, user_id, article_id)
+        UnlikeArticle(db, user_id, article_id)
 
     # else:
     return render_template('main/view_article.htm', username=session['username'], article_id=article_id, article_item=article_item, check_like=check_like, like=like)
@@ -142,7 +145,7 @@ def view_article():
 @login_required
 def user_profile():
     user_id = session['id']
-    article = SelectLikedArticles(cursor, user_id)
+    article = SelectLikedArticles(db, user_id)
     
     return render_template("main/user_profile.htm", article=article, username=session['username'])
 
@@ -152,8 +155,8 @@ def user_profile():
 def user_profile_unfav():
     user_id = session['id']
     article_id = request.form['article_id']
-    UnlikeArticle(db, cursor, user_id, article_id)
-    article = SelectLikedArticles(cursor, user_id)
+    UnlikeArticle(db, user_id, article_id)
+    article = SelectLikedArticles(db, user_id)
 
     return render_template("main/user_profile.htm", article=article, username=session['username'])
 

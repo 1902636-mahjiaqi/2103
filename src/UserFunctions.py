@@ -7,12 +7,15 @@ client = pymongo.MongoClient("mongodb+srv://admin:IBXxRxezhvT9f4D3@cluster0.vkqb
 db = client["ICT2103_Project"]
 
 def UserAuth(db, Username, Password):
+
     #hash Password
     hash = hashlib.sha256()
     hash.update(Password.encode())
     selectedcol = db["Users"]
     #Find username and password
     result = selectedcol.find_one({"UserName": Username,"UserPw": hash.digest()})
+    if result == None:
+        return result
     result = [result["_id"], result["UserName"],result["UserPw"],result["TierID"],result["isAdmin"],result["CardNo"],result["CardExpiryDate"]]
     return result
     # query = "SELECT * FROM user WHERE user.UserName = '{0}' AND UserPw = SHA2('{1}',256)".format(Username,Password)
@@ -49,8 +52,8 @@ def UserCreate(db, UserName, Password):
     hash = hashlib.sha256()
     hash.update(Password.encode())
     selectedcol = db["Users"]
-    row = {"_id": result["sequence_value"], "UserName": UserName, "UserPw": hash.digest(),"isAdmin":0
-            ,"CardNo":"-","CardExpiryDate":"-",
+    row = {"_id": result["sequence_value"], "UserName": UserName, "UserPw": hash.digest(),"isAdmin":0, "TierID": 1,
+            "CardNo":"-","CardExpiryDate":"-",
             "Order":[],"ArticleAccess": 1, "WordCloud": 0, "BarCharts": 0, "Sentiment": 1
            }
     selectedcol.insert_one(row)
@@ -60,7 +63,8 @@ def UserCreate(db, UserName, Password):
               result["CardNo"], result["CardExpiryDate"]]
     return result
 
-def InsertPaymentMethod(db, cursor, UserID, CardNo, CardExpiryDate):
+def InsertPaymentMethod(db, UserID, CardNo, CardExpiryDate):
+
     pass
     # query = "UPDATE user SET CardNo = AES_ENCRYPT(%s,%s), CardExpiryDate = %s WHERE UserID = %s"
     # val = (CardNo,UserID,CardExpiryDate,UserID)
@@ -79,8 +83,14 @@ def SelectUserPayment(cursor, UserID):
     # result = cursor.fetchone()
     # return result
 
-def SelectLikedArticles(cursor, UserID):
-    pass
+def SelectLikedArticles(db, UserID):
+    query = {"likeList": {"$in": [UserID]}}
+    selectedcol = db["Articles"]
+    result = selectedcol.find_one(query)
+    if result == None:
+        return result
+    result = [result["_id"],result["ArticleTitle"],result["ArticleDate"],result["CategoryName"],result["AgencyName"]]
+    return result
     # query = "SELECT a.ArticleID, a.ArticleTitle, a.ArticleDate, c.CategoryName, p.AgencyName " \
     #         "FROM likedby l, article a, agency p, articlecategory c " \
     #         "WHERE l.UserID = {0} AND a.ArticleID = l.ArticleID AND a.AgencyID = p.AgencyID AND a.CategoryID = c.CategoryID".format(UserID)
@@ -107,6 +117,6 @@ def Transact(db,cursor,UserID):
 #print(UserAuth(db,"test","123"))
 #print(InsertPaymentMethod(db,cursor,7,"5500 0000 0000 0004","03/21"))
 #print (SelectUserPayment(cursor, 7))
-#print(UserAuth(cursor,"test","1234"))
+#print(UserAuth(db,"test2","123"))
 #print(UserCreate(db,"test","123"))
-#print(SelectLikedArticles(cursor,7))
+#print(SelectLikedArticles(db,21))
