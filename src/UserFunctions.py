@@ -49,7 +49,10 @@ def UserCreate(db, UserName, Password):
     hash = hashlib.sha256()
     hash.update(Password.encode())
     selectedcol = db["Users"]
-    row = {"_id": result["sequence_value"], "UserName": UserName, "UserPw": hash.digest(),"TierID":1,"isAdmin":0,"CardNo":"-","CardExpiryDate":"-"}
+    row = {"_id": result["sequence_value"], "UserName": UserName, "UserPw": hash.digest(),"isAdmin":0
+            ,"CardNo":"-","CardExpiryDate":"-",
+            "Order":[],"ArticleAccess": 1, "WordCloud": 0, "BarCharts": 0, "Sentiment": 1
+           }
     selectedcol.insert_one(row)
     result = selectedcol.find().sort("_id", -1).limit(1)
     result = result[0]
