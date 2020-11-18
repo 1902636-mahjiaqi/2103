@@ -116,7 +116,7 @@ def user_dashboard():
 @app.route("/article")
 @login_required
 def article():
-    article = SelectAllArticleTitle(cursor)
+    article = SelectAllArticleTitle(db)
     return render_template("main/article.htm", article=article,username=session['username'])
 
 @app.route("/view_article", methods=['GET','POST'])
@@ -126,8 +126,8 @@ def view_article():
     article_id = request.form['article_id']
     like = request.form['like']
 
-    article_item = SelectArticleDetails(cursor, article_id)
-    check_like = CheckLike(cursor, user_id, article_id) 
+    article_item = SelectArticleDetails(db, article_id)
+    check_like = CheckLike(db, user_id, article_id)
 
     # check if liked
     if like == 'true' and check_like == False:
@@ -145,7 +145,7 @@ def view_article():
 @login_required
 def user_profile():
     user_id = session['id']
-    article = SelectLikedArticles(cursor, user_id)
+    article = SelectLikedArticles(db, user_id)
     
     return render_template("main/user_profile.htm", article=article, username=session['username'])
 
@@ -155,8 +155,8 @@ def user_profile():
 def user_profile_unfav():
     user_id = session['id']
     article_id = request.form['article_id']
-    UnlikeArticle(db, cursor, user_id, article_id)
-    article = SelectLikedArticles(cursor, user_id)
+    UnlikeArticle(db, user_id, article_id)
+    article = SelectLikedArticles(db, user_id)
 
     return render_template("main/user_profile.htm", article=article, username=session['username'])
 
