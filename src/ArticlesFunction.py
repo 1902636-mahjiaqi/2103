@@ -18,7 +18,7 @@ def SelectAllArticleTitle(db):
 
 def SelectArticleDetails(db, articleID):
     #Title, Date, URL, Sentiment, ArticleText,CategoryName, Agency Name
-    query = {"_id": articleID}
+    query = {"_id": int(articleID)}
     selectedcol = db["Articles"]
     result = selectedcol.find_one(query)
     print("result is ")
