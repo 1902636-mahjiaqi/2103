@@ -160,13 +160,13 @@ def pushtoMongoDB(articlesList,agency,category):
     else:
         categoryDetail = "Not found"
 
-    if agency == "1":
+    if agency == 1:
         agency = "The Straits Times"
         agencyDetail = "The Straits Times is an English-language daily broadsheet newspaper based in Singapore and currently owned by Singapore Press Holdings"
-    elif agency == "2":
+    elif agency == 2:
         agency = "Channel News Asia"
         agencyDetail = "CNA is an English-language news channel based in Singapore. It broadcasts free-to-air domestically and as a subscription network to 29 territories across Asia and Australia."
-    elif agency == "3":
+    elif agency == 3:
         agency = "Today"
         agencyDetail = "TODAY is a Singapore English-language digital news provider under Mediacorp. It was formerly a national free daily newspaper."
     else:
@@ -199,7 +199,8 @@ def pushtoMongoDB(articlesList,agency,category):
             "CategoryName": category,
             "CategoryDetail":categoryDetail,
             "AgencyName":agency,
-            "AgencyDetail":agencyDetail}
+            "AgencyDetail":agencyDetail,
+            "likeList":[]}
             selectedcol.insert_one(row)
         except Exception as e: 
             print(e)
@@ -263,5 +264,5 @@ pushtoDB(Tarticles3,3,3)
 #MongoDB
 #########################################################################
 
-Tarticles1 = todayCrawl("health",3)
-pushtoMongoDB(Tarticles1,3,"Health")
+Tarticles1 = todayCrawl("Business",1)
+pushtoMongoDB(Tarticles1,3,"Business")
