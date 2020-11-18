@@ -204,6 +204,15 @@ def pushtoMongoDB(articlesList,agency,category):
             selectedcol.insert_one(row)
         except Exception as e: 
             print(e)
+            # Getting ArticleID Counter
+            query = {"_id": "articleID"}
+            selectedcol = db["counters"]
+            result = selectedcol.find_one(query)
+            #Increment Value of User ID by one
+            selectedcol.find_one_and_update(
+                query,
+                {'$inc': {'sequence_value': -1}}
+            )
             continue
 
     
