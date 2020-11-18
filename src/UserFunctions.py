@@ -3,8 +3,8 @@ import datetime as dt
 import pymongo
 import urllib
 
-client = pymongo.MongoClient("mongodb+srv://admin:IBXxRxezhvT9f4D3@cluster0.vkqbl.mongodb.net/<dbname>?retryWrites=true&w=majority")
-db = client["ICT2103_Project"]
+# client = pymongo.MongoClient("mongodb+srv://admin:IBXxRxezhvT9f4D3@cluster0.vkqbl.mongodb.net/<dbname>?retryWrites=true&w=majority")
+# db = client["ICT2103_Project"]
 
 def UserAuth(db, Username, Password):
 
@@ -86,11 +86,14 @@ def SelectUserPayment(cursor, UserID):
 def SelectLikedArticles(db, UserID):
     query = {"likeList": {"$in": [UserID]}}
     selectedcol = db["Articles"]
-    result = selectedcol.find_one(query)
-    if result == None:
-        return result
-    result = [result["_id"],result["ArticleTitle"],result["ArticleDate"],result["CategoryName"],result["AgencyName"]]
-    return result
+    results = selectedcol.find(query)
+    LikeArticleArray = []
+    if results == None:
+        return results
+    for result in results:
+        result = [result["_id"],result["ArticleTitle"],result["ArticleDate"],result["CategoryName"],result["AgencyName"]]
+        LikeArticleArray.append(result)
+    return LikeArticleArray
     # query = "SELECT a.ArticleID, a.ArticleTitle, a.ArticleDate, c.CategoryName, p.AgencyName " \
     #         "FROM likedby l, article a, agency p, articlecategory c " \
     #         "WHERE l.UserID = {0} AND a.ArticleID = l.ArticleID AND a.AgencyID = p.AgencyID AND a.CategoryID = c.CategoryID".format(UserID)
