@@ -58,32 +58,68 @@
                     </div>
                     
                     <!-- like item -->
-                    <!-- <button type="button" class="btn btn-danger" class="like_btn" id="like_btn">❤ Unlike this Article</button> -->
-                    <!-- {{ check_like }} -->
-                    {% if (check_like)  %}
-                    <form method="POST" action={{ url_for('view_article') }}>
-                        <input type="text" id="post_item" name="text" value="{{ article_id }}">
-                        <input type="submit" class="btn btn-danger" class="like_btn" id="like_btn" value="💔 Unlike this Article">
+   
+                    <form method="POST" id="like_form">
+                        <input type="text" id="post_item" name="article_id" value="{{ article_id }}">
+                        <input type="text" id="post_item" name="like" value="false">
+                        <input type="submit" class="btn btn-dark" class="like_btn snd_btn1" id="unlike_btn" value="❤ Like this Article">
                     </form>
-                    {% else: %}
-                    <form method="POST" action={{ url_for('view_article') }}>
-                        <input type="text" id="post_item" name="text" value="{{ article_id }}">
-                        <input type="submit" class="btn btn-dark text-white" class="like_btn" id="like_btn" value="❤ Like this Article">
+      
+                    <form method="POST" id="unlike_form" }}>
+                        <input type="text" id="post_item" name="article_id" value="{{ article_id }}">
+                        <input type="text" id="post_item" name="like" value="true">
+                        <input type="submit" class="btn btn-danger text-white" class="like_btn snd_btn" id="like_btn" value="💔 Unlike this Article">
                     </form>
-                    {% endif %}
+      
+                    <div id="like_div"></div>
+                    </head>
+                    <body>
             </div>
         </div>
     </div>
 </div>
-<!-- <script>
-    $('#like_btn').click(function(){
-    var $this = $(this);
-    $this.toggleClass('like_btn');
-    if($this.hasClass('like_btn')){
-        $this.text('❤ Unlike this Article');
-    } else {
-        $this.text('❤ Like this Article');
-    }
-});
-</script> -->
+<script>
+    $(document).ready(function(){
+    console.log("{{check_like}}");
+
+   if ("{{check_like}}" == "True") {
+    $('#like_form').hide();
+    $('#unlike_form').show();
+   } else {
+    $('#like_form').show();
+    $('#unlike_form').hide();
+   }
+   
+    article_id = "{{ article_id }}";
+
+    $('#like_form').submit(function(e){
+         e.preventDefault(); // added this line and an argument 'e' to the function
+        $.ajax({
+            type: 'POST',
+            url: "{{ url_for('view_article') }}",
+            data: { article_id: article_id, like: "true" },
+        })
+        .done(function(result){
+            $('#like_form').hide();
+            $('#unlike_form').show();
+        })
+        return false;   
+    });
+
+    $('#unlike_form').submit(function(e){
+         e.preventDefault(); // added this line and an argument 'e' to the function
+        $.ajax({
+            type: 'POST',
+            url: "{{ url_for('view_article') }}",
+            data: { article_id: article_id, like: "false" },
+        })
+        .done(function(result){
+            $('#like_form').show();
+            $('#unlike_form').hide();
+        })
+        return false;   
+    });
+    }); 
+
+</script>
 {% endblock %}

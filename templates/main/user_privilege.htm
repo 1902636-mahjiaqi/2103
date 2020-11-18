@@ -3,5 +3,28 @@
     and purchase using card details 
 -->
 {% block content %}
-<h1>i is zeh usa privillege page</h1>
+<h1>User Privilege Page</h1>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm">
+            <!-- profile information -->
+            <div class="card">
+                <form class="card-body">
+                    <h4 class="card-title">Profile</h4>
+                    <span>
+                        {% if session['is_admin'] %}
+                        <p>Account Type: <strong class="text-danger">Administrator</strong></p>
+                        {% else %}
+                        <p>Account Type: <strong class="text-danger">User</strong></p>
+                            <p>User privilege: <strong class="text-danger">FREE</strong></p>
+                            <div class="alert alert-danger" role="alert">
+                                Your user privilege is currently <strong>FREE</strong>, click <a href="{{ url_for('user_purchase') }}">here</a> to purchase the VIP upgrade for your account!
+                            </div>
+                        {% endif %}
+                    </span>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

@@ -1,9 +1,9 @@
 from flask import Flask, redirect, url_for, render_template, request, flash, session
 from flask_login import login_user, current_user, LoginManager, login_manager
+import mysql.connector as mysql
 from functools import wraps
-import pymongo
 
-from src.UserFunctions import UserAuth, UserCreate
+from src.UserFunctions import UserAuth, UserCreate, SelectLikedArticles
 from src.ArticlesFunction import SelectAllArticleTitle, SelectArticleDetails, LikeArticle, CheckLike, UnlikeArticle
 #UserName: test PW:123 Admin
 
@@ -17,8 +17,13 @@ app.secret_key = 'secretkeyhere'
 if __name__ == '__main__':
     app.run(debug = True)
 
-client = pymongo.MongoClient("mongodb+srv://admin:IBXxRxezhvT9f4D3@cluster0.vkqbl.mongodb.net/<dbname>?retryWrites=true&w=majority")
-db = client["ICT2103_Project"]
+db = mysql.connect(
+    host ="rm-gs595dd89hu8175hl6o.mysql.singapore.rds.aliyuncs.com",
+    user ="ict1902698psk",
+    passwd ="KSP8962091",
+    database = "sql1902698psk"
+)
+cursor = db.cursor(buffered=True)
 
 # ensure page is login (for users)
 def login_required(f):
@@ -60,20 +65,22 @@ def login_post():
     username = request.form.get('usernameTB')
     password = request.form.get('passwordTB')
     
-    account = UserAuth(db, username, password)
+    account = UserAuth(db,cursor, username, password)
     if account:
         session['logged_in'] = True
-        session['id'] = UserAuth(db, username, password)[0]
-        session['username'] = UserAuth(db, username, password)[1]
+        session['id'] = UserAuth(db, cursor, username, password)[0]
+        session['username'] = UserAuth(db, cursor, username, password)[1]
 
         # check whether if account is administrator is admin
         # 0 is not admin
         # 1 is admin
-        if (UserAuth(db, username, password)[4] == 1):
+        if (UserAuth(db,cursor, username, password)[4] == 1):
             session['is_admin'] = True
 
         # Redirect to home page
-        return render_template('main/user_profile.htm', username=session['username'])
+        user_id = session['id']
+        article = SelectLikedArticles(cursor, user_id)
+        return render_template('main/user_profile.htm', username=session['username'], article=article)
     else:
         flash('Please check your login details and try again.')
         session.clear()
@@ -95,8 +102,8 @@ def register_post():
     reg_conpw = request.form.get('confirm_pwTB')
 
     if (reg_pw == reg_conpw):
-        if (UserAuth(db, reg_username, reg_pw) == None):
-            UserCreate(db, reg_username, reg_pw)
+        if (UserAuth(db,cursor, reg_username, reg_pw) == None):
+            UserCreate(db, cursor, reg_username, reg_pw)
             flash('Account successfully created.')
     else:
         flash('Account exist.')
@@ -120,55 +127,43 @@ def article():
 @login_required
 def view_article():
     user_id = session['id']
-    article_id = request.form['text']
+    article_id = request.form['article_id']
+    like = request.form['like']
+
     article_item = SelectArticleDetails(cursor, article_id)
     check_like = CheckLike(cursor, user_id, article_id) 
 
-    if request.method == 'POST' and check_like == False:
+    # check if liked
+    if like == 'true' and check_like == False:
         LikeArticle(db, cursor, user_id, article_id)
-        # flash(check_like)
-        # return redirect(url_for('view_article'))
-    if request.method == 'POST' and check_like == True:
+        
+    if like == 'false' and check_like == True:
         UnlikeArticle(db, cursor, user_id, article_id)
-        # return redirect(url_for('view_article'))
+
     # else:
-    return render_template('main/view_article.htm', username=session['username'], article_id=article_id, article_item=article_item, check_like=check_like)
+    return render_template('main/view_article.htm', username=session['username'], article_id=article_id, article_item=article_item, check_like=check_like, like=like)
 
-#like function here
-# @app.route("/view_article", methods=['GET','POST'])
-# @login_required
-# def like_article():
-#     article_item_id = request.form['like_item']
-#     article_item = SelectArticleDetails(cursor, article_item_id)
-#     user_id = session['id']
-
-#     check_like = CheckLike(cursor, user_id, article_item_id)
-
-#     LikeArticle(db, cursor, user_id, article_item_id)
-
-#     #to front-end check like = true/false
-#     return render_template('main/view_article.htm', username=session['username'], article_item_id=article_item_id, article_item=article_item, check_like = check_like)
-
-#unlike function here
-# @app.route("/view_article", methods=['GET','POST'])
-# @login_required
-# def unlike_article():
-#     article_item_id = request.form['unlike_item']
-#     article_item = SelectArticleDetails(cursor, article_item_id)
-#     user_id = session['id']
-
-#     check_like = CheckLike(cursor, user_id, article_item_id)
-
-#     UnlikeArticle(db, cursor, user_id, article_item_id)
-
-#     #to front-end check like = true/false
-#     return render_template('main/view_article.htm', username=session['username'], article_item_id=article_item_id, article_item=article_item, check_like = check_like)
 
 #return route to user favourite view, profile, privillege, etc
 @app.route("/user_profile")
 @login_required
 def user_profile():
-    return render_template("main/user_profile.htm", username=session['username'])
+    user_id = session['id']
+    article = SelectLikedArticles(cursor, user_id)
+    
+    return render_template("main/user_profile.htm", article=article, username=session['username'])
+
+
+@app.route("/user_profile_unfav", methods=['GET','POST'])
+@login_required
+def user_profile_unfav():
+    user_id = session['id']
+    article_id = request.form['article_id']
+    UnlikeArticle(db, cursor, user_id, article_id)
+    article = SelectLikedArticles(cursor, user_id)
+
+    return render_template("main/user_profile.htm", article=article, username=session['username'])
+
 
 #return route to user purchase view
 @app.route("/user_purchase")
@@ -189,4 +184,3 @@ def user_privilege():
 @admin_login_required
 def admin_dashboard():
     return render_template("main/admin_dashboard.htm", username=session['username'])
-

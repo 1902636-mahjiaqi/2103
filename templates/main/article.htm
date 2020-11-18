@@ -44,7 +44,8 @@
                 </div>
                 <!-- news article header -->
                 <form method="POST" action={{ url_for('view_article') }}>
-                    <input type="text" id="post_item" name="text" value="{{a[0]}}">
+                    <input type="text" id="post_item" name="article_id" value="{{a[0]}}">
+                    <input type="text" id="post_item" name="like" value="">
                     <input type="submit" id="display_text" value="{{a[1]}}">
                 </form>
                 <!-- news article agency name -->        
