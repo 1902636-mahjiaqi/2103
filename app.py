@@ -17,13 +17,6 @@ app.secret_key = 'secretkeyhere'
 if __name__ == '__main__':
     app.run(debug = True)
 
-db = mysql.connect(
-    host ="rm-gs595dd89hu8175hl6o.mysql.singapore.rds.aliyuncs.com",
-    user ="ict1902698psk",
-    passwd ="KSP8962091",
-    database = "sql1902698psk"
-)
-cursor = db.cursor(buffered=True)
 
 # ensure page is login (for users)
 def login_required(f):
@@ -65,21 +58,21 @@ def login_post():
     username = request.form.get('usernameTB')
     password = request.form.get('passwordTB')
     
-    account = UserAuth(db,cursor, username, password)
+    account = UserAuth(db, username, password)
     if account:
         session['logged_in'] = True
-        session['id'] = UserAuth(db, cursor, username, password)[0]
-        session['username'] = UserAuth(db, cursor, username, password)[1]
+        session['id'] = UserAuth(db,, username, password)[0]
+        session['username'] = UserAuth(db, username, password)[1]
 
         # check whether if account is administrator is admin
         # 0 is not admin
         # 1 is admin
-        if (UserAuth(db,cursor, username, password)[4] == 1):
+        if (UserAuth(db, username, password)[4] == 1):
             session['is_admin'] = True
 
         # Redirect to home page
         user_id = session['id']
-        article = SelectLikedArticles(cursor, user_id)
+        article = SelectLikedArticles(db, user_id)
         return render_template('main/user_profile.htm', username=session['username'], article=article)
     else:
         flash('Please check your login details and try again.')
@@ -102,8 +95,8 @@ def register_post():
     reg_conpw = request.form.get('confirm_pwTB')
 
     if (reg_pw == reg_conpw):
-        if (UserAuth(db,cursor, reg_username, reg_pw) == None):
-            UserCreate(db, cursor, reg_username, reg_pw)
+        if (UserAuth(db, reg_username, reg_pw) == None):
+            UserCreate(db, reg_username, reg_pw)
             flash('Account successfully created.')
     else:
         flash('Account exist.')
