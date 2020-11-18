@@ -3,8 +3,8 @@ import datetime as dt
 import pymongo
 import urllib
 
-client = pymongo.MongoClient("mongodb+srv://admin:IBXxRxezhvT9f4D3@cluster0.vkqbl.mongodb.net/<dbname>?retryWrites=true&w=majority")
-db = client["ICT2103_Project"]
+# client = pymongo.MongoClient("mongodb+srv://admin:IBXxRxezhvT9f4D3@cluster0.vkqbl.mongodb.net/<dbname>?retryWrites=true&w=majority")
+# db = client["ICT2103_Project"]
 
 def UserAuth(db, Username, Password):
 
