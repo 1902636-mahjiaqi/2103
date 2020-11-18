@@ -14,6 +14,8 @@ def UserAuth(db, cursor, Username, Password):
     query = "SELECT * FROM user WHERE user.UserName = '{0}' AND UserPw = SHA2('{1}',256)".format(Username,Password)
     cursor.execute(query)
     result = cursor.fetchone()
+    if result == None:
+        return result
     #Updating to check whether user have expired his paid priveledges
     if (result[3] == 2):
         query = "SELECT OrderDate FROM order_details WHERE order_details.UserID = '{0}' ORDER BY OrderDate LIMIT 1".format(result[0])
@@ -39,6 +41,7 @@ def UserCreate(db, cursor, UserName, Password):
         query = "SELECT LAST_INSERT_ID()"
         cursor.execute(query)
         result = cursor.fetchone()
+
         return result
     except:
         return False
@@ -88,5 +91,5 @@ def Transact(db,cursor,UserID):
 #print(InsertPaymentMethod(db,cursor,7,"5500 0000 0000 0004","03/21"))
 #print (SelectUserPayment(cursor, 7))
 #print(UserAuth(cursor,"test","1234"))
-#print(UserCreate(db,cursor,"test","123"))
+#print(UserCreate(db,cursor,"test4","123"))
 #print(SelectLikedArticles(cursor,7))
