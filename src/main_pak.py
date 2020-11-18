@@ -148,18 +148,7 @@ def pushtoDB(articlesList,agency,category):
 def pushtoMongoDB(articlesList,agency,category):
     client = pymongo.MongoClient("mongodb+srv://admin:IBXxRxezhvT9f4D3@cluster0.vkqbl.mongodb.net/<dbname>?retryWrites=true&w=majority")
     db = client["ICT2103_Project"]
-    
-    # Getting ArticleID Counter
-    query = {"_id": "articleID"}
-    selectedcol = db["counters"]
-    result = selectedcol.find_one(query)
-    #Increment Value of User ID by one
-    selectedcol.find_one_and_update(
-        query,
-        {'$inc': {'sequence_value': 1}}
-    )
-    
-    selectedcol = db["Articles"]
+
     #val = (0, article.url, article.title, article.date, SentimentRating, article.content, agency, category, article.title)
 
     if category == "Health":
@@ -186,6 +175,18 @@ def pushtoMongoDB(articlesList,agency,category):
 
     for article in articlesList:
         try:
+            # Getting ArticleID Counter
+            query = {"_id": "articleID"}
+            selectedcol = db["counters"]
+            result = selectedcol.find_one(query)
+            #Increment Value of User ID by one
+            selectedcol.find_one_and_update(
+                query,
+                {'$inc': {'sequence_value': 1}}
+            )
+
+            selectedcol = db["Articles"]
+
             SentimentRating = 0
             SentimentRating += SentimentAnalyse(article.content)
 
@@ -261,5 +262,6 @@ pushtoDB(Tarticles3,3,3)
 #########################################################################
 #MongoDB
 #########################################################################
+
 Tarticles1 = todayCrawl("health",3)
 pushtoMongoDB(Tarticles1,3,"Health")
