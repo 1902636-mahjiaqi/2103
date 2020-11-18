@@ -3,8 +3,8 @@ import datetime as dt
 import pymongo
 import urllib
 
-# client = pymongo.MongoClient("mongodb+srv://admin:IBXxRxezhvT9f4D3@cluster0.vkqbl.mongodb.net/<dbname>?retryWrites=true&w=majority")
-# db = client["ICT2103_Project"]
+client = pymongo.MongoClient("mongodb+srv://admin:IBXxRxezhvT9f4D3@cluster0.vkqbl.mongodb.net/<dbname>?retryWrites=true&w=majority")
+db = client["ICT2103_Project"]
 
 def UserAuth(db, Username, Password):
 
@@ -94,29 +94,22 @@ def SelectLikedArticles(db, UserID):
         result = [result["_id"],result["ArticleTitle"],result["ArticleDate"],result["CategoryName"],result["AgencyName"]]
         LikeArticleArray.append(result)
     return LikeArticleArray
-    # query = "SELECT a.ArticleID, a.ArticleTitle, a.ArticleDate, c.CategoryName, p.AgencyName " \
-    #         "FROM likedby l, article a, agency p, articlecategory c " \
-    #         "WHERE l.UserID = {0} AND a.ArticleID = l.ArticleID AND a.AgencyID = p.AgencyID AND a.CategoryID = c.CategoryID".format(UserID)
-    # cursor.execute(query)
-    # result = cursor.fetchall()
-    # return result
 
-def Transact(db,cursor,UserID):
-    pass
-    # try:
-    #     #Insert Receipt
-    #     query = "INSERT INTO order_details VALUES (%s,%s,%s,%s)"
-    #     val = (0, 10, dt.datetime.now().date(),UserID)
-    #     cursor.execute(query, val)
-    #     #Update the person's tier
-    #     query = "UPDATE user SET TierID = 2 WHERE UserID = {0}".format(UserID)
-    #     cursor.execute(query)
-    #     db.commit()
-    #     return True
-    # except:
-    #     return False
 
-#print(Transact(db,cursor,8))
+def Transact(db,UserID):
+    insertdict = {"Price": 10,
+                  "OrderDate": dt.datetime.today()}
+    print(dt.datetime.today())
+    values = {"$set": {"TierID": 2},"$push": {"Order": insertdict}}
+    query = {"_id": int(UserID)}
+    selectedcol = db["Users"]
+    result = selectedcol.update_one(query,values)
+    if result.matched_count > 0:
+        return True
+    else:
+        return False
+
+#print(Transact(db,21))
 #print(UserAuth(db,"test","123"))
 #print(InsertPaymentMethod(db,cursor,7,"5500 0000 0000 0004","03/21"))
 #print (SelectUserPayment(cursor, 7))
