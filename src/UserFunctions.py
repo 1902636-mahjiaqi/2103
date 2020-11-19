@@ -10,7 +10,6 @@ from Crypto import Random
 # db = client["ICT2103_Project"]
 
 class AESCipher(object):
-
     def __init__(self, key):
         self.bs = AES.block_size
         self.key = hashlib.sha256(key.encode()).digest()
@@ -45,6 +44,7 @@ def UserAuth(db, Username, Password):
     if result == None:
         return result
     result = [result["_id"], result["UserName"],result["UserPw"],result["TierID"],result["isAdmin"],result["CardNo"],result["CardExpiryDate"]]
+
     return result
     # query = "SELECT * FROM user WHERE user.UserName = '{0}' AND UserPw = SHA2('{1}',256)".format(Username,Password)
     # cursor.execute(query)
@@ -106,6 +106,8 @@ def SelectUserPayment(db, UserID):
     query = {"_id": UserID}
     selectedcol = db["Users"]
     result = selectedcol.find_one(query)
+    if result == None:
+        return result
     dec_msg = Crypt.decrypt(result["CardNo"])
     return [dec_msg,result["CardExpiryDate"]]
 
@@ -124,7 +126,7 @@ def SelectLikedArticles(db, UserID):
 def Transact(db,UserID):
     insertdict = {"Price": 10,
                   "OrderDate": dt.datetime.today()}
-    print(dt.datetime.today())
+    #print(dt.datetime.today())
     values = {"$set": {"TierID": 2},"$push": {"Order": insertdict}}
     query = {"_id": int(UserID)}
     selectedcol = db["Users"]

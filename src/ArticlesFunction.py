@@ -2,8 +2,8 @@ import pymongo
 from datetime import datetime
 import hashlib
 
-# client = pymongo.MongoClient("mongodb+srv://admin:IBXxRxezhvT9f4D3@cluster0.vkqbl.mongodb.net/<dbname>?retryWrites=true&w=majority")
-# db = client["ICT2103_Project"]
+client = pymongo.MongoClient("mongodb+srv://admin:IBXxRxezhvT9f4D3@cluster0.vkqbl.mongodb.net/<dbname>?retryWrites=true&w=majority")
+db = client["ICT2103_Project"]
 
 def SelectAllArticleTitle(db):
     query = {}
@@ -21,8 +21,6 @@ def SelectArticleDetails(db, articleID):
     query = {"_id": int(articleID)}
     selectedcol = db["Articles"]
     result = selectedcol.find_one(query)
-    print("result is ")
-    print(result)
     result = [result["ArticleTitle"], result["ArticleDate"], result["ArticleURL"],
                 result["SentimentRating"],result["ArticleContent"],
                 result["CategoryName"],result["AgencyName"]]
@@ -57,7 +55,7 @@ def CheckLike(db,userID,articleID):
     else:
         return False
 
-def SelectRecentArticles(cursor):
+def SelectRecentArticles(db):
     pass
     #This function is to select the past 24 hours of articles so as to generate the word cloud
     # query = "SELECT ArticleText FROM article WHERE ArticleDate >= date_sub(curdate(), interval 1 day)"
