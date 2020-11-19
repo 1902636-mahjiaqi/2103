@@ -180,20 +180,20 @@ def pushtoMongoDB(articlesList,agency,category):
             selectedcol = db["counters"]
             result = selectedcol.find_one(query)
             #Increment Value of User ID by one
-            selectedcol.find_one_and_update(
-                query,
-                {'$inc': {'sequence_value': 1}}
-            )
+            selectedcol.find_one_and_update(query,{'$inc': {'sequence_value': 1}})
 
             selectedcol = db["Articles"]
 
             SentimentRating = 0
             SentimentRating += SentimentAnalyse(article.content)
 
+
+            aDate = datetime.strptime(article.date, "%Y-%m-%d")
+
             row = {"_id": result["sequence_value"], 
             "ArticleURL": article.url, 
             "ArticleTitle": article.title,
-            "ArticleDate": article.date,
+            "ArticleDate": aDate,
             "ArticleContent": article.content,
             "SentimentRating": SentimentRating,
             "CategoryName": category,
@@ -201,6 +201,7 @@ def pushtoMongoDB(articlesList,agency,category):
             "AgencyName":agency,
             "AgencyDetail":agencyDetail,
             "likeList":[]}
+
             selectedcol.insert_one(row)
         except Exception as e: 
             print(e)
