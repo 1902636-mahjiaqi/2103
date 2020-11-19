@@ -3,7 +3,7 @@ from flask_login import login_user, current_user, LoginManager, login_manager
 import mysql.connector as mysql
 from functools import wraps
 
-from src.UserFunctions import UserAuth, UserCreate, SelectLikedArticles
+from src.UserFunctions import UserAuth, UserCreate, SelectLikedArticles, SelectUserPayment, InsertPaymentMethod, Transact
 from src.ArticlesFunction import SelectAllArticleTitle, SelectArticleDetails, LikeArticle, CheckLike, UnlikeArticle
 #UserName: test PW:123 Admin
 
@@ -121,7 +121,7 @@ def user_dashboard():
 @login_required
 def article():
     article = SelectAllArticleTitle(cursor)
-    return render_template("main/article.htm", article=article,username=session['username'])
+    return render_template("main/article.htm", article=article, username=session['username'])
 
 @app.route("/view_article", methods=['GET','POST'])
 @login_required
@@ -166,10 +166,30 @@ def user_profile_unfav():
 
 
 #return route to user purchase view
-@app.route("/user_purchase")
+@app.route("/user_purchase", methods=['GET'])
 @login_required
 def user_purchase():
-    return render_template("main/user_purchase.htm", username=session['username'])
+    user_id = session['id']
+    checkCurrentCreditCard = SelectUserPayment(cursor, user_id)
+    if checkCurrentCreditCard != "None":
+        return render_template("main/user_purchase.htm", username=session['username'], cardNumber=checkCurrentCreditCard[0], expiryDate=checkCurrentCreditCard[1])
+    else:
+        return render_template("main/user_purchase.htm", username=session['username'])
+
+@app.route("/user_purchase", methods=['POST'])
+def user_purchase_post():
+    user_id = session['id']
+    reg_cardNumber = request.form.get('cardNumber')
+    reg_expiryDate = request.form.get('expiryDate')
+
+    InsertPaymentMethod(db, cursor, user_id, reg_cardNumber, reg_expiryDate)
+    isSuccessful = Transact(db, cursor, user_id)
+    if isSuccessful == True:
+        flash('Account successfully upgraded.')
+    else:
+        flash('An error has occurred, please try again later.')
+
+    return render_template("main/user_profile.htm", username=session['username'])
 
 #return route to user purchase view
 @app.route("/user_privilege")
