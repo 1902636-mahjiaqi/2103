@@ -2,9 +2,38 @@ import hashlib
 import datetime as dt
 import pymongo
 import urllib
+import base64
+from Crypto.Cipher import AES
+from Crypto import Random
 
 # client = pymongo.MongoClient("mongodb+srv://admin:IBXxRxezhvT9f4D3@cluster0.vkqbl.mongodb.net/<dbname>?retryWrites=true&w=majority")
 # db = client["ICT2103_Project"]
+
+class AESCipher(object):
+
+    def __init__(self, key):
+        self.bs = AES.block_size
+        self.key = hashlib.sha256(key.encode()).digest()
+
+    def encrypt(self, raw):
+        raw = self._pad(raw)
+        iv = Random.new().read(AES.block_size)
+        cipher = AES.new(self.key, AES.MODE_CBC, iv)
+        return base64.b64encode(iv + cipher.encrypt(raw.encode()))
+
+    def decrypt(self, enc):
+        enc = base64.b64decode(enc)
+        iv = enc[:AES.block_size]
+        cipher = AES.new(self.key, AES.MODE_CBC, iv)
+        return self._unpad(cipher.decrypt(enc[AES.block_size:])).decode('utf-8')
+
+    def _pad(self, s):
+        return s + (self.bs - len(s) % self.bs) * chr(self.bs - len(s) % self.bs)
+
+    @staticmethod
+    def _unpad(s):
+        return s[:-ord(s[len(s)-1:])]
+
 
 def UserAuth(db, Username, Password):
 
@@ -116,3 +145,5 @@ def Transact(db,UserID):
 #print(UserAuth(db,"test2","123"))
 #print(UserCreate(db,"test","123"))
 #print(SelectLikedArticles(db,21))
+#x = AESCipher("1234")
+#print(x.decrypt(x.encrypt("data")))
