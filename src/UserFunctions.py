@@ -36,7 +36,6 @@ class AESCipher(object):
 
 
 def UserAuth(db, Username, Password):
-
     #hash Password
     hash = hashlib.sha256()
     hash.update(Password.encode())
@@ -93,24 +92,22 @@ def UserCreate(db, UserName, Password):
     return result
 
 def InsertPaymentMethod(db, UserID, CardNo, CardExpiryDate):
+    Crypt = AESCipher(str(UserID))
+    enc_msg = Crypt.encrypt(str(CardNo))
+    # Getting UserID
+    query = {"_id": UserID}
+    selectedcol = db["Users"]
+    value = {"$set": { "CardNo": enc_msg, "CardExpiryDate": CardExpiryDate}}
+    selectedcol.update_one(query, value)
 
-    pass
-    # query = "UPDATE user SET CardNo = AES_ENCRYPT(%s,%s), CardExpiryDate = %s WHERE UserID = %s"
-    # val = (CardNo,UserID,CardExpiryDate,UserID)
-    # cursor.execute(query, val)
-    # db.commit()
-    # if cursor.rowcount > 0:
-    #     return True
-    # else:
-    #     return False
-
-
-def SelectUserPayment(cursor, UserID):
-    pass
-    # query = "SELECT CAST(AES_DECRYPT(CardNo,{0}) as CHAR),CardExpiryDate FROM user WHERE UserID = {0}".format(UserID)
-    # cursor.execute(query)
-    # result = cursor.fetchone()
-    # return result
+def SelectUserPayment(db, UserID):
+    Crypt = AESCipher(str(UserID))
+    # Getting UserID
+    query = {"_id": UserID}
+    selectedcol = db["Users"]
+    result = selectedcol.find_one(query)
+    dec_msg = Crypt.decrypt(result["CardNo"])
+    return [dec_msg,result["CardExpiryDate"]]
 
 def SelectLikedArticles(db, UserID):
     query = {"likeList": {"$in": [UserID]}}
@@ -123,7 +120,6 @@ def SelectLikedArticles(db, UserID):
         result = [result["_id"],result["ArticleTitle"],result["ArticleDate"],result["CategoryName"],result["AgencyName"]]
         LikeArticleArray.append(result)
     return LikeArticleArray
-
 
 def Transact(db,UserID):
     insertdict = {"Price": 10,
@@ -140,8 +136,8 @@ def Transact(db,UserID):
 
 #print(Transact(db,21))
 #print(UserAuth(db,"test","123"))
-#print(InsertPaymentMethod(db,cursor,7,"5500 0000 0000 0004","03/21"))
-#print (SelectUserPayment(cursor, 7))
+#print(InsertPaymentMethod(db,21,"5500 0000 0000 0004","03/21"))
+#print(SelectUserPayment(db, 21))
 #print(UserAuth(db,"test2","123"))
 #print(UserCreate(db,"test","123"))
 #print(SelectLikedArticles(db,21))
