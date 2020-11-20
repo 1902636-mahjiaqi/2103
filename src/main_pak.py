@@ -190,7 +190,7 @@ def pushtoMongoDB(articlesList,agency,category):
 
             aDate = datetime.strptime(article.date, "%Y-%m-%d")
 
-            row = {"_id": result["sequence_value"], 
+            row = { 
             "ArticleURL": article.url, 
             "ArticleTitle": article.title,
             "ArticleDate": aDate,
