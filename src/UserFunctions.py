@@ -6,8 +6,8 @@ import base64
 from Crypto.Cipher import AES
 from Crypto import Random
 
-client = pymongo.MongoClient("mongodb+srv://admin:IBXxRxezhvT9f4D3@cluster0.vkqbl.mongodb.net/<dbname>?retryWrites=true&w=majority")
-db = client["ICT2103_Project"]
+# client = pymongo.MongoClient("mongodb+srv://admin:IBXxRxezhvT9f4D3@cluster0.vkqbl.mongodb.net/<dbname>?retryWrites=true&w=majority")
+# db = client["ICT2103_Project"]
 
 class AESCipher(object):
     def __init__(self, key):
