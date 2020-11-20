@@ -17,3 +17,6 @@
 ### PyMongo
 1. pip install pymongo
 2. pip install pymongo[srv]
+
+### Encryption
+1. pip install pycrytodom
