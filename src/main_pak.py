@@ -110,14 +110,6 @@ def todayCrawl(keyword,pageCount):
     #     print(soup)
     return todayArticlesList
 
-db = mysql.connect(
-        host="rm-gs595dd89hu8175hl6o.mysql.singapore.rds.aliyuncs.com",
-        user="ict1902698psk",
-        passwd="KSP8962091",
-        database="sql1902698psk"
-    )
-cursor = db.cursor()
-
 def pushtoDB(articlesList,agency,category):
     #count = 1
     for article in articlesList:

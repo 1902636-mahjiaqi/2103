@@ -4,25 +4,20 @@ from SentimentTest1 import SentimentAnalyse
 from datetime import datetime
 from selenium import webdriver
 import random
-import mysql.connector as mysql
 import time
 from time import sleep
+from main_pak import stArticle, pushtoMongoDB
+
 
 def ScrapeCNA(category,pages):
     #1 is health, #2 is business, #3 politics
-    # db = mysql.connect(
-    #     host="rm-gs595dd89hu8175hl6o.mysql.singapore.rds.aliyuncs.com",
-    #     user="ict1902698psk",
-    #     passwd="KSP8962091",
-    #     database="sql1902698psk"
-    # )
-    # cursor = db.cursor()
+    listofarticles = []
     if category == 1:
-        search = "health"
+        search = "Health"
     elif category == 2:
-        search = "business"
+        search = "Politics"
     else:
-        search = "politics"
+        search = "Business"
 
     for i in range(pages):
         contentlinks = []
@@ -42,16 +37,14 @@ def ScrapeCNA(category,pages):
 
         driver.quit()
         for links in contentlinks:
+
             SentimentRating = 0
             ArticleText = ""
-            AgencyID = 2
-            CategoryID = category
             print("----------------------")
             print(links)
             ArticleURL = links
             contentpage = requests.get(links)
             soup = BeautifulSoup(contentpage.content, 'html.parser')
-            author_results = soup.find("a", class_="article__author-title")
 
             # Find Title
             Title = soup.find("h1", class_="article__title")
@@ -65,32 +58,16 @@ def ScrapeCNA(category,pages):
             content_result = content_result.findAll("p")
             for i in content_result:
                 if i.find(class_='c-picture--article'):
-                    print("here")
                     continue
                 SentimentRating += SentimentAnalyse(i.getText())
                 ArticleText += i.getText()
-                print(i.getText())
             # Find Date
             Dateresult = soup.find("time", class_="article__details-item")
             datetime_object = datetime.strptime(Dateresult.getText(), '%d %b  %Y %I:%M%p')
             ArticleDate = datetime_object.strftime("%Y-%m-%d")
-            # try:
-                # query = "INSERT INTO article VALUES (%s,%s,%s,%s,%s,%s,%s,%s,MD5(%s))"
-                # val = (
-                # 0, ArticleURL, ArticleTitle, ArticleDate, SentimentRating, ArticleText, AgencyID, CategoryID,
-                # ArticleTitle)
-                # cursor.execute(query, val)
-                # print(ArticleDate)
-                # print(ArticleText)
-                # print(ArticleURL)
-                # print(SentimentRating)
-                # print(ArticleTitle)
-                # db.commit()
-            # except:
-            #     print("error")
-            #     print(ArticleTitle)
-            #     continue
+            listofarticles.append(stArticle(ArticleTitle,"",ArticleDate,ArticleText,ArticleURL))
+    pushtoMongoDB(listofarticles,2,search)
 
-ScrapeCNA(3,2)
+ScrapeCNA(3,5)
 
 
