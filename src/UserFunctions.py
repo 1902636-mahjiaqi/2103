@@ -43,31 +43,26 @@ def UserAuth(db, Username, Password):
     result = selectedcol.find_one({"UserName": Username,"UserPw": hash.digest()})
     if result == None:
         return result
-    result = [result["_id"], result["UserName"],result["UserPw"],result["TierID"],result["isAdmin"],result["CardNo"],result["CardExpiryDate"]]
-    agr = [{ "$unwind": '$Order' },
-    { "$sort": {
-        "Order.OrderDate": -1
-    }}]
-    print(selectedcol.aggregate(agr))
+    agr = [
+        #find row with this id
+        { "$match" : {"_id": result["_id"]}},
+        #unpack arrays in row
+        { "$unwind": '$Order' },
+        #sort descending
+        { "$sort": {"Order.OrderDate": -1}},
+        #select only order
+        { "$project":{"Order.OrderDate": 1}}]
+    date = list(selectedcol.aggregate(agr))
+    date = date[0]["Order"]["OrderDate"]
+    #If plan expires
+    if date + dt.timedelta(days = 30) < dt.datetime.now():
+        result["TierID"] = 1
+        query = {"_id": result["_id"]}
+        values = {"$set": {"TierID" : 1}}
+        selectedcol.update_one(query,values)
+    result = [result["_id"], result["UserName"], result["UserPw"], result["TierID"], result["isAdmin"],
+              result["CardNo"], result["CardExpiryDate"]]
     return result
-    # query = "SELECT * FROM user WHERE user.UserName = '{0}' AND UserPw = SHA2('{1}',256)".format(Username,Password)
-    # cursor.execute(query)
-    # result = cursor.fetchone()
-    # #Updating to check whether user have expired his paid priveledges
-    # if (result[3] == 2):
-    #     query = "SELECT OrderDate FROM order_details WHERE order_details.UserID = '{0}' ORDER BY OrderDate LIMIT 1".format(result[0])
-    #     cursor.execute(query)
-    #     receipt = cursor.fetchone()
-    #     print(receipt[0] + dt.timedelta(days = 30))
-    #     print(dt.datetime.now())
-    #     #If it expires set it as 1 which is a free user
-    #     if (receipt[0] + dt.timedelta(days = 30)) < dt.datetime.now().date():
-    #         sql = "UPDATE user SET TierID = 1 WHERE UserID = {0}".format(result[0])
-    #         cursor.execute(sql)
-    #         db.commit()
-    #         result = list(result)
-    #         result[3] = 1
-    # return result
 
 def UserCreate(db, UserName, Password):
     # Getting UserID
@@ -129,7 +124,7 @@ def SelectLikedArticles(db, UserID):
 
 def Transact(db,UserID):
     insertdict = {"Price": 10,
-                  "OrderDate": dt.datetime.today()}
+                  "OrderDate": dt.datetime.today()-dt.timedelta(days = 60)}
     #print(dt.datetime.today())
     values = {"$set": {"TierID": 2},"$push": {"Order": insertdict}}
     query = {"_id": int(UserID)}
@@ -140,12 +135,11 @@ def Transact(db,UserID):
     else:
         return False
 
-#print(Transact(db,21))
-#print(UserAuth(db,"test","123"))
+#print(Transact(db,23))
 #print(InsertPaymentMethod(db,21,"5500 0000 0000 0004","03/21"))
 #print(SelectUserPayment(db, 21))
-print(UserAuth(db,"test2","123"))
-#print(UserCreate(db,"test","123"))
+#print(UserAuth(db,"test3","123"))
+#print(UserCreate(db,"test3","123"))
 #print(SelectLikedArticles(db,21))
 #x = AESCipher("1234")
 #print(x.decrypt(x.encrypt("data")))
