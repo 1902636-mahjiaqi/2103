@@ -6,8 +6,8 @@ import base64
 from Crypto.Cipher import AES
 from Crypto import Random
 
-# client = pymongo.MongoClient("mongodb+srv://admin:IBXxRxezhvT9f4D3@cluster0.vkqbl.mongodb.net/<dbname>?retryWrites=true&w=majority")
-# db = client["ICT2103_Project"]
+client = pymongo.MongoClient("mongodb+srv://admin:IBXxRxezhvT9f4D3@cluster0.vkqbl.mongodb.net/<dbname>?retryWrites=true&w=majority")
+db = client["ICT2103_Project"]
 
 class AESCipher(object):
     def __init__(self, key):
@@ -44,7 +44,11 @@ def UserAuth(db, Username, Password):
     if result == None:
         return result
     result = [result["_id"], result["UserName"],result["UserPw"],result["TierID"],result["isAdmin"],result["CardNo"],result["CardExpiryDate"]]
-
+    agr = [{ "$unwind": '$Order' },
+    { "$sort": {
+        "Order.OrderDate": -1
+    }}]
+    print(selectedcol.aggregate(agr))
     return result
     # query = "SELECT * FROM user WHERE user.UserName = '{0}' AND UserPw = SHA2('{1}',256)".format(Username,Password)
     # cursor.execute(query)
@@ -140,7 +144,7 @@ def Transact(db,UserID):
 #print(UserAuth(db,"test","123"))
 #print(InsertPaymentMethod(db,21,"5500 0000 0000 0004","03/21"))
 #print(SelectUserPayment(db, 21))
-#print(UserAuth(db,"test2","123"))
+print(UserAuth(db,"test2","123"))
 #print(UserCreate(db,"test","123"))
 #print(SelectLikedArticles(db,21))
 #x = AESCipher("1234")
