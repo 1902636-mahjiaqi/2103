@@ -71,10 +71,10 @@ def todayCrawl(keyword,pageCount):
         #print(url_json)
         for node in url_json['nodes']:
             article = todayArticle("title", "author", "date", "", "link")
-            if not node.get('node').get('author') is "":
+            if node.get('node').get('author') != "":
                 article.author = node.get('node').get('author')
             else:
-                article.author = "2"
+                article.author = "Not Found"
             article.date = datetime.utcfromtimestamp(int(node.get('node').get('publication_date'))).strftime('%Y-%m-%d')
             article.title = node.get('node').get('title')
             article.url = node.get('node').get('node_url')
@@ -111,6 +111,13 @@ def todayCrawl(keyword,pageCount):
     return todayArticlesList
 
 def pushtoDB(articlesList,agency,category):
+    db = mysql.connect(
+        host="rm-gs595dd89hu8175hl6o.mysql.singapore.rds.aliyuncs.com",
+        user="ict1902698psk",
+        passwd="KSP8962091",
+        database="sql1902698psk"
+    )
+    cursor = db.cursor()
     #count = 1
     for article in articlesList:
         #print(count)
@@ -168,12 +175,6 @@ def pushtoMongoDB(articlesList,agency,category):
     for article in articlesList:
         try:
             # Getting ArticleID Counter
-            query = {"_id": "articleID"}
-            selectedcol = db["counters"]
-            result = selectedcol.find_one(query)
-            #Increment Value of User ID by one
-            selectedcol.find_one_and_update(query,{'$inc': {'sequence_value': 1}})
-
             selectedcol = db["Articles"]
 
             SentimentRating = 0
@@ -197,15 +198,6 @@ def pushtoMongoDB(articlesList,agency,category):
             selectedcol.insert_one(row)
         except Exception as e: 
             print(e)
-            # Getting ArticleID Counter
-            query = {"_id": "articleID"}
-            selectedcol = db["counters"]
-            result = selectedcol.find_one(query)
-            #Increment Value of User ID by one
-            selectedcol.find_one_and_update(
-                query,
-                {'$inc': {'sequence_value': -1}}
-            )
             continue
 
     
@@ -267,4 +259,4 @@ pushtoDB(Tarticles3,3,3)
 #########################################################################
 
 Tarticles1 = todayCrawl("Business",1)
-pushtoMongoDB(Tarticles1,3,"Business")
+#pushtoMongoDB(Tarticles1,3,"Business")
