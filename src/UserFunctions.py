@@ -133,6 +133,6 @@ def Transact(db,UserID):
 #print(SelectUserPayment(db, 21))
 #print(UserAuth(db,"test3","123"))
 #print(UserCreate(db,"test3","123"))
-#print(SelectLikedArticles(db,21))
+#print(SelectLikedArticles(db,3))
 #x = AESCipher("1234")
 #print(x.decrypt(x.encrypt("data")))
