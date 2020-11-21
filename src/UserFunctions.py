@@ -5,6 +5,7 @@ import urllib
 import base64
 from Crypto.Cipher import AES
 from Crypto import Random
+from bson.objectid import ObjectId
 
 # client = pymongo.MongoClient("mongodb+srv://admin:IBXxRxezhvT9f4D3@cluster0.vkqbl.mongodb.net/<dbname>?retryWrites=true&w=majority")
 # db = client["ICT2103_Project"]
@@ -43,23 +44,24 @@ def UserAuth(db, Username, Password):
     result = selectedcol.find_one({"UserName": Username,"UserPw": hash.digest()})
     if result == None:
         return result
-    agr = [
-        #find row with this id
-        { "$match" : {"_id": result["_id"]}},
-        #unpack arrays in row
-        { "$unwind": '$Order' },
-        #sort descending
-        { "$sort": {"Order.OrderDate": -1}},
-        #select only order
-        { "$project":{"Order.OrderDate": 1}}]
-    date = list(selectedcol.aggregate(agr))
-    date = date[0]["Order"]["OrderDate"]
-    #If plan expires
-    if date + dt.timedelta(days = 30) < dt.datetime.now():
-        result["TierID"] = 1
-        query = {"_id": result["_id"]}
-        values = {"$set": {"TierID" : 1}}
-        selectedcol.update_one(query,values)
+    if result["TierID"] == 2:
+        agr = [
+            #find row with this id
+            { "$match" : {"_id": result["_id"]}},
+            #unpack arrays in row
+            { "$unwind": '$Order' },
+            #sort descending
+            { "$sort": {"Order.OrderDate": -1}},
+            #select only order
+            { "$project":{"Order.OrderDate": 1}}]
+        date = list(selectedcol.aggregate(agr))
+        date = date[0]["Order"]["OrderDate"]
+        #If plan expires
+        if date + dt.timedelta(days = 30) < dt.datetime.now():
+            result["TierID"] = 1
+            query = {"_id": result["_id"]}
+            values = {"$set": {"TierID" : 1}}
+            selectedcol.update_one(query,values)
     result = [result["_id"], result["UserName"], result["UserPw"], result["TierID"], result["isAdmin"],
               result["CardNo"], result["CardExpiryDate"]]
     return result
@@ -85,7 +87,7 @@ def InsertPaymentMethod(db, UserID, CardNo, CardExpiryDate):
     Crypt = AESCipher(str(UserID))
     enc_msg = Crypt.encrypt(str(CardNo))
     # Getting UserID
-    query = {"_id": UserID}
+    query = {"_id": ObjectId(UserID)}
     selectedcol = db["Users"]
     value = {"$set": { "CardNo": enc_msg, "CardExpiryDate": CardExpiryDate}}
     selectedcol.update_one(query, value)
@@ -93,7 +95,7 @@ def InsertPaymentMethod(db, UserID, CardNo, CardExpiryDate):
 def SelectUserPayment(db, UserID):
     Crypt = AESCipher(str(UserID))
     # Getting UserID
-    query = {"_id": UserID}
+    query = {"_id": ObjectId(UserID)}
     selectedcol = db["Users"]
     result = selectedcol.find_one(query)
     if result == None:
@@ -102,7 +104,7 @@ def SelectUserPayment(db, UserID):
     return [dec_msg,result["CardExpiryDate"]]
 
 def SelectLikedArticles(db, UserID):
-    query = {"likeList": {"$in": [UserID]}}
+    query = {"likeList": {"$in": [str(UserID)]}}
     selectedcol = db["Articles"]
     results = selectedcol.find(query)
     LikeArticleArray = []
@@ -118,7 +120,7 @@ def Transact(db,UserID):
                   "OrderDate": dt.datetime.today()-dt.timedelta(days = 60)}
     #print(dt.datetime.today())
     values = {"$set": {"TierID": 2},"$push": {"Order": insertdict}}
-    query = {"_id": int(UserID)}
+    query = {"_id": ObjectId(UserID)}
     selectedcol = db["Users"]
     result = selectedcol.update_one(query,values)
     if result.matched_count > 0:
