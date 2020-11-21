@@ -3,16 +3,16 @@ from bson.objectid import ObjectId
 import datetime as dt
 import hashlib
 
-client = pymongo.MongoClient("mongodb+srv://admin:IBXxRxezhvT9f4D3@cluster0.vkqbl.mongodb.net/<dbname>?retryWrites=true&w=majority")
-db = client["ICT2103_Project"]
+# client = pymongo.MongoClient("mongodb+srv://admin:IBXxRxezhvT9f4D3@cluster0.vkqbl.mongodb.net/<dbname>?retryWrites=true&w=majority")
+# db = client["ICT2103_Project"]
 
 def SelectAllArticleTitle(db):
     query = {}
     selectedcol = db["Articles"]
-    results = selectedcol.find(query)
+    results = selectedcol.find(query).sort('ArticleDate', pymongo.DESCENDING)
     Homepageresults = []
     for result in results:
-        article = [result["_id"],result["ArticleTitle"],result["ArticleDate"],result["CategoryName"],result["AgencyName"]]
+        article = [result["_id"],result["ArticleTitle"],result["ArticleDate"].date().strftime("%d-%m-%Y"),result["CategoryName"],result["AgencyName"]]
         Homepageresults.append(article)
     return Homepageresults
 
@@ -38,7 +38,7 @@ def LikeArticle(db,userID,articleID):
         return False
 
 def UnlikeArticle(db,userID,articleID):
-    query = {"_id": str(articleID)}
+    query = {"_id": ObjectId(articleID)}
     values = {"$pull": {"likeList": str(userID)}}
     selectedcol = db["Articles"]
     result = selectedcol.update_one(query, values)
@@ -48,7 +48,7 @@ def UnlikeArticle(db,userID,articleID):
         return False
 
 def CheckLike(db,userID,articleID):
-    query = {"_id": articleID, "likeList": {"$in": [str(userID)]}}
+    query = {"_id": ObjectId(articleID), "likeList": {"$in": [str(userID)]}}
     selectedcol = db["Articles"]
     result = selectedcol.find_one(query)
     if result != None:
@@ -66,8 +66,8 @@ def SelectRecentArticles(db):
 
 
 #print(SelectRecentArticles(db))
-#print(CheckLike(db,21,40))
+#print(CheckLike(db,3,"5fb805947eb2da66a5f639a0"))
 #print(LikeArticle(db,21,40))
 #print(SelectArticleDetails(db,40))
 #print(SelectAllArticleTitle(db))
-#print(UnlikeArticle(db,21,40))
+#print(UnlikeArticle(db,3,"5fb805947eb2da66a5f639a0"))
