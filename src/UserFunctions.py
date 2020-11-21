@@ -65,15 +65,6 @@ def UserAuth(db, Username, Password):
     return result
 
 def UserCreate(db, UserName, Password):
-    # Getting UserID
-    query = {"_id": "userID"}
-    selectedcol = db["counters"]
-    result = selectedcol.find_one(query)
-    #Increment Value of User ID by one
-    selectedcol.find_one_and_update(
-        query,
-        {'$inc': {'sequence_value': 1}}
-    )
     #insert user
     #Hash user password
     hash = hashlib.sha256()

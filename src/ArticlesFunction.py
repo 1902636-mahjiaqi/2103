@@ -56,31 +56,15 @@ def CheckLike(db,userID,articleID):
         return False
 
 def SelectRecentArticles(db):
-    date = dt.datetime.today().date()
     selectedcol = db["Articles"]
-    start = dt.datetime(2019, 11, 20, 0, 0, 0, 0)
-    end = dt.datetime(2020, 11, 20, 0, 0, 0, 0)
+    emptylist = []
+    for post in selectedcol.find({"ArticleDate": {"$lt": dt.datetime.today(),"$gte": (dt.datetime.today() -dt.timedelta(days=1))}},{"ArticleContent"}):
+        emptylist.append(post["ArticleContent"])
 
-    for doc in selectedcol.find({'time': {'$gte': start, '$lt': end}}):
-        print(doc)
-    return
-    #print(date.isoformat())
-    #"ArticleDate": {"$lte": "new Date()", "$gt": (date - dt.timedelta(days=1)).isoformat()}
-    query = {"ArticleDate": { "$gte": "ISODate('2019-11-20Z')", "$lt": "ISODate('2020-11-21Z')"}}
-
-    results = list(selectedcol.find(query))
-    print(results)
-    # for i in results:
-    #     print(i)
-    #print(results)
-    #This function is to select the past 24 hours of articles so as to generate the word cloud
-    # query = "SELECT ArticleText FROM article WHERE ArticleDate >= date_sub(curdate(), interval 1 day)"
-    # cursor.execute(query)
-    # result = cursor.fetchall()
-    # return result
+    return emptylist
 
 
-print(SelectRecentArticles(db))
+#print(SelectRecentArticles(db))
 #print(CheckLike(db,21,40))
 #print(LikeArticle(db,21,40))
 #print(SelectArticleDetails(db,40))
