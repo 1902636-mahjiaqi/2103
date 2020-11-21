@@ -5,6 +5,7 @@ from functools import wraps
 
 from src.UserFunctions import UserAuth, UserCreate, SelectLikedArticles, SelectUserPayment, InsertPaymentMethod, Transact
 from src.ArticlesFunction import SelectAllArticleTitle, SelectArticleDetails, LikeArticle, CheckLike, UnlikeArticle
+#from src.WordCloud import generateWordCloud
 #UserName: test PW:123 Admin
 
 app = Flask(
@@ -114,7 +115,11 @@ def register_post():
 #return route to user dashboard view
 @app.route("/user_dashboard")
 def user_dashboard():
-    return render_template("main/user_dashboard.htm", username=session['username'])
+    #generateWordCloud(cursor)
+    legend = 'Monthly Data'
+    labels = ["January", "February", "March", "April", "May", "June", "July", "August"]
+    values = [10, 9, 8, 7, 6, 4, 7, 8]
+    return render_template("main/user_dashboard.htm", username=session['username'], values=values, labels=labels, legend=legend)
 
 #return route to user article view
 @app.route("/article")
@@ -189,7 +194,8 @@ def user_purchase_post():
     else:
         flash('An error has occurred, please try again later.')
 
-    return render_template("main/user_profile.htm", username=session['username'])
+    #return render_template("main/user_profile.htm", username=session['username'])
+    return redirect(url_for('user_profile'))
 
 #return route to user purchase view
 @app.route("/user_privilege")

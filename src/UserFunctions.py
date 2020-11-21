@@ -2,13 +2,13 @@ import hashlib
 import mysql.connector as mysql
 import datetime as dt
 
-db = mysql.connect(
-    host ="rm-gs595dd89hu8175hl6o.mysql.singapore.rds.aliyuncs.com",
-    user ="ict1902698psk",
-    passwd ="KSP8962091",
-    database = "sql1902698psk"
-)
-cursor = db.cursor()
+#db = mysql.connect(
+#    host ="rm-gs595dd89hu8175hl6o.mysql.singapore.rds.aliyuncs.com",
+#    user ="ict1902698psk",
+#    passwd ="KSP8962091",
+#    database = "sql1902698psk"
+#)
+#cursor = db.cursor()
 
 def UserAuth(db, cursor, Username, Password):
     query = "SELECT * FROM user WHERE user.UserName = '{0}' AND UserPw = SHA2('{1}',256)".format(Username,Password)
@@ -89,7 +89,7 @@ def Transact(db,cursor,UserID):
 #print(Transact(db,cursor,8))
 #print(UserAuth(db,cursor,"test1","123"))
 #print(InsertPaymentMethod(db,cursor,7,"5500 0000 0000 0004","03/21"))
-print (SelectUserPayment(cursor, 7))
+#print (SelectUserPayment(cursor, 7))
 #print(UserAuth(cursor,"test","1234"))
 #print(UserCreate(db,cursor,"test4","123"))
 #print(SelectLikedArticles(cursor,7))
