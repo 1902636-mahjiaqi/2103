@@ -1,4 +1,5 @@
 import pymongo
+from bson.objectid import ObjectId
 import datetime as dt
 import hashlib
 
@@ -18,7 +19,7 @@ def SelectAllArticleTitle(db):
 
 def SelectArticleDetails(db, articleID):
     #Title, Date, URL, Sentiment, ArticleText,CategoryName, Agency Name
-    query = {"_id": int(articleID)}
+    query = {"_id": ObjectId(articleID)}
     selectedcol = db["Articles"]
     result = selectedcol.find_one(query)
     result = [result["ArticleTitle"], result["ArticleDate"], result["ArticleURL"],
@@ -27,8 +28,8 @@ def SelectArticleDetails(db, articleID):
     return result
 
 def LikeArticle(db,userID,articleID):
-    query = {"_id": articleID}
-    values = { "$push": { "likeList": userID } }
+    query = {"_id": ObjectId(articleID)}
+    values = { "$push": { "likeList": str(userID) } }
     selectedcol = db["Articles"]
     result = selectedcol.update_one(query, values)
     if result.matched_count > 0:
@@ -37,8 +38,8 @@ def LikeArticle(db,userID,articleID):
         return False
 
 def UnlikeArticle(db,userID,articleID):
-    query = {"_id": articleID}
-    values = {"$pull": {"likeList": userID}}
+    query = {"_id": str(articleID)}
+    values = {"$pull": {"likeList": str(userID)}}
     selectedcol = db["Articles"]
     result = selectedcol.update_one(query, values)
     if result.matched_count > 0:
@@ -47,7 +48,7 @@ def UnlikeArticle(db,userID,articleID):
         return False
 
 def CheckLike(db,userID,articleID):
-    query = {"_id": articleID, "likeList": {"$in": [userID]}}
+    query = {"_id": articleID, "likeList": {"$in": [str(userID)]}}
     selectedcol = db["Articles"]
     result = selectedcol.find_one(query)
     if result != None:
