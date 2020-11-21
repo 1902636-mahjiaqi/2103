@@ -1,5 +1,5 @@
 import pymongo
-from datetime import datetime
+import datetime as dt
 import hashlib
 
 client = pymongo.MongoClient("mongodb+srv://admin:IBXxRxezhvT9f4D3@cluster0.vkqbl.mongodb.net/<dbname>?retryWrites=true&w=majority")
@@ -56,20 +56,15 @@ def CheckLike(db,userID,articleID):
         return False
 
 def SelectRecentArticles(db):
-    query = {}
     selectedcol = db["Articles"]
-    results = selectedcol.find(query)
-    for i in results:
-        print(i["ArticleDate"])
-    print(results)
-    #This function is to select the past 24 hours of articles so as to generate the word cloud
-    # query = "SELECT ArticleText FROM article WHERE ArticleDate >= date_sub(curdate(), interval 1 day)"
-    # cursor.execute(query)
-    # result = cursor.fetchall()
-    # return result
+    emptylist = []
+    for post in selectedcol.find({"ArticleDate": {"$lt": dt.datetime.today(),"$gte": (dt.datetime.today() -dt.timedelta(days=1))}},{"ArticleContent"}):
+        emptylist.append(post["ArticleContent"])
+
+    return emptylist
 
 
-print(SelectRecentArticles(db))
+#print(SelectRecentArticles(db))
 #print(CheckLike(db,21,40))
 #print(LikeArticle(db,21,40))
 #print(SelectArticleDetails(db,40))
