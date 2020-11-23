@@ -12,7 +12,7 @@
         <div class="row">
             <div class="col-sm">
                 <!-- chart number 1 -->
-                <!-- <canvas id="barChart"></canvas> -->
+                Word Cloud
                 <img src="{{url_for('static', filename='cloud.png')}}" class="image" alt="Word Cloud" width="100%" />
             </div>
             <div class="col-sm">
@@ -23,8 +23,8 @@
         <div class="row">
             <div class="col-sm">
                 <!-- chart number 1 -->
-                <canvas id="myChart2"></canvas>
                 The number of articles by each agency
+                <canvas id="myChart2"></canvas>
             </div>
             <div class="col-sm">
                 <!-- chart number 2 -->
@@ -111,7 +111,7 @@
                       {{item}},
                     {% endfor %}],
             spanGaps: false
-        }]
+        }],
       }
 
       // get chart canvas

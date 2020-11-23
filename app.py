@@ -5,7 +5,7 @@ from functools import wraps
 
 from src.UserFunctions import UserAuth, UserCreate, SelectLikedArticles, SelectUserPayment, InsertPaymentMethod, Transact
 from src.ArticlesFunction import SelectAllArticleTitle, SelectArticleDetails, LikeArticle, CheckLike, UnlikeArticle
-from src.SQLStatements import TopTenSentimentForAllCategory, NumOfArticlesByAgencyWithName, TopTenMostLikesArticleWithArticleTitle
+from src.SQLStatements import TopTenSentimentForAllCategory, NumOfArticlesByAgencyWithName, TopTenMostLikesArticleWithArticleTitle, TierAnalysis, SentimentValueCategory, MostArticleLikedAgency, AllAvgSentimentRating
 from src.WordCloud import generateWordCloud
 #UserName: test PW:123 Admin
 
@@ -124,7 +124,7 @@ def user_dashboard():
     labels1 = []
     legend1 = 'Top Ten Sentiment For All Category'
     for x in range(len(topTenSentimentForCategory)):
-        labels1.append(topTenSentimentForCategory[x][1])
+        labels1.append((topTenSentimentForCategory[x][1])[:10])
         values1.append(topTenSentimentForCategory[x][0])
 
     #code for number of articles by agency graph
@@ -142,8 +142,9 @@ def user_dashboard():
     labels3 = []
     legend3 = 'Top 10 articles with the most likes'
     for x in range(len(topTenMostLikesArticle)):
-        labels3.append(topTenMostLikesArticle[x][1])
+        labels3.append((topTenMostLikesArticle[x][1])[:10])
         values3.append(topTenMostLikesArticle[x][0])
+
     return render_template("main/user_dashboard.htm", username=session['username'], values1=values1, labels1=labels1, legend1=legend1, values2=values2, labels2=labels2, legend2=legend2, values3=values3, labels3=labels3, legend3=legend3)
 
 #return route to user article view
@@ -234,4 +235,40 @@ def user_privilege():
 @app.route("/admin_dashboard")
 @admin_login_required
 def admin_dashboard():
-    return render_template("main/admin_dashboard.htm", username=session['username'])
+    # code for tier analysis graph
+    tierAnalysis = TierAnalysis(cursor)
+    values1 = []
+    labels1 = []
+    legend1 = 'Tier Analysis'
+    for x in range(len(tierAnalysis)):
+        labels1.append((tierAnalysis[x][0]))
+        values1.append(tierAnalysis[x][1])
+
+    # code for sentiment value category graph
+    sentimentValueCategory = SentimentValueCategory(cursor)
+    values2 = []
+    labels2 = []
+    legend2 = 'Sentiment Value Category'
+    for x in range(len(sentimentValueCategory)):
+        labels2.append((sentimentValueCategory[x][0]))
+        values2.append(sentimentValueCategory[x][2])
+
+    # code for most article liked agency graph
+    mostArticleLikedAgency = MostArticleLikedAgency(cursor)
+    values3 = []
+    labels3 = []
+    legend3 = 'Most Article Liked Agency'
+    for x in range(len(mostArticleLikedAgency)):
+        labels3.append((mostArticleLikedAgency[x][0]))
+        values3.append(mostArticleLikedAgency[x][1])
+
+    # code for average sentiment rating graph
+    allAvgSentimentRating = AllAvgSentimentRating(cursor)
+    values4 = []
+    labels4 = []
+    legend4 = 'Agency with the most well-liked article'
+    for x in range(len(allAvgSentimentRating)):
+        labels4.append((allAvgSentimentRating[x][0]))
+        values4.append(allAvgSentimentRating[x][1])
+
+    return render_template("main/admin_dashboard.htm", username=session['username'], values1=values1, labels1=labels1, legend1=legend1, values2=values2, labels2=labels2, legend2=legend2, values3=values3, labels3=labels3, legend3=legend3, values4=values4, labels4=labels4, legend4=legend4)
