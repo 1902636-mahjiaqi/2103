@@ -5,7 +5,8 @@ from functools import wraps
 
 from src.UserFunctions import UserAuth, UserCreate, SelectLikedArticles, SelectUserPayment, InsertPaymentMethod, Transact
 from src.ArticlesFunction import SelectAllArticleTitle, SelectArticleDetails, LikeArticle, CheckLike, UnlikeArticle
-#from src.WordCloud import generateWordCloud
+from src.SQLStatements import TopTenSentimentForAllCategory, NumOfArticlesByAgencyWithName, TopTenMostLikesArticleWithArticleTitle
+from src.WordCloud import generateWordCloud
 #UserName: test PW:123 Admin
 
 app = Flask(
@@ -115,11 +116,35 @@ def register_post():
 #return route to user dashboard view
 @app.route("/user_dashboard")
 def user_dashboard():
-    #generateWordCloud(cursor)
-    legend = 'Monthly Data'
-    labels = ["January", "February", "March", "April", "May", "June", "July", "August"]
-    values = [10, 9, 8, 7, 6, 4, 7, 8]
-    return render_template("main/user_dashboard.htm", username=session['username'], values=values, labels=labels, legend=legend)
+    generateWordCloud(cursor)
+
+    #code for top 10 sentiment for all category graph
+    topTenSentimentForCategory = TopTenSentimentForAllCategory(cursor)
+    values1 = []
+    labels1 = []
+    legend1 = 'Top Ten Sentiment For All Category'
+    for x in range(len(topTenSentimentForCategory)):
+        labels1.append(topTenSentimentForCategory[x][1])
+        values1.append(topTenSentimentForCategory[x][0])
+
+    #code for number of articles by agency graph
+    numOfArticlesByAgency = NumOfArticlesByAgencyWithName(cursor)
+    values2 = []
+    labels2 = []
+    legend2 = 'Number of articles by agency'
+    for x in range(len(numOfArticlesByAgency)):
+        labels2.append(numOfArticlesByAgency[x][1])
+        values2.append(numOfArticlesByAgency[x][2])
+
+    #code for top 10 articles with most likes graph
+    topTenMostLikesArticle = TopTenMostLikesArticleWithArticleTitle(cursor)
+    values3 = []
+    labels3 = []
+    legend3 = 'Top 10 articles with the most likes'
+    for x in range(len(topTenMostLikesArticle)):
+        labels3.append(topTenMostLikesArticle[x][1])
+        values3.append(topTenMostLikesArticle[x][0])
+    return render_template("main/user_dashboard.htm", username=session['username'], values1=values1, labels1=labels1, legend1=legend1, values2=values2, labels2=labels2, legend2=legend2, values3=values3, labels3=labels3, legend3=legend3)
 
 #return route to user article view
 @app.route("/article")
