@@ -2,7 +2,7 @@
 
 import matplotlib.pyplot as plt
 from wordcloud import WordCloud, STOPWORDS
-from ArticlesFunction import SelectRecentArticles
+from src.ArticlesFunction import SelectRecentArticles
 import mysql.connector as mysql
 
 # db = mysql.connect(
