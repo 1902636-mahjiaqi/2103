@@ -34,9 +34,7 @@ def SentimentValueCategory(cursor):
 
 # Topic:Most popular Agency(for article likes)--(bar chart)
 def MostArticleLikedAgency(cursor):
-    query = "SELECT AgencyID,Count(AgencyID) " \
-            "FROM article a,likedby b WHERE a.ArticleID = b.ArticleID " \
-            "GROUP BY AgencyID Order By AgencyID;"
+    query = "SELECT a.AgencyID,c.AgencyName,Count(a.AgencyID) FROM article a,likedby b,agency c WHERE a.ArticleID = b.ArticleID AND a.AgencyID = c.AgencyID GROUP BY a.AgencyID Order By a.AgencyID";
     cursor.execute(query)
     result = cursor.fetchall()
     return result
@@ -158,7 +156,7 @@ def TopPaymentMethod(cursor):
 # print(NumOfArticlesByAgencyWithName(cursor))
 # print(TopTenMostLikesArticle(cursor))
 # print(TopTenMostLikesArticleWithArticleTitle(cursor))
-print(TopTenSentimentForSpecificCategory(cursor))
+# print(TopTenSentimentForSpecificCategory(cursor))
 # print(WorstTenSentimentForSpecificCategory(cursor))
 # print(TopTenSentimentForAllCategory(cursor))
 # print(testNested(cursor,'Today'))
