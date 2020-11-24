@@ -116,7 +116,7 @@ def register_post():
 #return route to user dashboard view
 @app.route("/user_dashboard")
 def user_dashboard():
-    generateWordCloud(cursor)
+    #generateWordCloud(cursor)
 
     #code for top 10 sentiment for all category graph
     topTenSentimentForCategory = TopTenSentimentForAllCategory(cursor)
