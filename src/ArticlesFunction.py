@@ -59,7 +59,7 @@ def CheckLike(db,userID,articleID):
 def SelectRecentArticles(db):
     selectedcol = db["Articles"]
     emptylist = []
-    for post in selectedcol.find({"ArticleDate": {"$lt": dt.datetime.today(),"$gte": (dt.datetime.today() -dt.timedelta(days=1))}},{"ArticleContent"}):
+    for post in selectedcol.find({"ArticleDate": {"$lt": dt.datetime.today(),"$gte": (dt.datetime.today() -dt.timedelta(days=30))}},{"ArticleContent"}):
         emptylist.append(post["ArticleContent"])
 
     return emptylist
