@@ -54,9 +54,9 @@ def SpecificAvgSentimentRatingAgencyNum(cursor):
 
 # Avg sentiment value for all agency
 def AllAvgSentimentRating(cursor):
-    query = "SELECT AgencyID,avg(SentimentRating) " \
-            "FROM sql1902698psk.article " \
-            "Where ArticleDate >= '2020/10/31' and ArticleDate <= '2020/11/21' Group By AgencyID;"
+    query = "SELECT a.AgencyID,b.AgencyName,avg(SentimentRating) " \
+            "FROM sql1902698psk.article a,sql1902698psk.agency b  " \
+            "Where ArticleDate >= '2020/10/31' and ArticleDate <= '2020/11/21' and a.AgencyID = b.AgencyID  Group By AgencyID;"
     cursor.execute(query)
     result = cursor.fetchall()
     return result
