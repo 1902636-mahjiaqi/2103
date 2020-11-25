@@ -2,7 +2,7 @@
 import pymongo
 import matplotlib.pyplot as plt
 from wordcloud import WordCloud, STOPWORDS
-from ArticlesFunction import SelectRecentArticles
+from src.ArticlesFunction import SelectRecentArticles
 from pathlib import Path
 
 client = pymongo.MongoClient("mongodb+srv://admin:IBXxRxezhvT9f4D3@cluster0.vkqbl.mongodb.net/<dbname>?retryWrites=true&w=majority")

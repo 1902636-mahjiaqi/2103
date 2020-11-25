@@ -55,14 +55,15 @@ def UserAuth(db, Username, Password):
             #select only order
             { "$project":{"Order.OrderDate": 1}}]
         date = list(selectedcol.aggregate(agr))
-        date = date[0]["Order"]["OrderDate"]
-        #If plan expires
-        if date + dt.timedelta(days = 30) < dt.datetime.now():
-            result["TierID"] = 1
-            query = {"_id": result["_id"]}
-            values = {"$set": {"TierID" : 1}}
-            selectedcol.update_one(query,values)
-    result = [result["_id"], result["UserName"], result["UserPw"], result["TierID"], result["isAdmin"],
+        if len(date) != 0:
+            date = date[0]["Order"]["OrderDate"]
+            #If plan expires
+            if date + dt.timedelta(days = 30) < dt.datetime.now():
+                result["TierID"] = 1
+                query = {"_id": result["_id"]}
+                values = {"$set": {"TierID" : 1}}
+                selectedcol.update_one(query,values)
+    result = [str(result["_id"]), result["UserName"], result["UserPw"], result["TierID"], result["isAdmin"],
               result["CardNo"], result["CardExpiryDate"]]
     return result
 
@@ -72,7 +73,7 @@ def UserCreate(db, UserName, Password):
     hash = hashlib.sha256()
     hash.update(Password.encode())
     selectedcol = db["Users"]
-    row = {"_id": result["sequence_value"], "UserName": UserName, "UserPw": hash.digest(),"isAdmin":0, "TierID": 1,
+    row = {"UserName": UserName, "UserPw": hash.digest(),"isAdmin":0, "TierID": 1,
             "CardNo":"-","CardExpiryDate":"-",
             "Order":[],"ArticleAccess": 1, "WordCloud": 0, "BarCharts": 0, "Sentiment": 1
            }
