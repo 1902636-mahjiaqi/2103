@@ -132,7 +132,7 @@ def Transact(db,UserID):
 #print(Transact(db,23))
 #print(InsertPaymentMethod(db,21,"5500 0000 0000 0004","03/21"))
 #print(SelectUserPayment(db, 21))
-#print(UserAuth(db,"test3","123"))
+#print(UserAuth(db,"test","123"))
 #print(UserCreate(db,"test3","123"))
 #print(SelectLikedArticles(db,3))
 #x = AESCipher("1234")

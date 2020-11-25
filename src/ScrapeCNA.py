@@ -68,6 +68,6 @@ def ScrapeCNA(category,pages):
             listofarticles.append(stArticle(ArticleTitle,"",ArticleDate,ArticleText,ArticleURL))
     pushtoMongoDB(listofarticles,2,search)
 
-ScrapeCNA(3,5)
+ScrapeCNA(1,10)
 
 
