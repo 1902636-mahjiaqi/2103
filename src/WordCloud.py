@@ -3,6 +3,7 @@ import pymongo
 import matplotlib.pyplot as plt
 from wordcloud import WordCloud, STOPWORDS
 from ArticlesFunction import SelectRecentArticles
+from pathlib import Path
 
 client = pymongo.MongoClient("mongodb+srv://admin:IBXxRxezhvT9f4D3@cluster0.vkqbl.mongodb.net/<dbname>?retryWrites=true&w=majority")
 db = client["ICT2103_Project"]
@@ -96,7 +97,9 @@ def generateWordCloud(db):
     plt.imshow(wordcloud,interpolation='bilinear')
     # no axis details
     plt.axis("off")
-    plt.savefig("../cloud.png")
+    p = Path(__file__).parents[1]
+    p = p.joinpath('static','cloud.png')
+    plt.savefig(str(p))
 
 
 generateWordCloud(db)
