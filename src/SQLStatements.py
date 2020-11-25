@@ -143,10 +143,20 @@ def TopPaymentMethod(cursor):
     args = (0,0,0)
     result = cursor.callproc('Decryptrow',args)
     result = list(result)
-    return result
+    retresult = []
+    #PREP DATA FOR CHART JS
+    for count in range(3):
+        if(count == 0):
+            item = ("MASTERS", result[count])
+        elif(count == 1):
+            item = ("VISA", result[count])
+        else:
+            item = ("AMEX", result[count])
+        retresult.append(item)
+    return retresult
 
-# print(TopPaymentMethod(cursor))
-# print(TierAnalysis(cursor))
+#print(TopPaymentMethod(cursor))
+#print(TierAnalysis(cursor))
 
 # print(SentimentValueCategory(cursor))
 # print(MostArticleLikedAgency(cursor))
