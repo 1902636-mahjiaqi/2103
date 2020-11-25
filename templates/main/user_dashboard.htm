@@ -12,7 +12,6 @@
         <div class="row">
             <div class="col-sm">
                 <!-- chart number 1 -->
-                Word Cloud
                 <img src="{{url_for('static', filename='cloud.png')}}" class="image" alt="Word Cloud" width="100%" />
             </div>
             <div class="col-sm">
@@ -33,12 +32,23 @@
         </div>
     </div>    
 {% endblock %}
-{% block js %} 
-    <script src="{{ url_for('static', filename='demo/line_chart.js') }}"></script>
+{% block js %}
+    <!--<script src="{{ url_for('static', filename='demo/line_chart.js') }}"></script>
     <script src="{{ url_for('static', filename='demo/bar_chart.js') }}"></script>
-    <script src="{{ url_for('static', filename='demo/bar_chart2.js') }}"></script>
+    <script src="{{ url_for('static', filename='demo/bar_chart2.js') }}"></script>-->
 
     <script>
+    //Add this option to make graphs start at zero
+    var startAtZero = {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero:true
+                }
+            }]
+        }
+      }
+
     //The 1st graph
       // define the chart data
       var chartData1 = {
@@ -177,6 +187,7 @@
       var myChart3 = new Chart(ctx, {
         type: 'bar',
         data: chartData3,
+        options: startAtZero
       });
     </script>
 
