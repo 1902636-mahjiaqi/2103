@@ -8,7 +8,7 @@ from src.UserFunctions import UserAuth, UserCreate, SelectLikedArticles, SelectU
 from src.ArticlesFunction import SelectAllArticleTitle, SelectArticleDetails, LikeArticle, CheckLike, UnlikeArticle
 from src.SQLStatements import TopTenSentimentForAllCategory, NumOfArticlesByAgencyWithName, \
     TopTenMostLikesArticleWithArticleTitle, TierAnalysis, SentimentValueCategory, MostArticleLikedAgency, \
-    AllAvgSentimentRating
+    AllAvgSentimentRating, TopPaymentMethod
 from src.WordCloud import generateWordCloud
 
 # UserName: test PW:123 Admin
@@ -295,6 +295,16 @@ def admin_dashboard():
         labels4.append((allAvgSentimentRating[x][0]))
         values4.append(allAvgSentimentRating[x][1])
 
+    # code for average sentiment rating graph
+    topPaymentMethod = TopPaymentMethod(cursor)
+    values5 = []
+    labels5 = []
+    legend5 = 'Top Payment Method'
+    for x in range(len(topPaymentMethod)):
+        labels5.append((topPaymentMethod[x][0]))
+        values5.append(topPaymentMethod[x][1])
+
     return render_template("main/admin_dashboard.htm", username=session['username'], values1=values1, labels1=labels1,
                            legend1=legend1, values2=values2, labels2=labels2, legend2=legend2, values3=values3,
-                           labels3=labels3, legend3=legend3, values4=values4, labels4=labels4, legend4=legend4)
+                           labels3=labels3, legend3=legend3, values4=values4, labels4=labels4, legend4=legend4,
+                           values5=values5, labels5=labels5, legend5=legend5)

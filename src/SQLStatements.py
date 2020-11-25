@@ -155,7 +155,7 @@ def TopPaymentMethod(cursor):
         retresult.append(item)
     return retresult
 
-#print(TopPaymentMethod(cursor))
+print(TopPaymentMethod(cursor))
 #print(TierAnalysis(cursor))
 
 # print(SentimentValueCategory(cursor))
