@@ -6,10 +6,8 @@
 {% block dashboard_active %}active{% endblock %}
 {% block content %}
     <div class="container-fluid">
-        <!-- <div class="alert alert-info" role="alert">
-            This is a info alert—check it out!
-        </div> -->
-        <div class="row">
+      <h3 class="card-title">User Dashboard</h3>
+        <div class="row my-3 mx-3">
             <div class="col-sm">
                 <!-- chart number 1 -->
                 <img src="{{url_for('static', filename='cloud.png')}}" class="image" alt="Word Cloud" width="100%" />
@@ -19,11 +17,11 @@
                 <canvas id="myChart1"></canvas>
             </div>
         </div>
-        <div class="row">
+        <div class="row my-3 mx-3">
             <div class="col-sm">
                 <!-- chart number 1 -->
-                The number of articles by each agency
                 <canvas id="myChart2"></canvas>
+                <span class="d-flex justify-content-center mt-3"><strong>Number of Articles by Each Agency</strong></span>
             </div>
             <div class="col-sm">
                 <!-- chart number 2 -->
@@ -50,8 +48,9 @@
       }
 
     //The 1st graph
-      // define the chart data
+    // define the chart data
       var chartData1 = {
+        
         labels : [{% for item in labels1 %}
                    "{{item}}",
                   {% endfor %}],
