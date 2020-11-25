@@ -1,5 +1,5 @@
 {% extends "layouts/user_base.htm" %}
-<!-- 
+<!--
     admin dashboard to view all users data
 -->
 {% block admin_dashboard_active %}active{% endblock %}
@@ -40,6 +40,17 @@
 {% endblock %}
 {% block js %}
     <script>
+    //Add this option to make graphs start at zero
+    var startAtZero = {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero:true
+                }
+            }]
+        }
+      }
+
     //The 1st graph
       // define the chart data
       var chartData1 = {
@@ -173,6 +184,7 @@
       var myChart3 = new Chart(ctx, {
         type: 'bar',
         data: chartData3,
+        options: startAtZero
       });
 
 
@@ -258,16 +270,6 @@
         }]
       }
 
-      var chart5options = {
-        scales: {
-            yAxes: [{
-                ticks: {
-                    beginAtZero:true
-                }
-            }]
-        }
-      }
-
       // get chart canvas
       var ctx = document.getElementById("myChart5");
 
@@ -275,7 +277,7 @@
       var myChart5 = new Chart(ctx, {
         type: 'bar',
         data: chartData5,
-        options: chart5options
+        options: startAtZero
       });
     </script>
 {% endblock %}
