@@ -4,6 +4,8 @@ import matplotlib.pyplot as plt
 from wordcloud import WordCloud, STOPWORDS
 from src.ArticlesFunction import SelectRecentArticles
 import mysql.connector as mysql
+from pathlib import Path
+
 
 # db = mysql.connect(
 #     host ="rm-gs595dd89hu8175hl6o.mysql.singapore.rds.aliyuncs.com",
@@ -31,7 +33,9 @@ def generateWordCloud(cursor):
     plt.imshow(wordcloud,interpolation='bilinear')
     # no axis details
     plt.axis("off")
-    plt.savefig("../cloud.png")
+    p = Path(__file__).parents[1]
+    p = p.joinpath('static','cloud.png')
+    plt.savefig(str(p))
 
 
-# generateWordCloud(cursor)
+#generateWordCloud(cursor)
