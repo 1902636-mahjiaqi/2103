@@ -292,8 +292,8 @@ def admin_dashboard():
     labels4 = []
     legend4 = 'Agency with the most well-liked article'
     for x in range(len(allAvgSentimentRating)):
-        labels4.append((allAvgSentimentRating[x][0]))
-        values4.append(allAvgSentimentRating[x][1])
+        labels4.append((allAvgSentimentRating[x][1]))
+        values4.append(allAvgSentimentRating[x][2])
 
     # code for average sentiment rating graph
     topPaymentMethod = TopPaymentMethod(cursor)
