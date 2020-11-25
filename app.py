@@ -262,7 +262,10 @@ def admin_dashboard():
     labels1 = []
     legend1 = 'Tier Analysis'
     for x in range(len(tierAnalysis)):
-        labels1.append((tierAnalysis[x][0]))
+        if (tierAnalysis[x][0]) == 1:
+            labels1.append("Free")
+        else:
+            labels1.append("Paid")
         values1.append(tierAnalysis[x][1])
 
     # code for sentiment value category graph
