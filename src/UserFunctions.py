@@ -2,13 +2,13 @@ import hashlib
 import mysql.connector as mysql
 import datetime as dt
 
-#db = mysql.connect(
-#    host ="rm-gs595dd89hu8175hl6o.mysql.singapore.rds.aliyuncs.com",
-#    user ="ict1902698psk",
-#    passwd ="KSP8962091",
-#    database = "sql1902698psk"
-#)
-#cursor = db.cursor()
+db = mysql.connect(
+   host ="rm-gs595dd89hu8175hl6o.mysql.singapore.rds.aliyuncs.com",
+   user ="ict1902698psk",
+   passwd ="KSP8962091",
+   database = "sql1902698psk"
+)
+cursor = db.cursor()
 
 def UserAuth(db, cursor, Username, Password):
     query = "SELECT * FROM user WHERE user.UserName = '{0}' AND UserPw = SHA2('{1}',256)".format(Username,Password)
@@ -86,6 +86,24 @@ def Transact(db,cursor,UserID):
     except:
         return False
 
+def CheckTier(cursor,UserID):
+    query = "SELECT TierID FROM user where UserID = {0}".format(UserID)
+    cursor.execute(query)
+    result = cursor.fetchone()
+    return result
+
+
+
+def DeleteUser(db,cursor,UserID):
+    query = "DELETE FROM user where UserID = {0}".format(UserID)
+    cursor.execute(query)
+    db.commit()
+    if cursor.rowcount > 0:
+        return True
+    else:
+        return False
+
+
 #print(Transact(db,cursor,8))
 #print(UserAuth(db,cursor,"test1","123"))
 #print(InsertPaymentMethod(db,cursor,7,"5500 0000 0000 0004","03/21"))
@@ -93,3 +111,4 @@ def Transact(db,cursor,UserID):
 #print(UserAuth(cursor,"test","1234"))
 #print(UserCreate(db,cursor,"test4","123"))
 #print(SelectLikedArticles(cursor,7))
+#print(CheckTier(cursor,"6"))
