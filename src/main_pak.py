@@ -227,7 +227,7 @@ STarticles4 = stCrawl("https://www.straitstimes.com/business/companies-markets?p
 STarticles5 = stCrawl("https://www.straitstimes.com/tags/coronavirus?page=",10)
 STarticles6 = stCrawl("https://www.straitstimes.com/singapore/health?page=",10)
 
-STarticles7 = stCrawl("https://www.straitstimes.com/politics/latest?page=",8)
+STarticles7 = stCrawl("https://www.straitstimes.com/politics/latest?page=",7)
 STarticles8 = stCrawl("https://www.straitstimes.com/tags/us-presidential-election-2020?page=",3)
 
 pushtoDB(STarticles5,1,1)
@@ -257,6 +257,33 @@ pushtoDB(Tarticles3,3,3)
 #########################################################################
 #MongoDB
 #########################################################################
+"""
+Tarticles1 = todayCrawl("health",20)
+Tarticles2 = todayCrawl("business",20)
+Tarticles3 = todayCrawl("politics",20)
 
-Tarticles1 = todayCrawl("Business",1)
-#pushtoMongoDB(Tarticles1,3,"Business")
+pushtoMongoDB(Tarticles1,3,"Health")
+pushtoMongoDB(Tarticles2,3,"Business")
+pushtoMongoDB(Tarticles3,3,"Politics")
+"""
+STarticles1 = stCrawl("https://www.straitstimes.com/business/economy?page=",10)
+STarticles2 = stCrawl("https://www.straitstimes.com/business/invest?page=",10)
+STarticles3 = stCrawl("https://www.straitstimes.com/business/banking?page=",10)
+STarticles4 = stCrawl("https://www.straitstimes.com/business/companies-markets?page=",10)
+
+STarticles5 = stCrawl("https://www.straitstimes.com/tags/coronavirus?page=",8)
+STarticles6 = stCrawl("https://www.straitstimes.com/singapore/health?page=",10)
+
+STarticles7 = stCrawl("https://www.straitstimes.com/politics/latest?page=",8)
+STarticles8 = stCrawl("https://www.straitstimes.com/tags/us-presidential-election-2020?page=",3)
+
+pushtoMongoDB(STarticles5,1,"Business")
+pushtoMongoDB(STarticles6,1,"Business")
+
+pushtoMongoDB(STarticles1,1,"Health")
+pushtoMongoDB(STarticles2,1,"Health")
+pushtoMongoDB(STarticles3,1,"Health")
+pushtoMongoDB(STarticles4,1,"Health")
+
+pushtoMongoDB(STarticles7,1,"Politics")
+pushtoMongoDB(STarticles8,1,"Politics")
