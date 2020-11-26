@@ -7,8 +7,8 @@ from Crypto.Cipher import AES
 from Crypto import Random
 from bson.objectid import ObjectId
 
-# client = pymongo.MongoClient("mongodb+srv://admin:IBXxRxezhvT9f4D3@cluster0.vkqbl.mongodb.net/<dbname>?retryWrites=true&w=majority")
-# db = client["ICT2103_Project"]
+client = pymongo.MongoClient("mongodb+srv://admin:IBXxRxezhvT9f4D3@cluster0.vkqbl.mongodb.net/<dbname>?retryWrites=true&w=majority")
+db = client["ICT2103_Project"]
 
 class AESCipher(object):
     def __init__(self, key):
@@ -129,6 +129,24 @@ def Transact(db,UserID):
     else:
         return False
 
+def CheckTier(db,UserID):
+
+    selectedcol = db["Users"]
+    # Find username and password
+    result = selectedcol.find_one({"_id": ObjectId(UserID)}, {"TierID": 1,"_id": 0})
+    return [result["TierID"]]
+
+
+
+def DeleteUser(db,cursor,UserID):
+    query = "DELETE FROM user where UserID = {0}".format(UserID)
+    cursor.execute(query)
+    db.commit()
+    if cursor.rowcount > 0:
+        return True
+    else:
+        return False
+
 #print(Transact(db,23))
 #print(InsertPaymentMethod(db,21,"5500 0000 0000 0004","03/21"))
 #print(SelectUserPayment(db, 21))
@@ -137,3 +155,4 @@ def Transact(db,UserID):
 #print(SelectLikedArticles(db,3))
 #x = AESCipher("1234")
 #print(x.decrypt(x.encrypt("data")))
+print(CheckTier(db,"5fbe7d9927f41108c9548d9d"))
