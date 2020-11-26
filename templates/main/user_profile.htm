@@ -48,6 +48,18 @@
                         Logout of NewsAPI</button>
                 </form>
             </div>
+            <br/>
+            {% if not session['is_admin'] %}
+            <!-- Delete Account -->
+            <div class="card">
+                <form class="card-body">
+                    <h4 class="card-title">Delete My Account</h4> 
+                    <!-- <abbr title="Deleted Account cannot be reversed">Delete Account</abbr> -->
+                    <button class="btn btn-danger btn-sm" id="confirm_delete" onclick="location.href='{{ url_for('delete_user') }}'" type="button">
+                        Delete Account</button>
+                </form>
+            </div>
+            {% endif %}
         </div>
         <div class="col-sm">
             <!-- favourites -->
@@ -81,4 +93,11 @@
         </div>
     </div>
 </div>
+
+<script>
+$('#confirm_delete').click(function(){
+    return confirm("Are you sure you want to delete? Account cannot be retrieved back.");
+});
+</script>
+
 {% endblock %}

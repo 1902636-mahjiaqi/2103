@@ -1,10 +1,10 @@
 from flask import Flask, redirect, url_for, render_template, request, flash, session
-from flask_login import login_user, current_user, LoginManager, login_manager
+# from flask_login import login_user, current_user, LoginManager, login_manager
 import mysql.connector as mysql
 from functools import wraps
 
 from src.UserFunctions import UserAuth, UserCreate, SelectLikedArticles, SelectUserPayment, InsertPaymentMethod, \
-    Transact, CheckTier
+    Transact, CheckTier, DeleteUser
 from src.ArticlesFunction import SelectAllArticleTitle, SelectArticleDetails, LikeArticle, CheckLike, UnlikeArticle
 from src.SQLStatements import TopTenSentimentForAllCategory, NumOfArticlesByAgencyWithName, \
     TopTenMostLikesArticleWithArticleTitle, TierAnalysis, SentimentValueCategory, MostArticleLikedAgency, \
@@ -331,3 +331,21 @@ def admin_dashboard():
                            legend1=legend1, values2=values2, labels2=labels2, legend2=legend2, values3=values3,
                            labels3=labels3, legend3=legend3, values4=values4, labels4=labels4, legend4=legend4,
                            values5=values5, labels5=labels5, legend5=legend5, tier=tier)
+
+
+####################### DELETE USER #######################
+@app.route("/delete_user")
+@login_required
+def delete_user():
+    user_id = session['id']
+    tier = CheckTier(cursor, user_id)
+
+    isSuccessful = DeleteUser(db, cursor, user_id)
+    if isSuccessful == True:
+        flash('Account successfully deleted.')
+        tier = 1
+        return render_template("main/login.htm", tier=tier)
+    else:
+        flash('An error has occurred, please try again later.')
+
+    return render_template("main/user_profile.htm", tier=tier, username=session['username'])
