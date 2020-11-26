@@ -73,10 +73,8 @@ def AllAvgSentimentRating(db):
 # Topic:TOP 10 sentiment value for article(list/bar graph)
 def TopTenSentimentForAllCategory(db):
     selectedTable = db["Articles"]
-    result = selectedTable.find({},{'ArticleTitle':1,'SentimentRating':1,'_id':0}).sort({"SentimentRating":-1}).limit(10)
-
+    result = selectedTable.find({"AgencyName":"Today"}).sort("SentimentRating",-1).limit(10)
     # result = selectedTable.find({"AgencyName":"Today"}).sort({"SentimentRating":-1}).limit(10)
-
     for x in result:
         print(x)
     return result
