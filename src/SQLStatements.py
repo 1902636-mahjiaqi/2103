@@ -165,7 +165,7 @@ def TopPaymentMethod(cursor):
 # print(NumOfArticlesByAgency(cursor))
 # print(NumOfArticlesByAgencyWithName(cursor))
 # print(TopTenMostLikesArticle(cursor))
-print(TopTenMostLikesArticleWithArticleTitle(cursor))
+#print(TopTenMostLikesArticleWithArticleTitle(cursor))
 # print(TopTenSentimentForSpecificCategory(cursor))
 # print(WorstTenSentimentForSpecificCategory(cursor))
 # print(TopTenSentimentForAllCategory(cursor))
