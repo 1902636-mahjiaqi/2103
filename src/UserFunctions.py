@@ -130,7 +130,6 @@ def Transact(db,UserID):
         return False
 
 def CheckTier(db,UserID):
-
     selectedcol = db["Users"]
     # Find username and password
     result = selectedcol.find_one({"_id": ObjectId(UserID)}, {"TierID": 1,"_id": 0})
@@ -138,11 +137,18 @@ def CheckTier(db,UserID):
 
 
 
-def DeleteUser(db,cursor,UserID):
-    query = "DELETE FROM user where UserID = {0}".format(UserID)
-    cursor.execute(query)
-    db.commit()
-    if cursor.rowcount > 0:
+def DeleteUser(db,UserID):
+    query = {"_id":ObjectId(UserID)}
+    selectedcol = db["Users"]
+    results = selectedcol.delete_one(query)
+
+    selectedcol = db["Articles"]
+    query = {"_id": ObjectId(UserID)}
+    newvalues = {"$pull": {"likeList": str(UserID)}}
+
+    selectedcol.update_many(query, newvalues)
+
+    if results.deleted_count > 0:
         return True
     else:
         return False
@@ -155,4 +161,5 @@ def DeleteUser(db,cursor,UserID):
 #print(SelectLikedArticles(db,3))
 #x = AESCipher("1234")
 #print(x.decrypt(x.encrypt("data")))
-print(CheckTier(db,"5fbe7d9927f41108c9548d9d"))
+#print(CheckTier(db,"5fbe7d9927f41108c9548d9d"))
+#print(DeleteUser(db,"5fbe7d9927f41108c9548d9d"))
