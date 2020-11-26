@@ -29,10 +29,12 @@
                         <p>Account Type: <strong class="text-danger">Administrator</strong></p>
                         {% else %}
                         <p>Account Type: <strong class="text-danger">User</strong></p>
-                            <p>User privilege: <strong class="text-danger">FREE</strong></p>
+                            <p>User privilege: <strong class="text-danger">{% if tier[0] == 2: %} PAID {% else: %} FREE {% endif %}</strong></p>
+                            {% if tier[0] == 1: %}  
                             <div class="alert alert-danger" role="alert">
                                 Your user privilege is currently <strong>FREE</strong>, click <a href="{{ url_for('user_privilege') }}">here</a> to view more information on our privileges tiers!
                             </div>
+                            {% endif %}
                         {% endif %}
                     </span>
                 </form>

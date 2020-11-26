@@ -4,7 +4,7 @@ import mysql.connector as mysql
 from functools import wraps
 
 from src.UserFunctions import UserAuth, UserCreate, SelectLikedArticles, SelectUserPayment, InsertPaymentMethod, \
-    Transact
+    Transact, CheckTier
 from src.ArticlesFunction import SelectAllArticleTitle, SelectArticleDetails, LikeArticle, CheckLike, UnlikeArticle
 from src.SQLStatements import TopTenSentimentForAllCategory, NumOfArticlesByAgencyWithName, \
     TopTenMostLikesArticleWithArticleTitle, TierAnalysis, SentimentValueCategory, MostArticleLikedAgency, \
@@ -70,7 +70,8 @@ def logout():
 # return route to login view
 @app.route("/")
 def login():
-    return render_template("main/login.htm")
+    tier = 1
+    return render_template("main/login.htm", tier=tier)
 
 
 @app.route('/login', methods=['POST'])
@@ -93,7 +94,10 @@ def login_post():
         # Redirect to home page
         user_id = session['id']
         article = SelectLikedArticles(cursor, user_id)
-        return render_template('main/user_profile.htm', username=session['username'], article=article)
+
+        tier = CheckTier(cursor, user_id)
+
+        return render_template('main/user_profile.htm', username=session['username'], article=article, tier=tier)
     else:
         flash('Please check your login details and try again.')
         session.clear()
@@ -158,9 +162,13 @@ def user_dashboard():
         labels3.append((topTenMostLikesArticle[x][1])[:10])
         values3.append(topTenMostLikesArticle[x][2])
 
+
+    user_id = session['id']
+    tier = CheckTier(cursor, user_id)
+
     return render_template("main/user_dashboard.htm", username=session['username'], values1=values1, labels1=labels1,
                            legend1=legend1, values2=values2, labels2=labels2, legend2=legend2, values3=values3,
-                           labels3=labels3, legend3=legend3)
+                           labels3=labels3, legend3=legend3, tier=tier)
 
 
 # return route to user article view
@@ -168,7 +176,10 @@ def user_dashboard():
 @login_required
 def article():
     article = SelectAllArticleTitle(cursor)
-    return render_template("main/article.htm", article=article, username=session['username'])
+    user_id = session['id']
+    tier = CheckTier(cursor, user_id)
+
+    return render_template("main/article.htm", article=article, username=session['username'], tier=tier)
 
 
 @app.route("/view_article", methods=['GET', 'POST'])
@@ -188,9 +199,12 @@ def view_article():
     if like == 'false' and check_like == True:
         UnlikeArticle(db, cursor, user_id, article_id)
 
+    user_id = session['id']
+    tier = CheckTier(cursor, user_id)
+
     # else:
     return render_template('main/view_article.htm', username=session['username'], article_id=article_id,
-                           article_item=article_item, check_like=check_like, like=like)
+                           article_item=article_item, check_like=check_like, like=like, tier=tier)
 
 
 # return route to user favourite view, profile, privillege, etc
@@ -199,8 +213,9 @@ def view_article():
 def user_profile():
     user_id = session['id']
     article = SelectLikedArticles(cursor, user_id)
+    tier = CheckTier(cursor, user_id)
 
-    return render_template("main/user_profile.htm", article=article, username=session['username'])
+    return render_template("main/user_profile.htm", article=article, username=session['username'], tier=tier)
 
 
 @app.route("/user_profile_unfav", methods=['GET', 'POST'])
@@ -210,8 +225,9 @@ def user_profile_unfav():
     article_id = request.form['article_id']
     UnlikeArticle(db, cursor, user_id, article_id)
     article = SelectLikedArticles(cursor, user_id)
+    tier = CheckTier(cursor, user_id)
 
-    return render_template("main/user_profile.htm", article=article, username=session['username'])
+    return render_template("main/user_profile.htm", article=article, username=session['username'], tier=tier)
 
 
 # return route to user purchase view
@@ -219,12 +235,13 @@ def user_profile_unfav():
 @login_required
 def user_purchase():
     user_id = session['id']
+    tier = CheckTier(cursor, user_id)
     checkCurrentCreditCard = SelectUserPayment(cursor, user_id)
     if checkCurrentCreditCard != "None":
         return render_template("main/user_purchase.htm", username=session['username'],
-                               cardNumber=checkCurrentCreditCard[0], expiryDate=checkCurrentCreditCard[1])
+                               cardNumber=checkCurrentCreditCard[0], expiryDate=checkCurrentCreditCard[1], tier=tier)
     else:
-        return render_template("main/user_purchase.htm", username=session['username'])
+        return render_template("main/user_purchase.htm", username=session['username'], tier=tier)
 
 
 @app.route("/user_purchase", methods=['POST'])
@@ -248,7 +265,10 @@ def user_purchase_post():
 @app.route("/user_privilege")
 @login_required
 def user_privilege():
-    return render_template("main/user_privilege.htm", username=session['username'])
+    user_id = session['id']
+    tier = CheckTier(cursor, user_id)
+
+    return render_template("main/user_privilege.htm", username=session['username'], tier=tier)
 
 
 ####################### ADMINISTRATOR #######################
@@ -304,7 +324,10 @@ def admin_dashboard():
         labels5.append((topPaymentMethod[x][0]))
         values5.append(topPaymentMethod[x][1])
 
+    user_id = session['id']
+    tier = CheckTier(cursor, user_id)
+
     return render_template("main/admin_dashboard.htm", username=session['username'], values1=values1, labels1=labels1,
                            legend1=legend1, values2=values2, labels2=labels2, legend2=legend2, values3=values3,
                            labels3=labels3, legend3=legend3, values4=values4, labels4=labels4, legend4=legend4,
-                           values5=values5, labels5=labels5, legend5=legend5)
+                           values5=values5, labels5=labels5, legend5=legend5, tier=tier)
