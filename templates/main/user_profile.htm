@@ -29,10 +29,12 @@
                         <p>Account Type: <strong class="text-danger">Administrator</strong></p>
                         {% else %}
                         <p>Account Type: <strong class="text-danger">User</strong></p>
-                            <p>User privilege: <strong class="text-danger">FREE</strong></p>
+                            <p>User privilege: <strong class="text-danger">{% if tier[0] == 2: %} PAID {% else: %} FREE {% endif %}</strong></p>
+                            {% if tier[0] == 1: %}  
                             <div class="alert alert-danger" role="alert">
                                 Your user privilege is currently <strong>FREE</strong>, click <a href="{{ url_for('user_privilege') }}">here</a> to view more information on our privileges tiers!
                             </div>
+                            {% endif %}
                         {% endif %}
                     </span>
                 </form>
@@ -46,6 +48,18 @@
                         Logout of NewsAPI</button>
                 </form>
             </div>
+            <br/>
+            {% if not session['is_admin'] %}
+            <!-- Delete Account -->
+            <div class="card">
+                <form class="card-body">
+                    <h4 class="card-title">Delete My Account</h4> 
+                    <!-- <abbr title="Deleted Account cannot be reversed">Delete Account</abbr> -->
+                    <button class="btn btn-danger btn-sm" id="confirm_delete" onclick="location.href='{{ url_for('delete_user') }}'" type="button">
+                        Delete Account</button>
+                </form>
+            </div>
+            {% endif %}
         </div>
         <div class="col-sm">
             <!-- favourites -->
@@ -79,4 +93,11 @@
         </div>
     </div>
 </div>
+
+<script>
+$('#confirm_delete').click(function(){
+    return confirm("Are you sure you want to delete? Account cannot be retrieved back.");
+});
+</script>
+
 {% endblock %}

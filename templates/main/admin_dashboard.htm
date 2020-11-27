@@ -4,23 +4,20 @@
 -->
 {% block admin_dashboard_active %}active{% endblock %}
 {% block content %}
-<h1>Admin Dashboard</h1>
     <div class="container-fluid">
-        <!-- <div class="alert alert-info" role="alert">
-            This is a info alert—check it out!
-        </div> -->
-        <div class="row">
+      <h3 class="card-title">Administrator Dashboard</h3>
+        <div class="row my-3 mx-3">
             <div class="col-sm">
                 <!-- chart number 1 -->
-                Tier Analysis
                 <canvas id="myChart1"></canvas>
+                <span class="d-flex justify-content-center mt-3"><strong>Tier Analysis</strong></span>
             </div>
             <div class="col-sm">
                 <!-- chart number 2 -->
                 <canvas id="myChart2"></canvas>
             </div>
         </div>
-        <div class="row">
+        <div class="row my-3 mx-3">
             <div class="col-sm">
                 <!-- chart number 3 -->
                 <canvas id="myChart3"></canvas>
@@ -30,7 +27,7 @@
                 <canvas id="myChart4"></canvas>
             </div>
         </div>
-        <div class="row">
+        <div class="row my-3 mx-3">
             <div class="col-sm-6">
                 <!-- chart number 5 -->
                 <canvas id="myChart5"></canvas>
