@@ -21,8 +21,6 @@ def UserAuth(db, cursor, Username, Password):
         query = "SELECT OrderDate FROM order_details WHERE order_details.UserID = '{0}' ORDER BY OrderDate LIMIT 1".format(result[0])
         cursor.execute(query)
         receipt = cursor.fetchone()
-        print(receipt[0] + dt.timedelta(days = 30))
-        print(dt.datetime.now())
         #If it expires set it as 1 which is a free user
         if (receipt[0] + dt.timedelta(days = 30)) < dt.datetime.now().date():
             sql = "UPDATE user SET TierID = 1 WHERE UserID = {0}".format(result[0])
