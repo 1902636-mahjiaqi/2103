@@ -136,8 +136,8 @@ def user_dashboard():
     labels1 = []
     legend1 = 'Top Ten Sentiment For All Category'
     for x in range(len(topTenSentimentForCategory)):
-        labels1.append((topTenSentimentForCategory[x][1])[:10])
-        values1.append(topTenSentimentForCategory[x][2])
+        labels1.append((topTenSentimentForCategory[x][0])[:10])
+        values1.append(topTenSentimentForCategory[x][1])
 
     # code for number of articles by agency graph
     numOfArticlesByAgency = NumOfArticlesByAgencyWithName(db)
@@ -145,8 +145,8 @@ def user_dashboard():
     labels2 = []
     legend2 = 'Number of articles by agency'
     for x in range(len(numOfArticlesByAgency)):
-        labels2.append(numOfArticlesByAgency[x][1])
-        values2.append(numOfArticlesByAgency[x][2])
+        labels2.append(numOfArticlesByAgency[x][0])
+        values2.append(numOfArticlesByAgency[x][1])
 
     # code for top 10 articles with most likes graph
     topTenMostLikesArticle = TopTenMostLikesArticleWithArticleTitle(db)
@@ -154,8 +154,8 @@ def user_dashboard():
     labels3 = []
     legend3 = 'Top 10 articles with the most likes'
     for x in range(len(topTenMostLikesArticle)):
-        labels3.append((topTenMostLikesArticle[x][1])[:10])
-        values3.append(topTenMostLikesArticle[x][2])
+        labels3.append((topTenMostLikesArticle[x][0])[:10])
+        values3.append(topTenMostLikesArticle[x][1])
 
 
     user_id = session['id']
