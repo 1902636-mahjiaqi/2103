@@ -27,7 +27,7 @@ def TierAnalysis(db):
 
     print(testList)
 
-    return result
+    return testList
 
 
 # Topic: SENTIMENT VALUE WITH CATEGORY NAME---(BAR CHART)(HM)
@@ -44,7 +44,7 @@ def SentimentValueCategory(db):
         testList.append((x.get('_id'), x.get('sentiment')))
 
     print(testList)
-    return result
+    return testList
 
 
 # Topic:Most popular Agency(for article likes)--(bar chart)(HM)(FIXED)
@@ -61,7 +61,7 @@ def MostArticleLikedAgency(db):
         testList.append((x.get('_id'), x.get('total')))
 
     print(testList)
-    return result
+    return testList
 
 
 # Topic: Percentage of Articles written by different Agencies(PIE CHART)(HM)
@@ -79,7 +79,7 @@ def NumOfArticlesByAgencyWithName(db):
 
     print(testList)
 
-    return result
+    return testList
 
 
 # Topic:TOP 10 MOST LIKES for article(FOR SUGGESTION PAGE INSTEAD)(hm)(fixed)(WORKING)
@@ -97,7 +97,7 @@ def TopTenMostLikesArticleWithArticleTitle(db):
         testList.append((x.get('ArticleTitle'), x.get('total likes')))
 
     print(testList)
-    return result
+    return testList
 
 
 #Topic:Avg sentiment value for each agency(bar chart)
@@ -114,7 +114,7 @@ def AllAvgSentimentRating(db):
        testList.append((x.get('_id'), x.get('sentiment')))
 
    print(testList)
-   return result
+   return testList
 
 
 # Topic:TOP 10 sentiment value for article(list/bar graph)
@@ -134,7 +134,7 @@ def TopTenSentimentForAllCategory(db):
 
 
     print(testList)
-    return result
+    return testList
 
 
 def TopPaymentMethod(db):
