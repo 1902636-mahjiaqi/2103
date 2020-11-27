@@ -289,8 +289,9 @@ def admin_dashboard():
     labels2 = []
     legend2 = 'Sentiment Value Category'
     for x in range(len(sentimentValueCategory)):
+        print(sentimentValueCategory)
         labels2.append((sentimentValueCategory[x][0]))
-        values2.append(sentimentValueCategory[x][2])
+        values2.append(sentimentValueCategory[x][1])
 
     # code for most article liked agency graph
     mostArticleLikedAgency = MostArticleLikedAgency(db)
@@ -298,8 +299,8 @@ def admin_dashboard():
     labels3 = []
     legend3 = 'Most Article Liked Agency'
     for x in range(len(mostArticleLikedAgency)):
-        labels3.append((mostArticleLikedAgency[x][1]))
-        values3.append(mostArticleLikedAgency[x][2])
+        labels3.append((mostArticleLikedAgency[x][0]))
+        values3.append(mostArticleLikedAgency[x][1])
 
     # code for average sentiment rating graph
     allAvgSentimentRating = AllAvgSentimentRating(db)
@@ -307,8 +308,8 @@ def admin_dashboard():
     labels4 = []
     legend4 = 'Agency with the most well-liked article'
     for x in range(len(allAvgSentimentRating)):
-        labels4.append((allAvgSentimentRating[x][1]))
-        values4.append(allAvgSentimentRating[x][2])
+        labels4.append((allAvgSentimentRating[x][0]))
+        values4.append(allAvgSentimentRating[x][1])
 
     # code for average sentiment rating graph
     topPaymentMethod = TopPaymentMethod(db)
