@@ -16,8 +16,17 @@ def TierAnalysis(db):
     # result = selectedTable.aggregate(query, fields)
     # result = selectedTable.aggregate([{$group:{_id:"$TierID",count:{$sum:1}}}])
     result = selectedTable.aggregate([{'$group':{'_id':'$TierID','count':{'$sum':1}}},{'$sort':{'count':-1}}])
+#     for x in result:
+#         print(x)
+    testList = []
     for x in result:
-        print(x)
+        # print(tuple(x.items()))
+        #print(x.items().at(0))
+        testList.append((x.get('_id'), x.get('count')))
+
+
+    print(testList)
+
     return result
 
 
@@ -26,8 +35,15 @@ def SentimentValueCategory(db):
     selectedTable = db["Articles"]
     # result = selectedTable.aggregate([{'$group':{'_id':'$CategoryName','sentiment':{'$sum':'$SentimentRating'}}}])
     result = selectedTable.aggregate([{'$group': {'_id': '$CategoryName', 'sentiment': {'$sum': '$SentimentRating'}}}])
+#     for x in result:
+#         print(x)
+    testList = []
     for x in result:
-        print(x)
+        # print(tuple(x.items()))
+        # print(x.items().at(0))
+        testList.append((x.get('_id'), x.get('sentiment')))
+
+    print(testList)
     return result
 
 
@@ -36,8 +52,15 @@ def MostArticleLikedAgency(db):
     selectedTable = db["Articles"]
     # result = selectedTable.aggregate([{'$project':{'AgencyName':1,'total likes':{'$cond':{'if':{'$isArray':'$likeList'},'then':{'$size':'$likeList'},'else':0}}}}])
     result = selectedTable.aggregate([{'$group':{'_id':'$AgencyName','total':{'$sum':{'$cond':{'if':{'$isArray':'$likeList'},'then':{'$size':'$likeList'},'else':0}}}}}])
+#     for x in result:
+#         print(x)
+    testList = []
     for x in result:
-        print(x)
+        # print(tuple(x.items()))
+        # print(x.items().at(0))
+        testList.append((x.get('_id'), x.get('total')))
+
+    print(testList)
     return result
 
 
@@ -45,8 +68,17 @@ def MostArticleLikedAgency(db):
 def NumOfArticlesByAgencyWithName(db):
     selectedTable = db["Articles"]
     result = selectedTable.aggregate([{'$group':{'_id':'$AgencyName','count':{'$sum':1}}}])
+#     for x in result:
+#         print(x)
+
+    testList = []
     for x in result:
-        print(x)
+        # print(tuple(x.items()))
+        # print(x.items().at(0))
+        testList.append((x.get('_id'), x.get('count')))
+
+    print(testList)
+
     return result
 
 
@@ -56,8 +88,15 @@ def TopTenMostLikesArticleWithArticleTitle(db):
     result = selectedTable.aggregate([{'$project':{'ArticleTitle':1,'total likes':{'$cond':{'if':{'$isArray':'$likeList'},'then':{'$size':'$likeList'},'else':0}}}},{'$sort':{'total likes':-1}},{'$limit':10}])
     # result = selectedTable.aggregate([{'$group': {'_id': '$ArticleTitle','total':{'$cond':{'if':{'$isArray':'$likeList'},'then':{'$size':'$likeList'},'else':0}}}},{'$sort':{'total likes':-1}},{'$limit':10}])
 
+#     for x in result:
+#         print(x)
+    testList = []
     for x in result:
-        print(x)
+        # print(tuple(x.items()))
+        # print(x.items().at(0))
+        testList.append((x.get('ArticleTitle'), x.get('total likes')))
+
+    print(testList)
     return result
 
 
@@ -65,18 +104,36 @@ def TopTenMostLikesArticleWithArticleTitle(db):
 def AllAvgSentimentRating(db):
    selectedTable = db["Articles"]
    result = selectedTable.aggregate([{'$group': {'_id': '$AgencyName','sentiment':{'$avg':'$SentimentRating'}}},{'$sort':{'sentiment':-1}}])
+#    for x in result:
+#        print(x)
+
+   testList = []
    for x in result:
-       print(x)
+       # print(tuple(x.items()))
+       # print(x.items().at(0))
+       testList.append((x.get('_id'), x.get('sentiment')))
+
+   print(testList)
    return result
 
 
 # Topic:TOP 10 sentiment value for article(list/bar graph)
 def TopTenSentimentForAllCategory(db):
     selectedTable = db["Articles"]
-    result = selectedTable.find({"AgencyName":"Today"}).sort("SentimentRating",-1).limit(10)
-    # result = selectedTable.find({"AgencyName":"Today"}).sort({"SentimentRating":-1}).limit(10)
+#     result = selectedTable.find({"AgencyName":"Today"}).sort("SentimentRating",-1).limit(10)
+    result = selectedTable.find({},{"ArticleTitle":1,"SentimentRating":1,"_id":0}).sort("SentimentRating:-1").limit(10)
+#     # result = selectedTable.find({"AgencyName":"Today"}).sort({"SentimentRating":-1}).limit(10)
+#     for x in result:
+#         print(x)
+
+    testList = []
     for x in result:
-        print(x)
+        # print(tuple(x.items()))
+        #print(x.items().at(0))
+        testList.append((x.get('ArticleTitle'), x.get('SentimentRating')))
+
+
+    print(testList)
     return result
 
 
