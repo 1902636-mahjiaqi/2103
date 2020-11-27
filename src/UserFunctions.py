@@ -96,9 +96,10 @@ def InsertPaymentMethod(db, UserID, CardNo, CardExpiryDate):
 def SelectUserPayment(db, UserID):
     Crypt = AESCipher(str(UserID))
     # Getting UserID
-    query = {"_id": ObjectId(UserID)}
     selectedcol = db["Users"]
-    result = selectedcol.find_one(query)
+    result = selectedcol.find_one({"_id": ObjectId(UserID)}, {"CardNo": 1,"CardExpiryDate":1,"_id": 0})
+    if result["CardNo"] == "-":
+        return [result["CardNo"],result["CardExpiryDate"]]
     if result == None:
         return result
     dec_msg = Crypt.decrypt(result["CardNo"])
@@ -118,7 +119,7 @@ def SelectLikedArticles(db, UserID):
 
 def Transact(db,UserID):
     insertdict = {"Price": 10,
-                  "OrderDate": dt.datetime.today()-dt.timedelta(days = 60)}
+                  "OrderDate": dt.datetime.today()}
     #print(dt.datetime.today())
     values = {"$set": {"TierID": 2},"$push": {"Order": insertdict}}
     query = {"_id": ObjectId(UserID)}
@@ -155,7 +156,7 @@ def DeleteUser(db,UserID):
 
 #print(Transact(db,23))
 #print(InsertPaymentMethod(db,21,"5500 0000 0000 0004","03/21"))
-#print(SelectUserPayment(db, 21))
+#print(SelectUserPayment(db, "5fbf21d90fcb9904472d1077"))
 #print(UserAuth(db,"test","123"))
 #print(UserCreate(db,"test3","123"))
 #print(SelectLikedArticles(db,3))
