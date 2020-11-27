@@ -3,24 +3,24 @@
     and purchase using card details 
 -->
 {% block content %}
-<h1>User Privilege Page</h1>
 <div class="container-fluid">
     <div class="row">
         <div class="col-sm">
             <!-- profile information -->
             <div class="card">
                 <form class="card-body">
-                    <h4 class="card-title">Profile</h4>
+                    <h4 class="card-title">Purchase Privilege</h4>
+                    <div class="jumbotron">
+                        <h1 class="display-4">Perks!</h1>
+                        <p class="lead">
+                            Enhance your experience using NewsAPI to be able to view our dashboard!
+                        </p>
+                        <img src="{{url_for('static', filename='sample.png')}}" width=50% />
+                      </div>
                     <span>
-                        {% if session['is_admin'] %}
-                        <p>Account Type: <strong class="text-danger">Administrator</strong></p>
-                        {% else %}
-                        <p>Account Type: <strong class="text-danger">User</strong></p>
-                            <p>User privilege: <strong class="text-danger">FREE</strong></p>
-                            <div class="alert alert-danger" role="alert">
-                                Your user privilege is currently <strong>FREE</strong>, click <a href="{{ url_for('user_purchase') }}">here</a> to purchase the VIP upgrade for your account!
-                            </div>
-                        {% endif %}
+                        <div class="alert alert-danger" role="alert">
+                            Click <a href="{{ url_for('user_purchase') }}">here</a> to purchase the VIP upgrade for your account!
+                        </div>
                     </span>
                 </form>
             </div>
