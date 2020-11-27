@@ -26,13 +26,18 @@
         <li class="nav-item {% block home_active %}{% endblock %}">
           <a class="nav-link" href="{{ url_for('article') }}">Home<span class="sr-only">(current)</span></a>
         </li>
+        {% if tier[0] == 2 or session['is_admin'] %}
         <li class="nav-item {% block dashboard_active %}{% endblock %}">
           <a class="nav-link" href="{{ url_for('user_dashboard') }}">Dashboard<span class="sr-only">(current)</span></a>
         </li>
+        {% endif %}
         {% if session['is_admin'] %}
         <li class="nav-item {% block admin_dashboard_active %}{% endblock %}">
           <a class="nav-link" href="{{ url_for('admin_dashboard') }}">Admin Dashboard<span class="sr-only">(current)</span></a>
         </li>
+        <!-- <li class="nav-item {% block delete_user_active %}{% endblock %}">
+          <a class="nav-link" href="{{ url_for('delete_user') }}">Manager User<span class="sr-only">(current)</span></a>
+        </li> -->
         {% else %}
         {% endif %}
       </ul>
