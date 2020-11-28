@@ -85,7 +85,7 @@ def NumOfArticlesByAgencyWithName(db):
 # Topic:TOP 10 MOST LIKES for article(FOR SUGGESTION PAGE INSTEAD)(hm)(fixed)(WORKING)
 def TopTenMostLikesArticleWithArticleTitle(db):
     selectedTable = db["Articles"]
-    result = selectedTable.aggregate([{'$project':{'ArticleTitle':1,'total likes':{'$cond':{'if':{'$isArray':'$likeList'},'then':{'$size':'$likeList'},'else':0}}}},{'$sort':{'total likes':-1}},{'$limit':10}])
+    result = selectedTable.aggregate([{'$project':{'_id':0,'ArticleTitle':1,'total likes':{'$cond':{'if':{'$isArray':'$likeList'},'then':{'$size':'$likeList'},'else':0}}}},{'$sort':{'total likes':-1}},{'$limit':10}])
     # result = selectedTable.aggregate([{'$group': {'_id': '$ArticleTitle','total':{'$cond':{'if':{'$isArray':'$likeList'},'then':{'$size':'$likeList'},'else':0}}}},{'$sort':{'total likes':-1}},{'$limit':10}])
 
 #     for x in result:
