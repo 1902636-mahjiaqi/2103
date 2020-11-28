@@ -310,7 +310,7 @@ def admin_dashboard():
     allAvgSentimentRating = AllAvgSentimentRating(cursor)
     values4 = []
     labels4 = []
-    legend4 = 'Agency with the most well-liked article'
+    legend4 = 'Average Sentiment for Agency'
     for x in range(len(allAvgSentimentRating)):
         labels4.append((allAvgSentimentRating[x][1]))
         values4.append(allAvgSentimentRating[x][2])
