@@ -3,9 +3,7 @@ from bson.objectid import ObjectId
 import datetime as dt
 import hashlib
 
-# client = pymongo.MongoClient("mongodb+srv://admin:IBXxRxezhvT9f4D3@cluster0.vkqbl.mongodb.net/<dbname>?retryWrites=true&w=majority")
-# db = client["ICT2103_Project"]
-
+#This function retrieves all articles
 def SelectAllArticleTitle(db):
     query = {}
     selectedcol = db["Articles"]
@@ -16,7 +14,7 @@ def SelectAllArticleTitle(db):
         Homepageresults.append(article)
     return Homepageresults
 
-
+#Function retrieves details of the article for the user to read
 def SelectArticleDetails(db, articleID):
     #Title, Date, URL, Sentiment, ArticleText,CategoryName, Agency Name
     query = {"_id": ObjectId(articleID)}
@@ -27,6 +25,7 @@ def SelectArticleDetails(db, articleID):
                 result["CategoryName"],result["AgencyName"]]
     return result
 
+#Function likes the article
 def LikeArticle(db,userID,articleID):
     query = {"_id": ObjectId(articleID)}
     values = { "$push": { "likeList": str(userID) } }
@@ -36,7 +35,7 @@ def LikeArticle(db,userID,articleID):
         return True
     else:
         return False
-
+#Function allows user to unlike an article
 def UnlikeArticle(db,userID,articleID):
     query = {"_id": ObjectId(articleID)}
     values = {"$pull": {"likeList": str(userID)}}
@@ -46,7 +45,7 @@ def UnlikeArticle(db,userID,articleID):
         return True
     else:
         return False
-
+#Function checks whether an article is liked
 def CheckLike(db,userID,articleID):
     query = {"_id": ObjectId(articleID), "likeList": {"$in": [str(userID)]}}
     selectedcol = db["Articles"]
@@ -56,6 +55,7 @@ def CheckLike(db,userID,articleID):
     else:
         return False
 
+#Function that selects the articles content within the past month, mainly for the word cloud
 def SelectRecentArticles(db):
     selectedcol = db["Articles"]
     emptylist = []

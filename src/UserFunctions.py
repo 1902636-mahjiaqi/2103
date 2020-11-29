@@ -10,6 +10,7 @@ from bson.objectid import ObjectId
 client = pymongo.MongoClient("mongodb+srv://admin:IBXxRxezhvT9f4D3@cluster0.vkqbl.mongodb.net/<dbname>?retryWrites=true&w=majority")
 db = client["ICT2103_Project"]
 
+#As mongodb does not have the AES Encrpytion module, this is the class to help us encrypt the Card Number
 class AESCipher(object):
     def __init__(self, key):
         self.bs = AES.block_size
@@ -34,7 +35,8 @@ class AESCipher(object):
     def _unpad(s):
         return s[:-ord(s[len(s)-1:])]
 
-
+#Function to authenticate user and grab out his details, also checks whether the user's subscription has
+#expired. When it is, it will remove him to tier 1 which is the free tier
 def UserAuth(db, Username, Password):
     #hash Password
     hash = hashlib.sha256()
@@ -67,6 +69,7 @@ def UserAuth(db, Username, Password):
               result["CardNo"], result["CardExpiryDate"]]
     return result
 
+#To Create the user account
 def UserCreate(db, UserName, Password):
     #insert user
     #Hash user password
@@ -84,6 +87,7 @@ def UserCreate(db, UserName, Password):
               result["CardNo"], result["CardExpiryDate"]]
     return result
 
+#Using the above encryption method, it uses AES256 to encrypt the card number and store in the user document
 def InsertPaymentMethod(db, UserID, CardNo, CardExpiryDate):
     Crypt = AESCipher(str(UserID))
     enc_msg = Crypt.encrypt(str(CardNo))
@@ -93,6 +97,7 @@ def InsertPaymentMethod(db, UserID, CardNo, CardExpiryDate):
     value = {"$set": { "CardNo": enc_msg, "CardExpiryDate": CardExpiryDate}}
     selectedcol.update_one(query, value)
 
+#Using the above decryption method, it uses AES256 to decrypt the card number and retrieve for the front ui
 def SelectUserPayment(db, UserID):
     Crypt = AESCipher(str(UserID))
     # Getting UserID
@@ -105,6 +110,7 @@ def SelectUserPayment(db, UserID):
     dec_msg = Crypt.decrypt(result["CardNo"])
     return [dec_msg,result["CardExpiryDate"]]
 
+#Function to select out the articles that the user likes
 def SelectLikedArticles(db, UserID):
     query = {"likeList": {"$in": [str(UserID)]}}
     selectedcol = db["Articles"]
@@ -117,6 +123,7 @@ def SelectLikedArticles(db, UserID):
         LikeArticleArray.append(result)
     return LikeArticleArray
 
+#Function to upgrade the user to the paid tier
 def Transact(db,UserID):
     insertdict = {"Price": 10,
                   "OrderDate": dt.datetime.today()}
@@ -130,6 +137,7 @@ def Transact(db,UserID):
     else:
         return False
 
+#Function to check whether the user is paid or free
 def CheckTier(db,UserID):
     selectedcol = db["Users"]
     # Find username and password
@@ -137,7 +145,7 @@ def CheckTier(db,UserID):
     return [result["TierID"]]
 
 
-
+#Function to delete user account
 def DeleteUser(db,UserID):
     query = {"_id":ObjectId(UserID)}
     selectedcol = db["Users"]

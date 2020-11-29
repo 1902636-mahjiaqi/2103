@@ -8,7 +8,7 @@ import time
 from time import sleep
 from main_pak import stArticle, pushtoMongoDB
 
-
+#Using selenium webdriver to retrieve CNA since as they use javascript to create content
 def ScrapeCNA(category,pages):
     #1 is health, #2 is business, #3 politics
     listofarticles = []
@@ -68,6 +68,8 @@ def ScrapeCNA(category,pages):
             listofarticles.append(stArticle(ArticleTitle,"",ArticleDate,ArticleText,ArticleURL))
     pushtoMongoDB(listofarticles,2,search)
 
-ScrapeCNA(1,10)
+ScrapeCNA(1,3)
+ScrapeCNA(2,3)
+ScrapeCNA(3,3)
 
 
