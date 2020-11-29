@@ -8,6 +8,8 @@ import mysql.connector as mysql
 import time
 from time import sleep
 
+#function to scrape CNA website and input to the database using selenium webdriver to overcome
+#their content loading via javascript
 def ScrapeCNA(category,pages):
     #1 is health, #2 is business, #3 politics
     db = mysql.connect(
