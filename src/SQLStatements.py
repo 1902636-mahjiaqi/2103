@@ -17,8 +17,6 @@ def TierAnalysis(cursor):
     query = "SELECT TierID,Count(*) FROM user Group by TierID"
     cursor.execute(query)
     result = cursor.fetchall()
-    # for x in result:
-    #     print(x)
     return result
 
 
@@ -34,7 +32,9 @@ def SentimentValueCategory(cursor):
 
 # Topic:Most popular Agency(for article likes)--(bar chart)
 def MostArticleLikedAgency(cursor):
-    query = "SELECT a.AgencyID,c.AgencyName,Count(a.AgencyID) FROM article a,likedby b,agency c WHERE a.ArticleID = b.ArticleID AND a.AgencyID = c.AgencyID GROUP BY a.AgencyID Order By a.AgencyID";
+    query = "SELECT a.AgencyID,c.AgencyName," \
+            "Count(a.AgencyID) FROM article a,likedby b,agency c " \
+            "WHERE a.ArticleID = b.ArticleID AND a.AgencyID = c.AgencyID GROUP BY a.AgencyID Order By a.AgencyID";
     cursor.execute(query)
     result = cursor.fetchall()
     return result
