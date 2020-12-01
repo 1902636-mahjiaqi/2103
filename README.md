@@ -19,4 +19,17 @@
 2. pip install pymongo[srv]
 
 ### Encryption
-1. pip install pycrytodom
+1. pip install pycrytodome
+
+##Codes Structure
+All Functions are under src file
+Scrapper functions are not connected to front end so need to "python run mySQL_Scrapper.py"
+All HTML codes are under templates
+App.py is the controller class that connects backend logic to front end logic
+
+#Admin Account
+User Name: admin
+Password: 123
+
+#Scrapper
+pip install bs4
