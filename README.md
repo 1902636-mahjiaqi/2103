@@ -13,9 +13,15 @@
 1. pip install nltk
 2. pip install vaderSentiment
 
-##Codes Structure
-All Functions are under src file
-Scrapper functions are not connected to front end so need to "python run mySQL_Scrapper.py"
-All HTML codes are under templates
-App.py is the controller class that connects backend logic to front end logic
+### Codes Structure
+1. All Functions are under src file
+2. Scrapper functions are not connected to front end so need to "python run mySQL_Scrapper.py"
+3. All HTML codes are under templates
+4. App.py is the controller class that connects backend logic to front end logic
 
+### Admin Account 
+Username: admin
+Pw: 123
+
+### Scraper
+pip install bs4
