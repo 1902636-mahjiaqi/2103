@@ -22,14 +22,14 @@
 1. pip install pycrytodome
 
 ### Codes Structure
-All Functions are under src file
-Scrapper functions are not connected to front end so need to "python run mySQL_Scrapper.py"
-All HTML codes are under templates
-App.py is the controller class that connects backend logic to front end logic
+1. All Functions are under src file
+2. Scrapper functions are not connected to front end so need to "python run mySQL_Scrapper.py"
+3. All HTML codes are under templates
+4. App.py is the controller class that connects backend logic to front end logic
 
 ### Admin Account
-User Name: admin
-Password: 123
+1. User Name: admin
+2. Password: 123
 
 ### Scrapper
 pip install bs4
